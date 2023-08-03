@@ -20,15 +20,15 @@ const App = () => {
   };
 
   return (
-      <Container>
-        <Stack>
+    <Container>
+      <Stack>
         <AppBar className='appBar'
           position="fixed"
           sx={{
             marginTop: "10px",
             display: "flex",
             flexDirection: 'row',
-            justifyContent:'space-between',
+            justifyContent: 'space-between',
             backgroundColor: "rgba(255,255,255,0.44)",
             backdropFilter: "blur(20px)",
           }}
@@ -42,36 +42,38 @@ const App = () => {
               }}
             >
               <Menu sx={{
-                width:'4vh',
-                height:'4vw'
-              }}/>
+                width: '4vh',
+                height: '4vw'
+              }} />
             </IconButton>
           </Toolbar>
-            <Stack direction="row" alignItems="center" spacing={1} sx={{ alignItems: 'center' }}>
-              <NavLink
-                to="/login"
-                activeClassName="activeLink"
-                className="navLink"
-                style={{ textDecoration: 'none', color: '#E01E9B', marginRight: '15px'}}
-              >
-                
-                (
-                  <Button color="inherit" sx={{marginRight:'0.5vw', padding:"0px", fontSize: '14px' }} >
-                    Log out
-                  </Button>
-                )
-                (
-                <Button color="inherit" sx={{marginRight:'0.5vw', padding:"0px", fontSize: '14px' }} onClick={() => navigate('/login')}>
-                    Log in
-                  </Button>
-                )
-                <IconButton color="inherit">
-                  <AccountCircleIcon />
-                </IconButton>
-              </NavLink>
-            </Stack>
+          <Stack direction="row" alignItems="center" spacing={1} sx={{ alignItems: 'center' }}>
+            <NavLink
+              to="/login"
+              activeClassName="activeLink"
+              className="navLink"
+              style={{ textDecoration: 'none', color: '#E01E9B', marginRight: '15px' }}
+            >
+
+              (
+              <Button color="inherit" sx={{ marginRight: '0.5vw', padding: "0px", fontSize: '14px' }} >
+                Log out
+              </Button>
+              )
+              (
+              <Button color="inherit" sx={{ marginRight: '0.5vw', padding: "0px", fontSize: '14px' }} onClick={() => navigate('/login')}>
+                Log in
+              </Button>
+              )
+              <IconButton color="inherit">
+                <AccountCircleIcon />
+              </IconButton>
+            </NavLink>
+          </Stack>
         </AppBar>
-        <ShowRecipes/>
+        <ShowRecipes />
+
+
         <Drawer className='drawer'
           anchor="left"
           open={open}
@@ -88,16 +90,16 @@ const App = () => {
         >
           <Box>
             <IconButton>
-              <ChevronLeft sx={{ color: '#E01E9B'}} onClick={handleDrawerClose}/>
+              <ChevronLeft sx={{ color: '#E01E9B' }} onClick={handleDrawerClose} />
             </IconButton>
           </Box>
-          <Divider sx={{ backgroundColor: '#E01E9B'}}/>
+          <Divider sx={{ backgroundColor: '#E01E9B' }} />
           <Stack direction="column" alignItems="flex-start" marginTop={2} marginLeft={5}>
             <Button
               activeClassName="activeLink"
               className="navLink"
               style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
-              //onClick={() => {navigate('/myCookbook'); setOpen(false)}}
+            //onClick={() => {navigate('/myCookbook'); setOpen(false)}}
             >
               My cookbook
             </Button>
@@ -105,7 +107,7 @@ const App = () => {
               activeClassName="activeLink"
               className="navLink"
               style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
-              //onClick={() => {navigate('/myAllergens'); setOpen(false)}}
+            //onClick={() => {navigate('/myAllergens'); setOpen(false)}}
             >
               My allergens
             </Button>
@@ -114,14 +116,14 @@ const App = () => {
               activeClassName="activeLink"
               className="navLink"
               style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
-              //onClick={() => {navigate('/chefRecipes'); setOpen(false)}}
+            //onClick={() => {navigate('/chefRecipes'); setOpen(false)}}
             >
               Chef recipes
             </Button>
           </Stack>
         </Drawer>
-        </Stack>
-      </Container>
+      </Stack>
+    </Container>
   );
 };
 
