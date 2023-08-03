@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 import { Menu as MenuIcon, Home as HomeIcon, Info as InfoIcon } from '@mui/icons-material';
+import { useNavigate } from 'react-router';
 
 const HomePage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [entities, setEntities] = useState([]);
+  const navigate = useNavigate();
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
