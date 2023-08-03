@@ -4,17 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import HomePage from './HomePage';
+//import HomePage from './HomePage';
 import ShowRecipes from './recipe/ShowRecipes';
+import RecipeDetails from './recipe/RecipeDetails';
 
 const router = createBrowserRouter([{
-  path:'/',
-  element:<App/>,
-  children : [
-    {
-      path:'homepage',
-      element: <HomePage/>
-    },
+  path: '/',
+  element: <App />,
+  children: [
+    
     // {
     //   path:'error',
     //   element: <Error/>
@@ -25,7 +23,7 @@ const router = createBrowserRouter([{
     // },
     {
       path: 'recipe',
-      element: <ShowRecipes/>
+      element: <ShowRecipes />
     },
     // {
     //   path:'recipes/new_recipe',
@@ -46,21 +44,21 @@ const router = createBrowserRouter([{
     //     })
     //   },
     // },
-    // {
-    //   path:'recipes/recipe_details/:id',
-    //   element:<RecipeDetails/>,
-    //   loader: async ({ params }) => {
-    //     const user = check_login(['ROLE_ADMIN', 'ROLE_REGULAR_USER', 'ROLE_CHEF']);
-    //     return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
-    //         method: 'GET',
-    //         headers: {
-    //           Authorization : user.token,
-    //           "Accept": "application/json",
-    //           "Content-Type": "application/json",
-    //         }
-    //       });
-    //   }
-    // }
+    {
+      path: 'recipes/recipe_details/:id',
+      element: <RecipeDetails />,
+      loader: async ({ params }) => {
+        //const user = check_login(['ROLE_ADMIN', 'ROLE_REGULAR_USER', 'ROLE_CHEF']);
+        return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
+          method: 'GET',
+          headers: {
+            //Authorization : user.token,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        });
+      }
+    }
   ]
 }
 ])
@@ -69,7 +67,7 @@ const router = createBrowserRouter([{
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
