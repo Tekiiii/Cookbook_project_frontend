@@ -10,12 +10,12 @@ const ShowRecipes = () => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
-  const {user, login, logout} = useContext(UserContext);
+  //const {user, login, logout} = useContext(UserContext);
 
   useEffect(() => {
     const getRecipes = async () => {
         //const user = localStorage.getItem("user");
-        if (user){
+        
             //const u = JSON.parse(user);
             let result = await fetch("http://localhost:8080/project/recipe", {
                 headers: {
@@ -30,7 +30,7 @@ const ShowRecipes = () => {
                 setData(recipes_r);
                 setAllRecipes(recipes_r);
             } 
-        }
+        
     }; 
     getRecipes();
 }, []);

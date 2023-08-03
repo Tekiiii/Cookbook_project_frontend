@@ -22,7 +22,7 @@ const Login = () => {
     }
 
     const loginUser = async () => {
-        const result = await fetch('http://localhost:8080/api/v1/login', {
+        const result = await fetch('http://localhost:8080/project/login', {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"

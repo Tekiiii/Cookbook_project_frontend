@@ -69,7 +69,7 @@ const ShowRecipe = ({recipe, onDelete}) => {
                         padding: "7% 0%",
                         height:'50px'
                     }}
-                    title={recipe.recipeName}
+                    title={recipe.name}
                 />
                 <CardContent
                     sx={{
@@ -85,7 +85,7 @@ const ShowRecipe = ({recipe, onDelete}) => {
                         padding: '15px 20px 10px 20px'
                     }}>
                     <Grid item xs={12}>
-                        Id: {recipe.ID}
+                        Id: {recipe.id}
                     </Grid>
                     <Grid item xs={12}>
                         Steps: {recipe.steps}

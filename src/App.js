@@ -47,31 +47,31 @@ const App = () => {
               }}/>
             </IconButton>
           </Toolbar>
-            {/* <Stack direction="row" alignItems="center" spacing={1} sx={{ alignItems: 'center' }}>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ alignItems: 'center' }}>
               <NavLink
                 to="/login"
                 activeClassName="activeLink"
                 className="navLink"
                 style={{ textDecoration: 'none', color: '#E01E9B', marginRight: '15px'}}
               >
-                {user ? 
+                
                 (
-                  <Button color="inherit" sx={{marginRight:'0.5vw', padding:"0px", fontSize: '14px' }} onClick={logout}>
+                  <Button color="inherit" sx={{marginRight:'0.5vw', padding:"0px", fontSize: '14px' }} >
                     Log out
                   </Button>
-                ) : 
+                )
                 (
                 <Button color="inherit" sx={{marginRight:'0.5vw', padding:"0px", fontSize: '14px' }} onClick={() => navigate('/login')}>
                     Log in
                   </Button>
-                )}
+                )
                 <IconButton color="inherit">
                   <AccountCircleIcon />
                 </IconButton>
               </NavLink>
-            </Stack> */}
+            </Stack>
         </AppBar>
-        {/* <ShowRecipes/> */}
+        <ShowRecipes/>
         <Drawer className='drawer'
           anchor="left"
           open={open}
