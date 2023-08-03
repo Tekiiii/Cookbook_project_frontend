@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Divider, Drawer, IconButton, Button, Box, Container, Stack } from '@mui/material';
 import { ChevronLeft, Menu } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -71,7 +71,7 @@ const App = () => {
             </NavLink>
           </Stack>
         </AppBar>
-        <ShowRecipes />
+        
 
 
         <Drawer className='drawer'
@@ -123,6 +123,9 @@ const App = () => {
           </Stack>
         </Drawer>
       </Stack>
+      <Box sx={{ paddingTop: '150px' }}>
+        <Outlet />
+      </Box>
     </Container>
   );
 };

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 //import HomePage from './HomePage';
 import ShowRecipes from './recipe/ShowRecipes';
 import RecipeDetails from './recipe/RecipeDetails';
@@ -12,6 +12,10 @@ const router = createBrowserRouter([{
   path: '/',
   element: <App />,
   children: [
+    {
+      path: '/',
+      element: <Navigate to="/recipe" />,
+    },
     
     // {
     //   path:'error',
@@ -45,7 +49,7 @@ const router = createBrowserRouter([{
     //   },
     // },
     {
-      path: 'recipes/recipe_details/:id',
+      path: 'recipe/recipe_details/:id',
       element: <RecipeDetails />,
       loader: async ({ params }) => {
         //const user = check_login(['ROLE_ADMIN', 'ROLE_REGULAR_USER', 'ROLE_CHEF']);
