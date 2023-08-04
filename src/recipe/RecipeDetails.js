@@ -67,6 +67,9 @@ const RecipeDetails = () => {
                     <Grid item xs={12}>
                         Amount: {recipe.amount}
                     </Grid>
+                    {/* <Grid item xs={12}>
+                        Ingredients: {recipe.ingredients}
+                    </Grid> */}
                     {/* <Typography sx={{
                 marginTop: '10px',
                 fontSize: '1em',

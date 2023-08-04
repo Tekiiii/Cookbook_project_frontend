@@ -99,7 +99,7 @@ const App = () => {
               activeClassName="activeLink"
               className="navLink"
               style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
-            //onClick={() => {navigate('/myCookbook'); setOpen(false)}}
+              onClick={() => {navigate('/myCookbook'); setOpen(false)}}
             >
               My cookbook
             </Button>
