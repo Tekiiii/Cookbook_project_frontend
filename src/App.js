@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Divider, Drawer, IconButton, Button, Box, Container, S
 import { ChevronLeft, Menu } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShowRecipes from './recipe/ShowRecipes';
+import MyAllergens from './allergens/MyAllergens';
 
 export const UserContext = createContext(null);
 
@@ -107,7 +108,7 @@ const App = () => {
               activeClassName="activeLink"
               className="navLink"
               style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
-            //onClick={() => {navigate('/myAllergens'); setOpen(false)}}
+            onClick={() => {navigate('/myAllergens'); setOpen(false)}}
             >
               My allergens
             </Button>
