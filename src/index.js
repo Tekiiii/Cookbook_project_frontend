@@ -10,6 +10,7 @@ import RecipeDetails from './recipe/RecipeDetails';
 import RecipeEdit from './recipe/RecipeEdit';
 import RecipeForm from './recipe/RecipeForm';
 import ShowMyCookbook from './Cookbook/ShowMyCookbook';
+import MyAllergens from './allergens/MyAllergens';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -69,6 +70,11 @@ const router = createBrowserRouter([{
     {
       path:'myCookbook',
       element:<ShowMyCookbook/>
+    },
+
+    {
+      path: 'myAllergens',
+      element: <MyAllergens />
     },
   ]
 }
