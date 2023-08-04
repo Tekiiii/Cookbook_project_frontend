@@ -7,6 +7,9 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 //import HomePage from './HomePage';
 import ShowRecipes from './recipe/ShowRecipes';
 import RecipeDetails from './recipe/RecipeDetails';
+import RecipeEdit from './recipe/RecipeEdit';
+import RecipeForm from './recipe/RecipeForm';
+import ShowMyCookbook from './Cookbook/ShowMyCookbook';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -16,7 +19,7 @@ const router = createBrowserRouter([{
       path: '/',
       element: <Navigate to="/recipe" />,
     },
-    
+
     // {
     //   path:'error',
     //   element: <Error/>
@@ -29,25 +32,25 @@ const router = createBrowserRouter([{
       path: 'recipe',
       element: <ShowRecipes />
     },
-    // {
-    //   path:'recipes/new_recipe',
-    //   element:<ProtectedRouteAdmin><RecipeForm/></ProtectedRouteAdmin>
-    // },
-    // {
-    //   path:'recipes/edit_recipe/:id',
-    //   element:<ProtectedRouteAdmin><RecipeEdit/></ProtectedRouteAdmin>,
-    //   loader: async ({ params }) => {
-    //     const user = check_login(['ROLE_ADMIN']);
-    //     return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
-    //       method: 'GET',
-    //         headers: {
-    //           Authorization : user.token,
-    //           "Accept": "application/json",
-    //           "Content-Type": "application/json",
-    //         }
-    //     })
-    //   },
-    // },
+    {
+      path: 'recipe/new_recipe',
+      element: <RecipeForm />
+    },
+    {
+      path: 'recipe/edit_recipe/:id',
+      element: <RecipeEdit />,
+      loader: async ({ params }) => {
+        //const user = check_login(['ROLE_ADMIN']);
+        return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
+          method: 'GET',
+          headers: {
+            //Authorization : user.token,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        })
+      },
+    },
     {
       path: 'recipe/recipe_details/:id',
       element: <RecipeDetails />,
@@ -62,7 +65,11 @@ const router = createBrowserRouter([{
           }
         });
       }
-    }
+    },
+    {
+      path:'myCookbook',
+      element:<ShowMyCookbook/>
+    },
   ]
 }
 ])

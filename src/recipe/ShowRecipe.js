@@ -5,6 +5,7 @@ import {
     Card,
     CardContent,
     CardHeader,
+    CardMedia,
     Grid, IconButton,
     Tooltip,
     Typography
@@ -12,6 +13,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { UserContext } from '../App';
 import { useContext } from 'react';
 
@@ -19,27 +21,26 @@ const ShowRecipe = ({ recipe, onDelete }) => {
     //const {user, login, logout} = useContext(UserContext);
     const navigate = useNavigate();
 
-    // const deleteRecipe = async () => {
-    //     const user = localStorage.getItem("user");
-    //     if (user) {
-    //         const u = JSON.parse(user);
-    //         let response = await fetch(`http://localhost:8080/project/?`, {
-    //             method: "DELETE",
-    //             headers: {
-    //                 Authorization : u.token,
-    //                 "Accept": "application/json",
-    //                 "Content-Type": "application/json",
-    //             }
-    //         });
-    //         if (response.ok) {
-    //             let d = await response.json();
-    //             console.log("Successfully deleted recipe");
-    //             onDelete(recipe.ID);
-    //         } else {
-    //          console.log("Error while deleting recipe");
-    //         }
-    //     }
-    // };
+    const deleteRecipe = async () => {
+        // const user = localStorage.getItem("user");
+        
+            //const u = JSON.parse(user);
+            let response = await fetch(`http://localhost:8080/project/recipe/${recipe.id}`, {
+                method: "DELETE",
+                headers: {
+                    //Authorization: u.token,
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }
+            });
+            if (response.ok) {
+                let d = await response.json();
+                console.log("Successfully deleted recipe");
+                onDelete(recipe.ID);
+            } else {
+                console.log("Error while deleting recipe");
+            }
+        }
 
     return (
         <Grid item xs={4}>
@@ -67,9 +68,14 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                         fontSize: "1.3em",
                         backgroundColor: "#6bb187",
                         padding: "7% 0%",
-                        height: '50px'
+                        height: '30px'
                     }}
+                    
                     title={recipe.name}
+                />
+                <CardMedia
+                    sx={{ height: 140 }}
+                    image ="https://cdn.cancer.ca/-/media/images/stock-images/recipes-main-banner-generic.png?rev=4a884cb602214bb3bc1ce51b84ef8a5f&cx=0.5&cy=0.5&cw=1200&ch=630&hash=B3798D04B58C0F94406103D32F09B1C5"
                 />
                 <CardContent
                     sx={{
@@ -88,13 +94,7 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                             Id: {recipe.id}
                         </Grid>
                         <Grid item xs={12}>
-                            Steps: {recipe.steps}
-                        </Grid>
-                        <Grid item xs={12}>
                             Time: {recipe.time}
-                        </Grid>
-                        <Grid item xs={12}>
-                            Amount: {recipe.amount}
                         </Grid>
                         {/* <Typography sx={{
                         marginTop: '10px',
@@ -147,7 +147,21 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                         </IconButton>
                     </Tooltip> </> :  <></>}
                 </Box>  */}
-
+                <Tooltip title="Edit">
+                    <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="edit" onClick={() => navigate(`edit_recipe/${recipe.ID}`)}>
+                        <EditIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Delete">
+                    <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="delete" onClick={deleteRecipe}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Add to my Cookbook">
+                    <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="Add to my Cookbook">
+                        <FavoriteBorderIcon />
+                    </IconButton>
+                </Tooltip>
             </Card>
         </Grid>
     )
