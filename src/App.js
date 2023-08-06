@@ -1,16 +1,23 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Divider, Drawer, IconButton, Button, Box, Container, Stack } from '@mui/material';
 import { ChevronLeft, Menu } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShowRecipes from './recipe/ShowRecipes';
 import MyAllergens from './allergens/MyAllergens';
+import { get_login } from './login_logic';
+import Login from './Login';
 
 export const UserContext = createContext(null);
 
 const App = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const [userData, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    setIsLogin(get_login());
+  })
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -20,13 +27,23 @@ const App = () => {
     setOpen(false);
   };
 
+  const handleUserLogin = () => {
+    return;
+    // isUserLoggedIn ? logOut() : // TODO: open login modal;
+  }
+
+  const logOut = () => {
+    // TODO: add api for logout
+  }
+
+
+
   return (
     <Container>
       <Stack>
         <AppBar className='appBar'
           position="fixed"
           sx={{
-            marginTop: "10px",
             display: "flex",
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -39,41 +56,27 @@ const App = () => {
               onClick={handleDrawerOpen}
               sx={{
                 color: '#E01E9B',
-                marginLeft: '2vw',
+                borderRadius: '100%',
               }}
             >
               <Menu sx={{
-                width: '4vh',
-                height: '4vw'
+                width: '24px',
+                height: '24px'
               }} />
             </IconButton>
           </Toolbar>
           <Stack direction="row" alignItems="center" spacing={1} sx={{ alignItems: 'center' }}>
-            <NavLink
-              to="/login"
-              activeClassName="activeLink"
-              className="navLink"
-              style={{ textDecoration: 'none', color: '#E01E9B', marginRight: '15px' }}
-            >
-
-              (
-              <Button color="inherit" sx={{ marginRight: '0.5vw', padding: "0px", fontSize: '14px' }} >
-                Log out
-              </Button>
-              )
-              (
-              <Button color="inherit" sx={{ marginRight: '0.5vw', padding: "0px", fontSize: '14px' }} onClick={() => navigate('/login')}>
-                Log in
-              </Button>
-              )
+            {/* TODO: add button with user name(if logged in) and account icon inside which will open dropdown*/}
+            {/* dropdown will contain following options:
+              if logged in otions are: ['user profile, log out']
+              if logged out option are: ['login, sign in']
+            */}
+            Button
               <IconButton color="inherit">
                 <AccountCircleIcon />
               </IconButton>
-            </NavLink>
           </Stack>
         </AppBar>
-        
-
 
         <Drawer className='drawer'
           anchor="left"
