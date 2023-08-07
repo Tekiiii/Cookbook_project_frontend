@@ -5,7 +5,7 @@ import { ChevronLeft, Menu } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShowRecipes from './recipe/ShowRecipes';
 import MyAllergens from './allergens/MyAllergens';
-import { get_login } from './login_logic';
+import { get_login, useLogin } from './login_logic';
 import Login from './Login';
 
 export const UserContext = createContext(null);
@@ -14,6 +14,7 @@ const App = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const [userData, setIsLogin] = useState(false);
+  const [user, login, logout] = useLogin();
 
   useEffect(() => {
     setIsLogin(get_login());
@@ -66,15 +67,27 @@ const App = () => {
             </IconButton>
           </Toolbar>
           <Stack direction="row" alignItems="center" spacing={1} sx={{ alignItems: 'center' }}>
-            {/* TODO: add button with user name(if logged in) and account icon inside which will open dropdown*/}
-            {/* dropdown will contain following options:
-              if logged in otions are: ['user profile, log out']
-              if logged out option are: ['login, sign in']
-            */}
-            Button
+            <NavLink
+              to="/login"
+              activeClassName="activeLink"
+              className="navLink"
+              style={{ textDecoration: 'none', color: '#E01E9B', marginRight: '15px' }}
+            >
+              {user ?
+                (
+                  <Button color="inherit" sx={{ marginRight: '0.5vw', padding: "0px", fontSize: '14px' }} onClick={logout}>
+                    Log out
+                  </Button>
+                ) :
+                (
+                  <Button color="inherit" sx={{ marginRight: '0.5vw', padding: "0px", fontSize: '14px' }} onClick={() => navigate('/login')}>
+                    Log in
+                  </Button>
+                )}
               <IconButton color="inherit">
                 <AccountCircleIcon />
               </IconButton>
+            </NavLink>
           </Stack>
         </AppBar>
 
@@ -103,7 +116,7 @@ const App = () => {
               activeClassName="activeLink"
               className="navLink"
               style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
-              onClick={() => {navigate('/myCookbook'); setOpen(false)}}
+              onClick={() => { navigate('/myCookbook'); setOpen(false) }}
             >
               My cookbook
             </Button>
@@ -111,7 +124,7 @@ const App = () => {
               activeClassName="activeLink"
               className="navLink"
               style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
-            onClick={() => {navigate('/myAllergens'); setOpen(false)}}
+              onClick={() => { navigate('/myAllergens'); setOpen(false) }}
             >
               My allergens
             </Button>

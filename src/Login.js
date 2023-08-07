@@ -22,7 +22,7 @@ const Login = () => {
     }
 
     const loginUser = async () => {
-        const result = await fetch('http://localhost:8080/project/login', {
+        const result = await fetch('http://localhost:8080/cookbook/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -45,7 +45,6 @@ const Login = () => {
     return (
         <Container>
             <Typography className="typo" sx={{ marginBottom: '30px', fontSize: '20px', color: '#E01E9B', textAlign: 'center' }}>
-                Dobrodošli na vebsajt elektronskog dnevnika! <br />
                 Molimo Vas, ulogujte se.
             </Typography>
             <Box sx={{ margin: '50px auto 30px auto', alignItems: 'center', width: '40%', textAlign: 'center' }}>

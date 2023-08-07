@@ -11,6 +11,8 @@ import RecipeEdit from './recipe/RecipeEdit';
 import RecipeForm from './recipe/RecipeForm';
 import ShowMyCookbook from './Cookbook/ShowMyCookbook';
 import MyAllergens from './allergens/MyAllergens';
+import { check_login } from './login_logic';
+import Login from './Login';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -24,11 +26,11 @@ const router = createBrowserRouter([{
     // {
     //   path:'error',
     //   element: <Error/>
-    // },
-    // {
-    //   path:'login',
-    //   element:<Login/>
-    // },
+    //},
+    {
+      path:'login',
+      element:<Login/>
+    },
     {
       path: 'recipe',
       element: <ShowRecipes />
@@ -41,11 +43,11 @@ const router = createBrowserRouter([{
       path: 'recipe/edit_recipe/:id',
       element: <RecipeEdit />,
       loader: async ({ params }) => {
-        //const user = check_login(['ROLE_ADMIN']);
+        const user = check_login(['ROLE_ADMIN']);
         return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
           method: 'GET',
           headers: {
-            //Authorization : user.token,
+            Authorization : user.token,
             "Accept": "application/json",
             "Content-Type": "application/json",
           }
@@ -56,11 +58,11 @@ const router = createBrowserRouter([{
       path: 'recipe/recipe_details/:id',
       element: <RecipeDetails />,
       loader: async ({ params }) => {
-        //const user = check_login(['ROLE_ADMIN', 'ROLE_REGULAR_USER', 'ROLE_CHEF']);
+        const user = check_login(['ROLE_ADMIN', 'ROLE_REGULAR_USER', 'ROLE_CHEF']);
         return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
           method: 'GET',
           headers: {
-            //Authorization : user.token,
+            Authorization : user.token,
             "Accept": "application/json",
             "Content-Type": "application/json",
           }

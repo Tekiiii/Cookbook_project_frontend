@@ -37,12 +37,13 @@ const ShowRecipes = () => {
 
   useEffect(() => {
     const getRecipes = async () => {
-      //const user = localStorage.getItem("user");
+      const user = localStorage.getItem("user");
 
-      //const u = JSON.parse(user);
+      const u = JSON.parse(user);
+      if (user) {
       let result = await fetch("http://localhost:8080/project/recipe", {
         headers: {
-          //Authorization : u.token,
+          Authorization : u.token,
           "Accept": "application/json",
           "Content-Type": "application/json"
         },
@@ -53,7 +54,7 @@ const ShowRecipes = () => {
         setData(recipes_r);
         setAllRecipes(recipes_r);
       }
-
+    }
     };
     getRecipes();
   }, []);
