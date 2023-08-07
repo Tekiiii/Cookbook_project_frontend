@@ -19,7 +19,7 @@ const ShowRecipes = () => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
-  //const {user, login, logout} = useContext(UserContext);
+  const { user, login, logout } = useContext(UserContext);
 
   useEffect(() => {
     if (search === '') {
@@ -38,23 +38,22 @@ const ShowRecipes = () => {
   useEffect(() => {
     const getRecipes = async () => {
       const user = localStorage.getItem("user");
-
-      const u = JSON.parse(user);
       if (user) {
-      let result = await fetch("http://localhost:8080/project/recipe", {
-        headers: {
-          Authorization : u.token,
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-      });
-      console.log(result);
-      if (result.ok) {
-        let recipes_r = await result.json();
-        setData(recipes_r);
-        setAllRecipes(recipes_r);
+        const u = JSON.parse(user);
+        let result = await fetch("http://localhost:8080/project/recipe", {
+          headers: {
+            Authorization: u.token,
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
+        });
+        console.log(result);
+        if (result.ok) {
+          let recipes_r = await result.json();
+          setData(recipes_r);
+          setAllRecipes(recipes_r);
+        }
       }
-    }
     };
     getRecipes();
   }, []);
@@ -98,32 +97,32 @@ const ShowRecipes = () => {
           }
         />
       </Box>
-      {/* {user && user.role === "ROLE_CHEF" ? */}
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-45px' }}>
-        <Button variant="outlined" onClick={() => navigate("new_recipe")}
-          sx={{
-            padding: '10px 15px',
-            backgroundColor: "rgba(253, 246, 238, 0.396)",
-            backdropFilter: "blur(4px)",
-            color: "#418258",
-            borderRadius: "15px",
-            border: '0.5px solid #6bb187',
-            "&:hover": {
-              border: '0.5px solid #6bb187',
-              backgroundColor: "rgba(253, 246, 238, 0.7)",
+      {user && user.role === "ROLE_CHEF" || user.role === "ROLE_ADMIN" ?
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-45px' }}>
+          <Button variant="outlined" onClick={() => navigate("new_recipe")}
+            sx={{
+              padding: '10px 15px',
+              backgroundColor: "rgba(253, 246, 238, 0.396)",
               backdropFilter: "blur(4px)",
-            }
-          }}>
-          {" "}Add new recipe{" "}
-        </Button>
-      </Box>
+              color: "#418258",
+              borderRadius: "15px",
+              border: '0.5px solid #6bb187',
+              "&:hover": {
+                border: '0.5px solid #6bb187',
+                backgroundColor: "rgba(253, 246, 238, 0.7)",
+                backdropFilter: "blur(4px)",
+              }
+            }}>
+            {" "}Add new recipe{" "}
+          </Button>
+        </Box> : <></>}
       <Grid sx={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(196px, 1fr))',
         gridGap: '36px',
         margin: '40px auto',
       }}>
-        {data.map((s) => <ShowRecipe recipe={s} key={s.ID} />)}
+        {data.map((s) => <ShowRecipe recipe={s} key={s.ID} onDelete={handleDelete} />)}
       </Grid>
     </Container>
   );

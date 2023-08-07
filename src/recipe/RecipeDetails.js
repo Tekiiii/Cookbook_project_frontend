@@ -67,20 +67,9 @@ const RecipeDetails = () => {
                     <Grid item xs={12}>
                         Amount: {recipe.amount}
                     </Grid>
-                    {/* <Grid item xs={12}>
+                    <Grid item xs={12}>
                         Ingredients: {recipe.ingredients}
-                    </Grid> */}
-                    {/* <Typography sx={{
-                marginTop: '10px',
-                fontSize: '1em',
-                textAlign: 'left',
-                paddingLeft: '4px',
-                color: '#E01E9B'
-            }}>
-                Osnovne informacije: <br/>
-                Lorem ipsum dolor sit amet, consectetur adi piscing elit, 
-                sed magna aliqua sequete.
-            </Typography> */}
+                    </Grid>
                 </Grid>
             </CardContent>
         </Card>

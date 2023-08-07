@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
-//import HomePage from './HomePage';
 import ShowRecipes from './recipe/ShowRecipes';
 import RecipeDetails from './recipe/RecipeDetails';
 import RecipeEdit from './recipe/RecipeEdit';
@@ -13,6 +12,9 @@ import ShowMyCookbook from './Cookbook/ShowMyCookbook';
 import MyAllergens from './allergens/MyAllergens';
 import { check_login } from './login_logic';
 import Login from './Login';
+import Error from './Error';
+import ProtectedRouteAdmin from './ProtectedRouteAdmin';
+import ProtectedRoute from './ProtectedRoute';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -22,32 +24,31 @@ const router = createBrowserRouter([{
       path: '/',
       element: <Navigate to="/recipe" />,
     },
-
-    // {
-    //   path:'error',
-    //   element: <Error/>
-    //},
     {
-      path:'login',
-      element:<Login/>
+      path: 'error',
+      element: <Error />
+    },
+    {
+      path: 'login',
+      element: <Login />
     },
     {
       path: 'recipe',
-      element: <ShowRecipes />
+      element: <ProtectedRoute><ShowRecipes /></ProtectedRoute>
     },
     {
       path: 'recipe/new_recipe',
-      element: <RecipeForm />
+      element: <ProtectedRouteAdmin><RecipeForm /></ProtectedRouteAdmin>
     },
     {
       path: 'recipe/edit_recipe/:id',
-      element: <RecipeEdit />,
+      element: <ProtectedRouteAdmin><RecipeEdit /></ProtectedRouteAdmin>,
       loader: async ({ params }) => {
-        const user = check_login(['ROLE_ADMIN']);
+        const user = check_login(['ROLE_ADMIN', 'ROLE_CHEF']);
         return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
           method: 'GET',
           headers: {
-            Authorization : user.token,
+            Authorization: user.token,
             "Accept": "application/json",
             "Content-Type": "application/json",
           }
@@ -62,7 +63,7 @@ const router = createBrowserRouter([{
         return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
           method: 'GET',
           headers: {
-            Authorization : user.token,
+            Authorization: user.token,
             "Accept": "application/json",
             "Content-Type": "application/json",
           }
@@ -70,8 +71,8 @@ const router = createBrowserRouter([{
       }
     },
     {
-      path:'myCookbook',
-      element:<ShowMyCookbook/>
+      path: 'myCookbook',
+      element: <ProtectedRoute><ShowMyCookbook /></ProtectedRoute>
     },
 
     {

@@ -19,7 +19,6 @@ export const useLogin = () => {
             navigate('/login');
         }
     ]
-
 }
 
 export const get_login = () => {

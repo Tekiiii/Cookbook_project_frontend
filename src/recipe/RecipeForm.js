@@ -19,30 +19,32 @@ const RecipeForm = () => {
             setGlobalError("Please fill all the fields in the form")
             return;
         }
-        //const user = localStorage.getItem("user");
-        //const u = JSON.parse(user);
-        let response = await fetch("http://localhost:8080/project/recipe/newRecipe", {
-            method: "POST",
-            headers: {
-                //Authorization : u.token,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newRecipe),
-        });
-        console.log(response);
-        if (response.ok) {
-            let d = await response.json();
-            console.log(JSON.stringify(d));
-            alert("You have successfully created new recipe!");
-            navigate("/recipe");
-        } else {
-            console.log("Failed creating new recipe");
+        const user = localStorage.getItem("user");
+        if (user) {
+            const u = JSON.parse(user);
+            let response = await fetch("http://localhost:8080/project/recipe/newRecipe", {
+                method: "POST",
+                headers: {
+                    Authorization: u.token,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newRecipe),
+            });
+            console.log(response);
+            if (response.ok) {
+                let d = await response.json();
+                console.log(JSON.stringify(d));
+                alert("You have successfully created new recipe!");
+                navigate("/recipe");
+            } else {
+                console.log("Failed creating new recipe");
+            }
         }
     }
 
     return <Container maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <Typography sx={{ marginBottom: '20px', fontSize: '22px', color: '#E01E9B' }}>
-            Kreiranje novog recepta <br />
+            Create new recipe <br />
             <span style={{ fontSize: '16px' }}>Molimo Vas unesite potrebne podatke u polja za unos.</span>
         </Typography>
         <Box
@@ -131,6 +133,5 @@ const RecipeForm = () => {
         </Box>
     </Container>
 };
-
 
 export default RecipeForm;

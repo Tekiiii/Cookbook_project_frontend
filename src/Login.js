@@ -34,7 +34,7 @@ const Login = () => {
             login(user);
             localStorage.setItem("user", JSON.stringify(user));
             console.log('Ulogovan korisnik ' + JSON.stringify(user))
-            navigate('/pocetna');
+            navigate('/recipe'); // TODO or 
             setErrorLogin(false);
         } else {
             console.log('Problem prilikom logovanja');
