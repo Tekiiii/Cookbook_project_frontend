@@ -34,15 +34,15 @@ const router = createBrowserRouter([{
     },
     {
       path: 'recipe',
-      element: <ProtectedRoute><ShowRecipes /></ProtectedRoute>
+      element: <ShowRecipes />
     },
     {
       path: 'recipe/new_recipe',
-      element: <ProtectedRouteAdmin><RecipeForm /></ProtectedRouteAdmin>
+      element: <RecipeForm />
     },
     {
       path: 'recipe/edit_recipe/:id',
-      element: <ProtectedRouteAdmin><RecipeEdit /></ProtectedRouteAdmin>,
+      element: <RecipeEdit />,
       loader: async ({ params }) => {
         const user = check_login(['ROLE_ADMIN', 'ROLE_CHEF']);
         return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
