@@ -10,7 +10,7 @@ const ProtectedRoute = ({children}) => {
         const user = get_login();
         if(!user || user === undefined){
             setLoggedUser(false);
-            navigate('/error');
+            navigate('/error'); // TODO?
         }
         setLoggedUser(true);
     }
