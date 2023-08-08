@@ -108,6 +108,14 @@ const App = () => {
               <Button
                 activeClassName="activeLink"
                 className="navLink"
+                style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
+                onClick={() => { navigate('/regularuser'); setOpen(false) }}
+              >
+                Regular users
+              </Button>
+              <Button
+                activeClassName="activeLink"
+                className="navLink"
                 style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
                 onClick={() => { navigate('/myAllergens'); setOpen(false) }}
               >
