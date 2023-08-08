@@ -23,12 +23,12 @@ const ShowRecipe = ({ recipe, onDelete }) => {
 
     const deleteRecipe = async () => {
         const user = localStorage.getItem("user");
-        if (user) {
-            const u = JSON.parse(user);
+        // if (user) {
+            // const u = JSON.parse(user);
             let response = await fetch(`http://localhost:8080/project/recipe/${recipe.id}`, {
                 method: "DELETE",
                 headers: {
-                    Authorization: u.token,
+                    // Authorization: u.token,
                     "Accept": "application/json",
                     "Content-Type": "application/json",
                 }
@@ -40,7 +40,7 @@ const ShowRecipe = ({ recipe, onDelete }) => {
             } else {
                 console.log("Error while deleting recipe");
             }
-        }
+        // }
     }
 
     return (
@@ -92,16 +92,13 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                             padding: '15px 20px 10px 20px'
                         }}>
                         <Grid item xs={12}>
-                            Id: {recipe.id}
-                        </Grid>
-                        <Grid item xs={12}>
                             Time: {recipe.time}
                         </Grid>
                     </Grid>
                 </CardContent>
 
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {user && user.role === "ROLE_REGULAR_USER" || user.role === "ROLE_CHEF" || user.role === "ROLE_ADMIN" ?
+                    {/* {user && user.role === "ROLE_REGULAR_USER" || user.role === "ROLE_CHEF" || user.role === "ROLE_ADMIN" ? */}
                         <Tooltip title="Info">
                             <IconButton
                                 sx={{ margin: '0px 8px 15px 8px', color: '#6bb187', fontSize: '1em' }}
@@ -109,8 +106,8 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                                 onClick={() => navigate(`recipe_details/${recipe.ID}`)}>
                                 Informacije&nbsp;&nbsp;<InfoIcon />
                             </IconButton>
-                        </Tooltip> :
-                        <>
+                        </Tooltip> 
+                        {/* :<>
                             <Tooltip title="Info">
                                 <IconButton
                                     sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }}
@@ -119,8 +116,9 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                                     <InfoIcon />
                                 </IconButton>
                             </Tooltip>
-                        </>}
-                    {user && user.role === "ROLE_ADMIN" || user.role === "ROLE_CHEF" ?
+                        </> */}
+                         {/* } */}
+                    {/* {user && user.role === "ROLE_ADMIN" || user.role === "ROLE_CHEF" ? */}
                         <>
                             <Tooltip title="Edit">
                                 <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="edit" onClick={() => navigate(`edit_recipe/${recipe.ID}`)}>
@@ -131,14 +129,16 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                                 <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="delete" onClick={deleteRecipe}>
                                     <DeleteIcon />
                                 </IconButton>
-                            </Tooltip> </> : <></>}
-                    {user && user.role === "ROLE_REGULAR_USER" ?
+                            </Tooltip> </> 
+                            {/* : <></>} */}
+                    {/* {user && user.role === "ROLE_REGULAR_USER" ? */}
                         <>
                             <Tooltip title="Add to my Cookbook">
                                 <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="Add to my Cookbook">
                                     <FavoriteBorderIcon />
                                 </IconButton>
-                            </Tooltip> </> : <></>}
+                            </Tooltip> </> 
+                            {/* : <></>} */}
                 </ Box>
             </Card>
         </Grid>
