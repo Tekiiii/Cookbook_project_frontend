@@ -34,11 +34,11 @@ const ShowMyCookbook = () => {
   }, [search]);
 
   useEffect(() => {
-    const getMyCookbook = async () => {
+    const getMyCookbook = async ({params}) => {
       const user = localStorage.getItem("user");
       if (user) {
         const u = JSON.parse(user);
-        let result = await fetch("http://localhost:8080/project/cookbook", {
+        let result = await fetch(`http://localhost:8080/project/cookbook/${params.id}`, {
           headers: {
             Authorization: u.token,
             "Accept": "application/json",

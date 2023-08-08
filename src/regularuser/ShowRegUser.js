@@ -34,10 +34,10 @@ const ShowRegUser = ({ regularUser, onDelete }) => {
   };
 
   return <Card sx={{ marginBottom: 3, marginRight: 5, marginLeft: 5 }} variant="outlined">
-    <CardHeader sx={{ textAlign: 'center', backgroundColor: 'skyblue' }} title={`${regularUser.name} ${regularUser.lastName}`} >  </CardHeader>
+    <CardHeader sx={{ textAlign: 'center', backgroundColor: 'skyblue' }} title={`${regularUser.name} ${regularUser.lastname}`} >  </CardHeader>
     <CardContent>ID: {regularUser.ID}</CardContent>
-    <CardContent>Allergens: {regularUser.allergens}</CardContent>
-    <CardContent>My Cookbook: {regularUser.myCookBook}</CardContent>
+    <CardContent>Allergens: {regularUser.allergens.id}</CardContent>
+    <CardContent>My Cookbook: {regularUser.myCookBook.id}</CardContent>
     <CardContent>e-Mail: <i>{regularUser.email}</i></CardContent>
     <CardActions sx={{ display: 'flex', justifyContent: 'end' }}>
       <Tooltip title="Info">
