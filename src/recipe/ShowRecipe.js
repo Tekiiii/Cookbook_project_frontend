@@ -104,7 +104,7 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                                 sx={{ margin: '0px 8px 15px 8px', color: '#6bb187', fontSize: '1em' }}
                                 aria-label="info"
                                 onClick={() => navigate(`recipe_details/${recipe.ID}`)}>
-                                Informacije&nbsp;&nbsp;<InfoIcon />
+                                <InfoIcon />
                             </IconButton>
                         </Tooltip> 
                         {/* :<>
