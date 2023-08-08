@@ -4,20 +4,33 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const MyAllergens = () => {
   const [allergens, setAllergens] = useState([]);
+  const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredAllergens, setFilteredAllergens] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/project/allergens')
-      .then((response) => response.json())
-      .then((data) => {
-        setAllergens(data);
-        setFilteredAllergens(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching allergens:', error);
-      });
-  }, []);
+    const getAllergens = async () => {
+      const user = localStorage.getItem("user");
+      if (user) {
+      const u = JSON.parse(user);
+      let result = await fetch('http://localhost:8080/project/allergens/userAllergens', {
+      method: 'GET',
+      headers: {
+        Authorization: u.token,
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+    });
+    console.log(result);
+        if (result.ok) {
+          let allergens_a = await result.json();
+          setData(allergens_a);
+          setAllergens(allergens_a);
+        }
+      }
+  };
+  getAllergens();
+}, []);
 
   useEffect(() => {
     const filtered = allergens.filter((allergen) =>
@@ -64,7 +77,7 @@ const MyAllergens = () => {
         />
       </Box>
       <ul>
-        {filteredAllergens.map((allergen) => (
+        {data.map((allergen) => (
           <li key={allergen.id}>{allergen.name}</li>
         ))}
       </ul>
