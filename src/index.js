@@ -15,6 +15,8 @@ import Login from './Login';
 import Error from './Error';
 import ProtectedRouteAdmin from './ProtectedRouteAdmin';
 import ProtectedRoute from './ProtectedRoute';
+import ShowRegUsers from './regularuser/ShowRegUsers';
+import RegUserForm from './regularuser/RegUserForm';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -72,12 +74,20 @@ const router = createBrowserRouter([{
     },
     {
       path: 'myCookbook',
-      element: <ProtectedRoute><ShowMyCookbook /></ProtectedRoute>
+      element: <ShowMyCookbook />
     },
 
     {
       path: 'myAllergens',
       element: <MyAllergens />
+    },
+    {
+      path: 'regularuser',
+      element: <ShowRegUsers/>
+    },
+    {
+      path: "regularuser/newRegUser",
+      element: <RegUserForm/>,
     },
   ]
 }
