@@ -56,6 +56,30 @@ const ShowMyCookbook = () => {
     getMyCookbook();
   }, []);
 
+  // useEffect(() => {
+  // const getRecipes = async ({params}) => {
+  //   const user = localStorage.getItem("user");
+  //       if (user) {
+  //        const u = JSON.parse(user);
+  //       let result = await fetch(`http://localhost:8080/project/recipe/${params.id}`, {
+  //           method: "GET",
+  //           headers: {
+  //                Authorization: u.token,
+  //               "Accept": "application/json",
+  //               "Content-Type": "application/json",
+  //           }
+  //       });
+  //       if (result.ok) {
+  //         let get_recipes = await result.json();
+  //         setData(get_recipes);
+  //         setMyCookbook(get_recipes);
+  //       }
+  //    }
+  //   };
+  //   getRecipes();
+  // }, []);
+
+
   return (
     <Container>
       <Typography sx={{ marginBottom: "20px", fontSize: "22px", color: "#E01E9B" }}>
