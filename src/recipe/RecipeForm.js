@@ -6,7 +6,11 @@ import { useNavigate } from "react-router-dom";
 const RecipeForm = () => {
     const [newRecipe, setNewRecipe] = useState({
         name: "",
-        time: ""
+        time: "",
+        amount: "",
+        steps: "",
+        picture: "",
+        ingredients: []
     });
 
     const [recipeNameError, setRecipeNameError] = useState("");
@@ -15,7 +19,8 @@ const RecipeForm = () => {
     const navigate = useNavigate();
 
     const save = async () => {
-        if (newRecipe.name === "" || newRecipe.name === "") {
+        if (newRecipe.name === "" || newRecipe.time === "" || newRecipe.steps === ""
+        || newRecipe.amount === ""|| newRecipe.picture === ""|| newRecipe.ingredients === []) {
             setGlobalError("Please fill all the fields in the form")
             return;
         }
@@ -117,8 +122,8 @@ const RecipeForm = () => {
                     const value = e.target.value;
                     if (value === "") {
                         setTimeError("Molim vas unesite vreme za pripremu.");
-                    } else if (value <= 0 || value > 50) {
-                        setTimeError("Vreme za pripremu ne sme biti preko 1000.");
+                    } else if (value <= 0 || value > 400) {
+                        setTimeError("Vreme za pripremu ne sme biti preko 400.");
                     } else if (isNaN(value)) {
                         setTimeError("Ne sme se unositi tekst, molimo vas unesite broj do 1000.");
                     } else setTimeError("");
