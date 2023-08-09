@@ -11,10 +11,18 @@ const ChefForm = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
-
+  const newChef = {
+    name: name,
+    lastname: lastname,
+    username:username,
+    password: password,
+    confirmed_password: confirmed_password,
+    email: email,
+  };
 
   const addChef = async () => {
 
+    
     const user = localStorage.getItem("user");
     if (user) {
        const u = JSON.parse(user);
@@ -37,14 +45,7 @@ const ChefForm = () => {
     }
    }
 
-   const newChef = {
-    name: name,
-    lastname: lastname,
-    username:username,
-    password: password,
-    confirmed_password: confirmed_password,
-    email: email,
-  };
+   
  };
   return (
     <Container>
