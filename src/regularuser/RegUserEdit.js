@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom/dist";
 
-const RegUSerEdit = () => {
+const RegUserEdit = () => {
 
     const regularUser = useLoaderData();
     const [updatedRegularUser, setUpdatedRegularUser] = useState(regularUser);
@@ -177,4 +177,4 @@ const RegUSerEdit = () => {
         );
     };
 
-    export default RegUSerEdit;
+    export default RegUserEdit;

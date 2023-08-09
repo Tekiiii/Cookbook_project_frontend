@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardContent, ListItem, CardActions, Tooltip, IconButton } from '@mui/material'
+import { Card, CardHeader, CardContent, ListItem, CardActions, Tooltip, IconButton, CardMedia } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -34,6 +34,10 @@ const ShowRegUser = ({ regularUser, onDelete }) => {
   };
 
   return <Card sx={{ marginBottom: 3, marginRight: 5, marginLeft: 5 }} variant="outlined">
+    <CardMedia
+                    sx={{ height: 140 }}
+                    image="https://cdn.cancer.ca/-/media/images/stock-images/recipes-main-banner-generic.png?rev=4a884cb602214bb3bc1ce51b84ef8a5f&cx=0.5&cy=0.5&cw=1200&ch=630&hash=B3798D04B58C0F94406103D32F09B1C5"
+                />
     <CardHeader sx={{ textAlign: 'center', backgroundColor: 'skyblue' }} title={`${regularUser.name} ${regularUser.lastname}`} >  </CardHeader>
     <CardContent>ID: {regularUser.id}</CardContent>
     <CardContent>Allergens: {regularUser.allergens.id}</CardContent>

@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useSearchParams } from "react-router-dom";
 import { Box, Button, Container, TextField } from "@mui/material";
 
 const RegUserForm = () => {
   const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [myCookBook, setMyCookBook] = useState("");
-  const [allergens, setAllergens] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmed_password, setConfirmed_password] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
@@ -38,9 +39,10 @@ const RegUserForm = () => {
 
    const newRegularUser = {
     name: name,
-    lastName: lastName,
-    myCookBook: myCookBook,
-    allergens: allergens,
+    lastname: lastname,
+    username:username,
+    password: password,
+    confirmed_password: confirmed_password,
     email: email,
   };
  };
@@ -77,7 +79,7 @@ const RegUserForm = () => {
           label="Regular user lastname"
           placeholder="Regular user lastname"
           onChange={(e) => {
-            setLastName(e.target.value);
+            setLastname(e.target.value);
           }}
         />
         <TextField
@@ -85,10 +87,10 @@ const RegUserForm = () => {
           fullWidth
           required
           id="outlined-required"
-          label="Allergens"
-          placeholder="Allergens"
+          label="Username"
+          placeholder="Username"
           onChange={(e) => {
-            setAllergens(e.target.value);
+            setUsername(e.target.value);
           }}
         />
         <TextField
@@ -96,10 +98,21 @@ const RegUserForm = () => {
           fullWidth
           required
           id="outlined-required"
-          label="MyCookbook"
-          placeholder="MyCookbook"
+          label="Password"
+          placeholder="Password"
           onChange={(e) => {
-            setMyCookBook(e.target.value);
+            setPassword(e.target.value);
+          }}
+        />
+        <TextField
+          sx={{ width: "100%" }}
+          fullWidth
+          required
+          id="outlined-required"
+          label="Confirmed password"
+          placeholder="Confirmed password"
+          onChange={(e) => {
+            setConfirmed_password(e.target.value);
           }}
         />
         <TextField
