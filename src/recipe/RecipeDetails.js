@@ -12,18 +12,18 @@ const RecipeDetails = () => {
     useEffect(() => {
         const getIngredients = async () => {
 
-          let result = await fetch(`http://localhost:8080/project/ingredients/recipe/${recipe.id}`, {
-          method: 'GET',
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          },
-        });
-        console.log(result);
+            let result = await fetch(`http://localhost:8080/project/ingredients/recipe/${recipe.id}`, {
+                method: 'GET',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+            });
+            console.log(result);
             if (result.ok) {
-              let ingredients = await result.json();
-              setData(ingredients);
-              setIngredients(ingredients);
+                let ingredients = await result.json();
+                setData(ingredients);
+                setIngredients(ingredients);
             }
         };
         getIngredients();
@@ -91,16 +91,16 @@ const RecipeDetails = () => {
                         Amount: {recipe.amount}
                     </Grid>
                     <Grid item xs={12}>
-                        {data.length > 0  ? (
+                        {data.length > 0 ? (
                             <>
                                 Ingredients:
                                 <ul>
                                     {data.map((ingredients) => (
-                                    <li key={ingredients.id}>{ingredients.id}</li>
+                                        <li key={ingredients.id}>{ingredients.id}</li>
                                     ))}
                                 </ul>
-                            </> ) 
-                            : 
+                            </>)
+                            :
                             ("No ingredients found")}
                     </Grid>
                 </Grid>

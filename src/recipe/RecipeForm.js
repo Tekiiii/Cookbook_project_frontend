@@ -4,26 +4,44 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const RecipeForm = () => {
-    const [newRecipe, setNewRecipe] = useState({
-        name: "",
-        time: "",
-        amount: "",
-        steps: "",
-        picture: "",
-        ingredients: []
-    });
+    // const [newRecipe, setNewRecipe] = useState({
+    //     name: "",
+    //     time: "",
+    //     amount: "",
+    //     steps: "",
+    //     picture: "",
+    //     ingredients: []
+    // });
 
-    const [recipeNameError, setRecipeNameError] = useState("");
+    const [name, setName] = useState("");
+    const [time, setTime] = useState("");
+    const [amount, setAmount] = useState("");
+    const [steps, setSteps] = useState("");
+    const [ingredients, setIngredients] = useState([]);
+
+    const [nameError, setNameError] = useState("");
     const [timeError, setTimeError] = useState("");
+    const [stepsError, setStepsError] = useState("");
+    const [amountError, setAmountError] = useState("");
+    const [ingredientsError, setIngredientsError] = useState("");
     const [globalError, setGlobalError] = useState(false);
+    const errorMessageTemplate = "Please enter ";
     const navigate = useNavigate();
 
     const save = async () => {
-        if (newRecipe.name === "" || newRecipe.time === "" || newRecipe.steps === ""
-        || newRecipe.amount === ""|| newRecipe.picture === ""|| newRecipe.ingredients === []) {
-            setGlobalError("Please fill all the fields in the form")
+        if (name === "" || time === "" || steps === ""
+            || amount === "") {
+            setGlobalError("Please fill all the fields in the form.")
             return;
         }
+
+        const new_recipe = {
+            name: name,
+            time: time,
+            amount: amount,
+            steps: steps
+        }
+
         const user = localStorage.getItem("user");
         if (user) {
             const u = JSON.parse(user);
@@ -33,7 +51,7 @@ const RecipeForm = () => {
                     Authorization: u.token,
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(newRecipe),
+                body: JSON.stringify(new_recipe),
             });
             console.log(response);
             if (response.ok) {
@@ -50,7 +68,7 @@ const RecipeForm = () => {
     return <Container maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <Typography sx={{ marginBottom: '20px', fontSize: '22px', color: '#E01E9B' }}>
             Create new recipe <br />
-            <span style={{ fontSize: '16px' }}>Molimo Vas unesite potrebne podatke u polja za unos.</span>
+            <span style={{ fontSize: '16px' }}>Please fill all fields below.</span>
         </Typography>
         <Box
             component="form"
@@ -69,69 +87,122 @@ const RecipeForm = () => {
                 sx={{ width: "100%" }}
                 fullWidth
                 required
-                id="outlined-required"
+                id="outlined-isbn-required"
                 label="Recipe name"
-                value={newRecipe.name}
                 placeholder="Recipe name"
-                helperText={recipeNameError}
-                error={recipeNameError === "" ? false : true}
+                helperText={nameError}
+                error={nameError}
                 onBlur={(e) => {
                     const value = e.target.value;
-                    if (value === "") {
-                        setRecipeNameError("Molim vas unesite naziv recepta.");
+                    setName(value);
+                    if (!value) {
+                        setNameError(errorMessageTemplate + "recipe name.");
                     }
                 }}
                 onChange={(e) => {
-                    setNewRecipe(
-                        produce((draft) => {
-                            draft.name = e.target.value;
-                        })
-                    );
-                    if (e.target.value === "") {
-                        setRecipeNameError("Molim vas unesite naziv recepta.");
-                    } else if (!/^[a-zA-Z\s]+$/.test(e.target.value)) {
-                        setRecipeNameError("Ne sme se uneti broj, molim vas unesite naziv recepta.");
-                    } else if (e.target.value.length < 2) {
-                        setRecipeNameError("Naziv recepta mora imati više od 2 karaktera.");
-                    } else if (e.target.value.length > 20) {
-                        setRecipeNameError("Naziv recepta mora imati manje od 20 karaktera.");
-                    } else setRecipeNameError("");
+                    const value = e.target.value;
+                    setName(value);
+                    if (!value) {
+                        setNameError(errorMessageTemplate + "recipe name.");
+                    } else if (!/^\D+$/.test(value)) {
+                        setNameError("Cannot enter a number.");
+                    } else if (value.length < 2) {
+                        setNameError("Recipe name must have more than 2 characters.");
+                    } else if (value.length > 30) {
+                        setNameError("Recipe name must have less than 30 characters.");
+                    } else {
+                        setNameError("");
+                    }
                 }}
             />
             <TextField
                 sx={{ width: "100px" }}
                 fullWidth
                 required
-                id="outlined-noc-input"
-                label="Time to prepare"
-                value={newRecipe.time}
+                id="outlined-isbn-input"
+                label="Time to prepare in minutes"
                 error={timeError}
                 helperText={timeError}
                 onBlur={(e) => {
                     const value = e.target.value;
-                    if (value === "") {
-                        setTimeError("Molim vas unesite vreme za pripremu u minutima.");
+                    setTime(value);
+                    if (!value) {
+                        setTimeError(errorMessageTemplate + "time.");
                     }
                 }}
                 onChange={(e) => {
-                    setNewRecipe(
-                        produce((draft) => {
-                            draft.time = e.target.value;
-                        })
-                    );
                     const value = e.target.value;
-                    if (value === "") {
-                        setTimeError("Molim vas unesite vreme za pripremu.");
-                    } else if (value <= 0 || value > 400) {
-                        setTimeError("Vreme za pripremu ne sme biti preko 400.");
+                    setTime(value);
+                    if (!value) {
+                        setTimeError("Please enter a required time for recipe preparation.");
+                    } else if (value <= 0 || value > 1000) {
+                        setTimeError("Time cannot be over 1000.");
                     } else if (isNaN(value)) {
-                        setTimeError("Ne sme se unositi tekst, molimo vas unesite broj do 1000.");
+                        setTimeError("Cannot enter text, please enter number less than 1000.");
                     } else setTimeError("");
+                }}
+            />
+
+            <TextField
+                sx={{ width: "100%" }}
+                fullWidth
+                required
+                id="outlined-isbn-required"
+                label="Steps"
+                placeholder="Steps"
+                helperText={stepsError}
+                error={stepsError}
+                onBlur={(e) => {
+                    const value = e.target.value;
+                    setSteps(value);
+                    if (!value) {
+                        setStepsError(errorMessageTemplate + "steps.");
+                    }
+                }}
+                onChange={(e) => {
+                    const value = e.target.value;
+                    setSteps(value);
+                    if (!value) {
+                        setStepsError(errorMessageTemplate + "name.");
+                    } else if (value.length < 2) {
+                        setStepsError("Steps must have more than 2 characters.");
+                    } else if (value.length > 3000000) {
+                        setStepsError("Steps must have less than 3000000 characters.");
+                    } else {
+                        setStepsError("");
+                    }
+                }}
+            />
+            <TextField
+                sx={{ width: "100px" }}
+                fullWidth
+                required
+                id="outlined-isbn-input"
+                label="Amount"
+                error={amountError}
+                helperText={amountError}
+                onBlur={(e) => {
+                    const value = e.target.value;
+                    setAmount(value);
+                    if (!value) {
+                        setTimeError(errorMessageTemplate + "amount.");
+                    }
+                }}
+                onChange={(e) => {
+                    const value = e.target.value;
+                    setAmount(value);
+                    if (!value) {
+                        setAmountError(errorMessageTemplate + "amount.");
+                    } else if (value <= 0 || value > 40000) {
+                        setAmountError("Time cannot be over 1000000.");
+                    } else if (isNaN(value)) {
+                        setAmountError("Cannot enter text, please enter number less than 1000000.");
+                    } else setAmountError("");
                 }}
             />
             <Button sx={{ color: '#E01E9B' }}
                 onClick={save}
-                disabled={timeError || recipeNameError}>
+                disabled={timeError || nameError || stepsError || amountError}>
                 {" "}Save{" "}
             </Button>
             <FormHelperText error={globalError}>{globalError}</FormHelperText>
