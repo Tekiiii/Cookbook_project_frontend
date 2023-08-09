@@ -28,13 +28,14 @@ const IngredientDetails = () => {
                     Proteins: {ingredient.proteins}</Typography>
                     <Typography sx={{display: "flex", flexDirection: "column", justifyContent: "space-around", padding: "7px"}}>
                     Saturated fats: {ingredient.saturatedFats}</Typography>
-                    <CardContent> {ingredient.allergen ? (
+                    <Typography sx={{display: "flex", flexDirection: "column", justifyContent: "space-around", padding: "7px"}}> 
+                    {ingredient.allergen ? (
                     <>
                     Allergen: {ingredient.allergen.icon} {ingredient.allergen.name}
                      </>
                     ) : (
                     'No allergen')}
-                    </CardContent>
+                    </Typography>
                 </CardContent>
             </Card>
             </Box>
