@@ -61,11 +61,11 @@ const router = createBrowserRouter([{
       path: 'recipe/recipe_details/:id',
       element: <RecipeDetails />,
       loader: async ({ params }) => {
-        const user = check_login(['ROLE_ADMIN', 'ROLE_REGULAR_USER', 'ROLE_CHEF']);
+        console.log(params.id);
+        console.log(params);
         return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
           method: 'GET',
           headers: {
-            Authorization: user.token,
             "Accept": "application/json",
             "Content-Type": "application/json",
           }

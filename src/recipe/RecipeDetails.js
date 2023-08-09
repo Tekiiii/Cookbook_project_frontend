@@ -1,10 +1,32 @@
 import { Card, Grid, CardContent, CardHeader, Container, Typography, Button, Box } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
 
 const RecipeDetails = () => {
     const recipe = useLoaderData();
     const navigate = useNavigate();
+    const [ingredients, setIngredients] = useState([]);
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const getIngredients = async () => {
+          let result = await fetch(`http://localhost:8080/project/ingredients/id/${ingredients.id}`, {
+          method: 'GET',
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
+        });
+        console.log(result);
+            if (result.ok) {
+              let ingredients = await result.json();
+              setData(ingredients);
+              setIngredients(ingredients);
+            }
+        };
+        getIngredients();
+    }, []);
 
     return <Container sx={{ width: '65%' }}>
         <Typography
@@ -68,7 +90,12 @@ const RecipeDetails = () => {
                         Amount: {recipe.amount}
                     </Grid>
                     <Grid item xs={12}>
-                        Ingredients: {recipe.ingredients}
+                        Ingredients:
+                        <ul>
+                            {data.map((ingredients) => (
+                            <li key={ingredients.id}>{ingredients}</li>
+                            ))}
+                        </ul>
                     </Grid>
                 </Grid>
             </CardContent>
