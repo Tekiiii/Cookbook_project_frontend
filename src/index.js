@@ -17,6 +17,8 @@ import ProtectedRouteAdmin from './ProtectedRouteAdmin';
 import ProtectedRoute from './ProtectedRoute';
 import ShowRegUsers from './regularuser/ShowRegUsers';
 import RegUserForm from './regularuser/RegUserForm';
+import RegUserDetails from './regularuser/RegUserDetails';
+import RegUserEdit from './regularuser/RegUserEdit';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -86,8 +88,40 @@ const router = createBrowserRouter([{
       element: <ShowRegUsers/>
     },
     {
-      path: "regularuser/newRegUser",
-      element: <RegUserForm/>,
+      path: "regularuser/newRegularUser",
+      element: <RegUserForm />,
+    },
+    {
+      path: 'regularuser/edit_regularuser/:id',
+      element: <RegUserEdit />,
+      loader: async ({ params }) => {
+        const user = check_login('ROLE_ADMIN');
+        return fetch(`http://localhost:8080/project/regularuser/${params.id}`, {
+          method: 'GET',
+          headers: {
+            Authorization: user.token,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        })
+      },
+    },
+    {
+      path: "regularuser/regularuser_details/:id",
+      element: <RegUserDetails />,
+      loader: async ({ params }) => {
+        const user = check_login('ROLE_ADMIN');
+        // console.log(params.id);
+        // console.log(params);
+        return fetch(`http://localhost:8080/project/regularuser/${params.id}`, {
+          method: 'GET',
+          headers: {
+            Authorization: user.token,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        });
+      }
     },
   ]
 }

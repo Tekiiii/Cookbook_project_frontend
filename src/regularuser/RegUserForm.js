@@ -23,7 +23,7 @@ const RegUserForm = () => {
         "Content-Type": "application/json",
        "Authorization": u.token,
       },
-      body: JSON.stringify(newRegUser),
+      body: JSON.stringify(newRegularUser),
     });
 
     console.log(response);
@@ -36,11 +36,11 @@ const RegUserForm = () => {
     }
    }
 
-   const newRegUser = {
+   const newRegularUser = {
     name: name,
     lastName: lastName,
     myCookBook: myCookBook,
-   // allergens: allergens,
+    allergens: allergens,
     email: email,
   };
  };
