@@ -120,7 +120,7 @@ return (
             const value = e.target.value.trim();
             setUnit(value);
             if (value==="") {
-                setUnitError("Please insert a fond");
+                setUnitError("Please insert an unit");
             }
           }}
           
