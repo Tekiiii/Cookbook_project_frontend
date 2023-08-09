@@ -5,6 +5,7 @@ import { ChevronLeft, Menu } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShowRecipes from './recipe/ShowRecipes';
 import MyAllergens from './allergens/MyAllergens';
+import AllAllergens from './allergens/AllAllergens';
 import { useLogin } from './login_logic';
 
 export const UserContext = createContext(null);
@@ -105,6 +106,16 @@ const App = () => {
               >
                 My cookbook
               </Button>
+              {user && user.role === "ROLE_ADMIN" && (
+                <>
+                  <Button
+                    activeClassName="activeLink"
+                    className="navLink"
+                    style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
+                    onClick={() => { navigate('/allAllergens'); setOpen(false) }}
+                  >
+                    All Allergens
+                  </Button>
               <Button
                 activeClassName="activeLink"
                 className="navLink"

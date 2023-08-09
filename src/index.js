@@ -10,6 +10,7 @@ import RecipeEdit from './recipe/RecipeEdit';
 import RecipeForm from './recipe/RecipeForm';
 import ShowMyCookbook from './Cookbook/ShowMyCookbook';
 import MyAllergens from './allergens/MyAllergens';
+import AllAllergens from './allergens/AllAllergens';
 import { check_login } from './login_logic';
 import Login from './Login';
 import Error from './Error';
@@ -87,6 +88,10 @@ const router = createBrowserRouter([{
     {
       path: 'myAllergens',
       element: <MyAllergens />
+    },
+    {
+      path: 'allAllergens',
+      element: <AllAllergens />,
     },
     {
       path: 'ingredients',
