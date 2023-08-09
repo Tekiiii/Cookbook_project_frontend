@@ -51,7 +51,7 @@ const ShowRegUsers = () => {
 
   useEffect(() => {
     if (search !== "") {
-      let ru1 = all.filter((ru) => ru.name.toLowerCase().includes(search.toLowerCase()));
+      let ru1 = all.filter((ru) => ru.name.toLowerCase().includes(search.toLowerCase()) || ru.lastname.toLowerCase().includes(search.toLowerCase()));
       setRegularUser(ru1);
     } else {
       setRegularUser(all);
@@ -109,8 +109,8 @@ const ShowRegUsers = () => {
           />
         </FormControl>
 
-        {/* nastavnici/new_nastavnik */}
-        <Button variant="outlined" onClick={() => navigation("newRegUser")}>
+        {/* regulauser/newRegularUser */}
+        <Button variant="outlined" onClick={() => navigation("newRegularUser")}>
           {" "}
           Add new regular user{" "}
         </Button>

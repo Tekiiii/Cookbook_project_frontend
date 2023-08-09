@@ -35,7 +35,7 @@ const ShowRegUser = ({ regularUser, onDelete }) => {
 
   return <Card sx={{ marginBottom: 3, marginRight: 5, marginLeft: 5 }} variant="outlined">
     <CardHeader sx={{ textAlign: 'center', backgroundColor: 'skyblue' }} title={`${regularUser.name} ${regularUser.lastname}`} >  </CardHeader>
-    <CardContent>ID: {regularUser.ID}</CardContent>
+    <CardContent>ID: {regularUser.id}</CardContent>
     <CardContent>Allergens: {regularUser.allergens.id}</CardContent>
     <CardContent>My Cookbook: {regularUser.myCookBook.id}</CardContent>
     <CardContent>e-Mail: <i>{regularUser.email}</i></CardContent>
@@ -43,14 +43,14 @@ const ShowRegUser = ({ regularUser, onDelete }) => {
       <Tooltip title="Info">
         <IconButton
           aria-label="info"
-          onClick={() => navigate(`regularuser/${regularUser.id}`)}
+          onClick={() => navigate(`regularuser_details/${regularUser.id}`)}
         >
           <InfoIcon />
         </IconButton>
       </Tooltip>
 
       <Tooltip title="Edit" >
-        <IconButton  aria-label="edit" onClick={() => navigate(`updateRegularUser/${regularUser.id}`)}>
+        <IconButton  aria-label="edit" onClick={() => navigate(`edit_regularuser/${regularUser.id}`)}>
           <EditIcon />
         </IconButton>
       </Tooltip>
