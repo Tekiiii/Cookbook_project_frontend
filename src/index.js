@@ -26,6 +26,7 @@ import ShowChefs from './chef/ShowChefs';
 import ChefDetails from './chef/ChefDetails';
 import ChefForm from './chef/ChefForm';
 import IngredientDetails from './ingredients/IngredientDetails';
+import IngredientForm from './ingredients/IngredientForm';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -113,7 +114,10 @@ const router = createBrowserRouter([{
         });
       }
     },
-
+    {
+      path: 'ingredients/newIngredient',
+      element:<IngredientForm/>
+    },
     {
       path: 'regularuser',
       element: <ShowRegUsers />

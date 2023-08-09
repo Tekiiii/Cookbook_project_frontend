@@ -26,6 +26,7 @@ const ShowIngredient = ({ingredient, onDelete}) => {
         let d = await response.json();
         console.log('Ingredient deleted!');
         onDelete(ingredient.id);
+      
       } 
     }
     };
