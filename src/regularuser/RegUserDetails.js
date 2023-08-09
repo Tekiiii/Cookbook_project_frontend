@@ -2,14 +2,12 @@ import { Box, Button, CardMedia, Container, Grid, Typography } from "@mui/materi
 import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
-
-
-
 const RegUserDetails = () => {
     const regularUser = useLoaderData(); //preuzmemo podatke koje nam je loader dobavio
     const navigate = useNavigate();
     const [allergens, setAllergens] = useState([]);
     const [data, setData] = useState([]);
+
     useEffect(() => {
         const getAllergens = async () => {
             const user = localStorage.getItem("user");
