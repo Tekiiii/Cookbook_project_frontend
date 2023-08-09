@@ -91,12 +91,17 @@ const RecipeDetails = () => {
                         Amount: {recipe.amount}
                     </Grid>
                     <Grid item xs={12}>
-                        Ingredients:
-                        <ul>
-                            {data.map((ingredients) => (
-                            <li key={ingredients.id}>{ingredients.id}</li>
-                            ))}
-                        </ul>
+                        {data.length > 0  ? (
+                            <>
+                                Ingredients:
+                                <ul>
+                                    {data.map((ingredients) => (
+                                    <li key={ingredients.id}>{ingredients.id}</li>
+                                    ))}
+                                </ul>
+                            </> ) 
+                            : 
+                            ("No ingredients found")}
                     </Grid>
                 </Grid>
             </CardContent>
