@@ -11,7 +11,8 @@ const RecipeDetails = () => {
 
     useEffect(() => {
         const getIngredients = async () => {
-          let result = await fetch(`http://localhost:8080/project/ingredients/id/${ingredients.id}`, {
+
+          let result = await fetch(`http://localhost:8080/project/ingredients/recipe/${recipe.id}`, {
           method: 'GET',
           headers: {
             "Accept": "application/json",
@@ -93,7 +94,7 @@ const RecipeDetails = () => {
                         Ingredients:
                         <ul>
                             {data.map((ingredients) => (
-                            <li key={ingredients.id}>{ingredients}</li>
+                            <li key={ingredients.id}>{ingredients.id}</li>
                             ))}
                         </ul>
                     </Grid>
