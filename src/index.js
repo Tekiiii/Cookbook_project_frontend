@@ -17,6 +17,7 @@ import ProtectedRouteAdmin from './ProtectedRouteAdmin';
 import ProtectedRoute from './ProtectedRoute';
 import ShowRegUsers from './regularuser/ShowRegUsers';
 import RegUserForm from './regularuser/RegUserForm';
+import ShowIngredients from './ingredients/ShowIngredients';
 import RegUserDetails from './regularuser/RegUserDetails';
 import RegUserEdit from './regularuser/RegUserEdit';
 
@@ -82,6 +83,10 @@ const router = createBrowserRouter([{
     {
       path: 'myAllergens',
       element: <MyAllergens />
+    },
+    {
+      path: 'ingredients',
+      element: <ShowIngredients/>
     },
     {
       path: 'regularuser',
