@@ -20,6 +20,10 @@ import RegUserForm from './regularuser/RegUserForm';
 import ShowIngredients from './ingredients/ShowIngredients';
 import RegUserDetails from './regularuser/RegUserDetails';
 import RegUserEdit from './regularuser/RegUserEdit';
+import ChefEdit from './chef/ChefEdit';
+import ShowChefs from './chef/ShowChefs';
+import ChefDetails from './chef/ChefDetails';
+import ChefForm from './chef/ChefForm';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -90,7 +94,7 @@ const router = createBrowserRouter([{
     },
     {
       path: 'regularuser',
-      element: <ShowRegUsers/>
+      element: <ShowRegUsers />
     },
     {
       path: "regularuser/newRegularUser",
@@ -119,6 +123,46 @@ const router = createBrowserRouter([{
         // console.log(params.id);
         // console.log(params);
         return fetch(`http://localhost:8080/project/regularuser/${params.id}`, {
+          method: 'GET',
+          headers: {
+            Authorization: user.token,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        });
+      }
+    },
+    {
+      path: 'chef',
+      element: <ShowChefs />
+    },
+    {
+      path: "chef/newChef",
+      element: <ChefForm />,
+    },
+    {
+      path: 'chef/edit_chef/:id',
+      element: <ChefEdit />,
+      loader: async ({ params }) => {
+        const user = check_login('ROLE_ADMIN');
+        return fetch(`http://localhost:8080/project/chef/${params.id}`, {
+          method: 'GET',
+          headers: {
+            Authorization: user.token,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        })
+      },
+    },
+    {
+      path: "chef/chef_details/:id",
+      element: <ChefDetails />,
+      loader: async ({ params }) => {
+        const user = check_login('ROLE_ADMIN');
+        // console.log(params.id);
+        // console.log(params);
+        return fetch(`http://localhost:8080/project/chef/${params.id}`, {
           method: 'GET',
           headers: {
             Authorization: user.token,

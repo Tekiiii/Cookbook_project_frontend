@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, CardMedia, Container, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
@@ -29,7 +29,6 @@ const RegUserDetails = () => {
     //     getAllergens();
     // }, []);
     return <Container>
-
         <Box sx={{ display: "flex", justifyContent: "center", width: '100%' }}>
             <Typography sx={{ fontSize: '30px', fontWeight: 'bold' }}>{`${regularUser.name} ${regularUser.lastname}`}</Typography>
         </Box>
@@ -39,16 +38,16 @@ const RegUserDetails = () => {
           justifyContente - horizontalno poravnanje */}
 
             <Grid item xs={6}>
-                My Cookbook:
+                <h4>My Cookbook:</h4>
             </Grid>
             <Grid item xs={6}>
-                {regularUser.myCookBook.id}
+               <h2> {regularUser.myCookBook.id}</h2>
             </Grid>
             <Grid item xs={6} >
-                e-Mail:
+            <h4> e-Mail:</h4>
             </Grid>
             <Grid item xs={6}>
-                {regularUser.email}
+            <h2> <i> {regularUser.email}</i></h2>
             </Grid>
             {/* <Grid item xs={12}>
                 Allergens:
