@@ -107,17 +107,6 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                             <InfoIcon />
                         </IconButton>
                     </Tooltip>
-                    {/* :<>
-                            <Tooltip title="Info">
-                                <IconButton
-                                    sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }}
-                                    aria-label="info"
-                                    onClick={() => navigate(`recipe_details/${recipe.id}`)}>
-                                    <InfoIcon />
-                                </IconButton>
-                            </Tooltip>
-                        </> */}
-                    {/* } */}
                     {user && user.role === "ROLE_ADMIN" || user.role === "ROLE_CHEF" ?
                         <>
                             <Tooltip title="Edit">
@@ -131,14 +120,14 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                                 </IconButton>
                             </Tooltip> </>
                         : <></>}
-                    {/* {user && user.role === "ROLE_REGULAR_USER" ? */}
-                    <>
-                        <Tooltip title="Add to my Cookbook">
-                            <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="Add to my Cookbook">
-                                <FavoriteBorderIcon />
-                            </IconButton>
-                        </Tooltip> </>
-                    {/* : <></>} */}
+                    {user && user.role === "ROLE_REGULAR_USER" ?
+                        <>
+                            <Tooltip title="Add to my Cookbook">
+                                <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="Add to my Cookbook">
+                                    <FavoriteBorderIcon />
+                                </IconButton>
+                            </Tooltip> </>
+                        : <></>}
                 </ Box>
             </Card>
         </Grid>
