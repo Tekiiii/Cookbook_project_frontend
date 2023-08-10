@@ -6,11 +6,11 @@ import InfoIcon from "@mui/icons-material/Info";
 import { UserContext } from '../App';
 import { useContext } from 'react';
 
-const ShowIngredient = ({ingredient}) => {
+const ShowIngredient = ({ingredient, onDelete}) => {
     const { user, login, logout } = useContext(UserContext);
     const navigate = useNavigate();
   
-    const deleteIngredient = async ({ingredient, onDelete}) => {
+    const deleteIngredient = async () => {
       const user = localStorage.getItem("user");
       if (user) {
       const u = JSON.parse(user);
@@ -24,8 +24,9 @@ const ShowIngredient = ({ingredient}) => {
       });
       if (response.ok) {
         let d = await response.json();
-        console.log('Regular user deleted!');
+        console.log('Ingredient deleted!');
         onDelete(ingredient.id);
+      
       } 
     }
     };
@@ -49,7 +50,26 @@ const ShowIngredient = ({ingredient}) => {
       'No allergen')}
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'end' }}>
-       
+      <Tooltip title="Info">
+        <IconButton
+          aria-label="info"
+          onClick={() => navigate(`ingredient_details/${ingredient.id}`)}
+        >
+          <InfoIcon />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title="Edit" >
+        <IconButton  aria-label="edit" onClick={() => navigate(`edit_ingredient/${ingredient.id}`)}>
+          <EditIcon />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title="Delete">
+        <IconButton aria-label="delete" onClick={deleteIngredient}>
+          <DeleteIcon />
+        </IconButton>
+      </Tooltip>
         
         
       </CardActions>

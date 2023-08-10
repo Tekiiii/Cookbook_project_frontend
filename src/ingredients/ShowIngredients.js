@@ -39,6 +39,8 @@ const ShowIngredients = () => {
       }
     }, [search, all]);
   
+    
+    // brise ali ne osvezi stranicu
     const handleDelete = (ingredientsiD) => {
       const deleteIng = ingredients.filter((i) => i.id!= ingredientsiD);
       setIngredients(deleteIng);

@@ -26,6 +26,8 @@ import ChefEdit from './chef/ChefEdit';
 import ShowChefs from './chef/ShowChefs';
 import ChefDetails from './chef/ChefDetails';
 import ChefForm from './chef/ChefForm';
+import IngredientDetails from './ingredients/IngredientDetails';
+import IngredientForm from './ingredients/IngredientForm';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -112,6 +114,25 @@ const router = createBrowserRouter([{
     {
       path: 'ingredients',
       element: <ShowIngredients />
+    },
+    {
+      path: 'ingredients/ingredient_details/:id',
+      element: <IngredientDetails/>,
+      loader: async ({ params }) => {
+        console.log(params.id);
+        console.log(params);
+        return fetch(`http://localhost:8080/project/ingredients/id/${params.id}`, {
+          method: 'GET',
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        });
+      }
+    },
+    {
+      path: 'ingredients/newIngredient',
+      element:<IngredientForm/>
     },
     {
       path: 'regularuser',
