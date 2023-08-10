@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
 const RegUserDetails = () => {
-    const regularUser = useLoaderData(); //preuzmemo podatke koje nam je loader dobavio
+    const regularuser = useLoaderData(); //preuzmemo podatke koje nam je loader dobavio
     const navigate = useNavigate();
     const [allergens, setAllergens] = useState([]);
     const [data, setData] = useState([]);
@@ -34,7 +34,7 @@ const RegUserDetails = () => {
 
     return <Container>
         <Box sx={{ display: "flex", justifyContent: "center", width: '100%' }}>
-            <Typography sx={{ fontSize: '30px', fontWeight: 'bold' }}>{`${regularUser.name} ${regularUser.lastname}`}</Typography>
+            <Typography sx={{ fontSize: '30px', fontWeight: 'bold' }}>{`${regularuser.name} ${regularuser.lastname}`}</Typography>
         </Box>
 
         <Grid container spacing={3} direction='row' alignItems='center' justifyContent='center' sx={{ padding: '5px', maxWidth: '20%' }}>
@@ -45,23 +45,23 @@ const RegUserDetails = () => {
                 <h4>My Cookbook:</h4>
             </Grid>
             <Grid item xs={6}>
-                <h2> {regularUser.myCookBook.id}</h2>
+                <h2> {regularuser.myCookBook.id}</h2>
             </Grid>
             <Grid item xs={6} >
                 <h4> e-Mail:</h4>
             </Grid>
             <Grid item xs={6}>
-                <h2> <i> {regularUser.email}</i></h2>
+                <h2> <i> {regularuser.email}</i></h2>
             </Grid>
             <Grid item xs={12}>
                 {data.length > 0 ? (
                     <>
                     Allergens: 
-                    <ul>
+                    {/* <ul>
                         {data.map((allergens) => (
                             <li key={allergens.id}>{allergens.name}</li>
                         ))}
-                    </ul>
+                    </ul> */}
                      </>
                     ) : (
                     'No allergens')}

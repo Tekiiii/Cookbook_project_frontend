@@ -169,7 +169,7 @@ const router = createBrowserRouter([{
       element: <ShowRegUsers />
     },
     {
-      path: "regularuser/newRegularUser",
+      path: "regularuser/newregularuser",
       element: <RegUserForm />,
     },
     {

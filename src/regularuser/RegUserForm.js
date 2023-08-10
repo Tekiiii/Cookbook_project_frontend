@@ -13,7 +13,7 @@ const RegUserForm = () => {
   const [globalError, setGlobalError] = useState(false);
 
 
-  const newRegularUser = {
+  const newregularuser = {
     name: name,
     lastname: lastname,
     username:username,
@@ -22,7 +22,7 @@ const RegUserForm = () => {
     email: email,
   };
 
-  const addRegularUser = async () => {
+  const addregularuser = async () => {
 
     const user = localStorage.getItem("user");
     if (user) {
@@ -33,7 +33,7 @@ const RegUserForm = () => {
         "Content-Type": "application/json",
        "Authorization": u.token,
       },
-      body: JSON.stringify(newRegularUser),
+      body: JSON.stringify(newregularuser),
     });
 
     console.log(response);
@@ -131,7 +131,7 @@ const RegUserForm = () => {
         />
 
         <Button
-          onClick={addRegularUser}
+          onClick={addregularuser}
         >
           {" "}
           Save{" "}
