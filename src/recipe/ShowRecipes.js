@@ -37,24 +37,24 @@ const ShowRecipes = () => {
 
   useEffect(() => {
     const getRecipes = async () => {
-   //  const user = localStorage.getItem("user");
-   //   if (user) {
-   //    const u = JSON.parse(user);
-        let result = await fetch("http://localhost:8080/project/recipe", {
-          method: 'GET',
-          headers: {
-    //        Authorization: u.token,
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          },
-        });
-        console.log(result);
-        if (result.ok) {
-          let recipes_r = await result.json();
-          setData(recipes_r);
-          setAllRecipes(recipes_r);
-        }
-   //   }
+      //  const user = localStorage.getItem("user");
+      //   if (user) {
+      //    const u = JSON.parse(user);
+      let result = await fetch("http://localhost:8080/project/recipe", {
+        method: 'GET',
+        headers: {
+          //        Authorization: u.token,
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+      });
+      console.log(result);
+      if (result.ok) {
+        let recipes_r = await result.json();
+        setData(recipes_r);
+        setAllRecipes(recipes_r);
+      }
+      //   }
     };
     getRecipes();
   }, []);
@@ -98,7 +98,7 @@ const ShowRecipes = () => {
           }
         />
       </Box>
-  {/*   {user && user.role === "ROLE_CHEF" || user.role === "ROLE_ADMIN" ? */}
+      {user && user.role === "ROLE_CHEF" || user.role === "ROLE_ADMIN" ?
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-45px' }}>
           <Button variant="outlined" onClick={() => navigate("new_recipe")}
             sx={{
@@ -116,8 +116,8 @@ const ShowRecipes = () => {
             }}>
             {" "}Add new recipe{" "}
           </Button>
-        </Box> 
-        {/* : <></>}  */}
+        </Box>
+        : <></>}
       <Grid sx={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(196px, 1fr))',
