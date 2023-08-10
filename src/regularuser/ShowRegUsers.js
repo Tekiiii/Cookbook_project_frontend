@@ -14,16 +14,16 @@ import ShowRegUser from "./ShowRegUser";
 
 
 const ShowRegUsers = () => {
-  const [regularUser, setRegularUser] = useState([]);
+  const [regularuser, setregularuser] = useState([]);
   const [all, setAll] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const navigation = useNavigate();
-  const[showRegUsers, setShowRegUsers] = useState(regularUser);
+  const[showRegUsers, setShowRegUsers] = useState(regularuser);
 
   useEffect(() => {
-    const getRegularUsers = async () => {
+    const getregularusers = async () => {
       const user = localStorage.getItem("user");
      if (user) {
        const u = JSON.parse(user);
@@ -38,7 +38,7 @@ const ShowRegUsers = () => {
         console.log(result);
         if (result.ok) {
           let ru = await result.json();
-          setRegularUser(ru);
+          setregularuser(ru);
           setAll(ru);
           setIsLoading(false);
         } else {
@@ -47,21 +47,21 @@ const ShowRegUsers = () => {
       };
 
     };
-    getRegularUsers();
+    getregularusers();
   }, []);
 
   useEffect(() => {
     if (search !== "") {
       let ru1 = all.filter((ru) => ru.name.toLowerCase().includes(search.toLowerCase()) || ru.lastname.toLowerCase().includes(search.toLowerCase()));
-      setRegularUser(ru1);
+      setregularuser(ru1);
     } else {
-      setRegularUser(all);
+      setregularuser(all);
     }
   }, [search, all]);
 
-  const handleDelete = (regularUserId) => {
+  const handleDelete = (regularuserId) => {
     // osvezimo prikaz
-    const fru = showRegUsers.filter((ru) => ru.id!= regularUserId);
+    const fru = showRegUsers.filter((ru) => ru.id!= regularuserId);
     setShowRegUsers(fru);
   };
 
@@ -110,17 +110,17 @@ const ShowRegUsers = () => {
           />
         </FormControl>
 
-        {/* regulauser/newRegularUser */}
-        <Button variant="outlined" onClick={() => navigation("newRegularUser")}>
+        {/* regulauser/newregularuser */}
+        <Button variant="outlined" onClick={() => navigation("newregularuser")}>
           {" "}
           Add new regular user{" "}
         </Button>
       </Box>
 
       <Stack direction="column">
-        {regularUser.map((ru) =>
+        {regularuser.map((ru) =>
           <ShowRegUser
-            regularUser={ru}
+            regularuser={ru}
             onDelete={handleDelete} key={ru.id} />
         )}
       </Stack>

@@ -5,18 +5,18 @@ import { useParams } from "react-router-dom/dist";
 
 const RegUserEdit = () => {
 
-    const regularUser = useLoaderData();
-    const [updatedRegularUser, setUpdatedRegularUser] = useState(regularUser);
+    const regularuser = useLoaderData();
+    const [updatedregularuser, setUpdatedregularuser] = useState(regularuser);
     const navigate = useNavigate();
 
     // funkcija za izmenu 
 
     const { id } = useParams();
-    const [name, setName] = useState(regularUser.name);
-    const [lastName, setLastName] = useState(regularUser.lastname);
-    const [myCookbook, setMyCookbook] = useState(regularUser.myCookBook);
-    const [allergens, setAllergens] = useState(regularUser.allergens);
-    const [email, setEmail] = useState(regularUser.email);
+    const [name, setName] = useState(regularuser.name);
+    const [lastName, setLastName] = useState(regularuser.lastname);
+    const [myCookbook, setMyCookbook] = useState(regularuser.myCookBook);
+    const [allergens, setAllergens] = useState(regularuser.allergens);
+    const [email, setEmail] = useState(regularuser.email);
 
     const [globalError, setGlobalError] = useState(false);
     const errorMessageTemplate = "Please enter the ";
@@ -45,7 +45,7 @@ const RegUserEdit = () => {
             if (user) {
                 const u = JSON.parse(user);
                 let response = await fetch(
-                    `http://localhost:8080/project/regularuser/edit_regularuser/${updatedRegularUser.id}`,
+                    `http://localhost:8080/project/regularuser/edit_regularuser/${updatedregularuser.id}`,
                     {
                         method: "PUT",
                         headers: {
