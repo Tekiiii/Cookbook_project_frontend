@@ -30,7 +30,10 @@ import ChefForm from './chef/ChefForm';
 import IngredientDetails from './ingredients/IngredientDetails';
 import IngredientForm from './ingredients/IngredientForm';
 import IngredientEdit from './ingredients/IngredientEdit';
-import ChefRecipes from './chef/ChefRecipes';
+import ChefRecipeEdit from './chefRecipes/ChefRecipeEdit';
+import ChefRecipes from './chefRecipes/ChefRecipes';
+import ChefRecipeDetails from './chefRecipes/ChefRecipeDetails';
+import ChefRecipeForm from './chefRecipes/ChefRecipeForm';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -54,20 +57,7 @@ const router = createBrowserRouter([{
     },
     {
       path: 'recipe/new_recipe',
-      element: <RecipeForm />,
-      // loader: async () => {
-      //   const user = check_login(['ROLE_ADMIN', 'ROLE_CHEF']);
-      //   const ingredients_r = await fetch(`http://localhost:8080/project/ingredients`, {
-      //     method: 'GET',
-      //     headers: {
-      //       Authorization: user.token,
-      //       "Accept": "application/json",
-      //       "Content-Type": "application/json",
-      //     }
-      //   });
-      //   const ingredients = await ingredients_r.json();
-      //   return ingredients;
-      // }
+      element: <RecipeForm />
     },
     {
       path: 'recipe/edit_recipe/:id',
@@ -128,7 +118,7 @@ const router = createBrowserRouter([{
       },
     },
     {
-      path: 'add-allergen',
+      path: 'add_allergen',
       element: <AllergenForm />,
     },
     {
@@ -158,23 +148,18 @@ const router = createBrowserRouter([{
       path: 'ingredients/edit_ingredient/:id',
       element: <IngredientEdit />,
       loader: async ({ params }) => {
-        const user = localStorage.getItem("user");
-        if (user) {
-          const u = JSON.parse(user);
-          let result = await fetch(`http://localhost:8080/project/ingredients/id/${params.id}`, {
-            method: 'GET',
-            headers: {
-              "Authorization": u.token,
-              "Accept": "application/json",
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify()
-          });
-          if (result.ok) {
-            let r = await result.json();
-            return r;
-          }
-        }
+        let result = await fetch(`http://localhost:8080/project/ingredients/id/${params.id}`, {
+          method: 'GET',
+          headers: {
+            "Accept": "application/json",
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify()
+        });
+        if (result.ok) {
+          let r = await result.json();
+          return r;
+        } 
       }
     },
     {
@@ -245,22 +230,42 @@ const router = createBrowserRouter([{
       }
     },
     {
-      path: 'chefRecipes/new_recipe',
-      element: <RecipeForm />
-    },
-    {
-      path: 'edit_recipe',
-      element: <RecipeEdit />
-    },
-    {
       path: 'chefRecipes',
-      element: <ChefRecipes />,
-      // children: [
-      //   {
-      //     path: 'edit_recipe',
-      //     element: <RecipeEdit />
-      //   },
-      // ]
+      element: <ChefRecipes />
+    },
+    ,
+    {
+      path: 'chefRecipes/edit_recipe/:id',
+      element: <ChefRecipeEdit />,
+      loader: async ({ params }) => {
+        const user = check_login(['ROLE_ADMIN', 'ROLE_CHEF']);
+        return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
+          method: 'GET',
+          headers: {
+            Authorization: user.token,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        })
+      },
+    },
+    ,
+    {
+      path: 'chefRecipes/recipe_details/:id',
+      element: <ChefRecipeDetails />,
+      loader: async ({ params }) => {
+        return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
+          method: 'GET',
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        });
+      }
+    },
+    {
+      path: 'chefRecipes/new_recipe',
+      element: <ChefRecipeForm />
     },
   ]
 }

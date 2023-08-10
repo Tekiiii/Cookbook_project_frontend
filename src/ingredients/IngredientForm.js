@@ -15,6 +15,8 @@ const IgredientForm = () =>{
     const [sugars, setSugars] = useState("");
     const [proteins, setProteins] = useState("");
     const [saturatedFats, setSaturatedFats] = useState("");
+//dodati alergene
+
     const [globalError, setGlobalError] = useState(false);
     const errorMessageTemplate = "Please enter ";
     const [nameError, setNameError] = useState("");
