@@ -43,11 +43,11 @@ const ShowRecipe = ({ recipe, onDelete }) => {
         }
     }
 
-    const updateRecipe = async () => {
+    const updateRecipe = async (cookbook_id, recipe_id) => {
         const user = localStorage.getItem("user");
         if (user) {
             const u = JSON.parse(user);
-            let response = await fetch(`http://localhost:8080/project/cookbook/cookbook_id/${user.myCookbook.id}/recipe_id/${recipe.id}`, {
+            let response = await fetch(`http://localhost:8080/project/cookbook/cookbook_id/${cookbook_id}/recipe_id/${recipe_id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: u.token,

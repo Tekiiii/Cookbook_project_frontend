@@ -33,65 +33,65 @@ const RecipeEdit = () => {
     const [globalError, setGlobalError] = useState(false);
     const errorMessageTemplate = "Please enter ";
 
-    const changeRecipe = (e) => {
-        setUpdatedRecipe(
-            produce((draft) => {
-                draft[e.target.name] = e.target.value;
-            })
-        );
+    // const changeRecipe = (e) => {
+    //     setUpdatedRecipe(
+    //         produce((draft) => {
+    //             draft[e.target.name] = e.target.value;
+    //         })
+    //     );
 
-        setRecipeError((prevErrors) => ({
-            ...prevErrors,
-            [e.target.name]: "",
-        }));
+    //     setRecipeError((prevErrors) => ({
+    //         ...prevErrors,
+    //         [e.target.name]: "",
+    //     }));
 
-        if (e.target.name === "name") {
-            const value = e.target.value.trim();
-            if (value === "") {
-                setRecipeError((prevErrors) => ({
-                    ...prevErrors,
-                    [e.target.name]: "Please enter recipe name.",
-                }));
-            } else if (!/^[a-zA-Z\s]+$/.test(value)) {
-                setRecipeError((prevErrors) => ({
-                    ...prevErrors,
-                    [e.target.name]:
-                        "Cannot enter a number, please enter recipe name.",
-                }));
-            } else if (value.length < 2 || value.length > 20) {
-                setRecipeError((prevErrors) => ({
-                    ...prevErrors,
-                    [e.target.name]: "Recipe name must be between 2 and 20 characters long.",
-                }));
-            } else {
-                setRecipeError((prevErrors) => ({
-                    ...prevErrors,
-                    [e.target.name]: "",
-                }));
-            }
-        }
+    //     if (e.target.name === "name") {
+    //         const value = e.target.value.trim();
+    //         if (value === "") {
+    //             setRecipeError((prevErrors) => ({
+    //                 ...prevErrors,
+    //                 [e.target.name]: "Please enter recipe name.",
+    //             }));
+    //         } else if (!/^[a-zA-Z\s]+$/.test(value)) {
+    //             setRecipeError((prevErrors) => ({
+    //                 ...prevErrors,
+    //                 [e.target.name]:
+    //                     "Cannot enter a number, please enter recipe name.",
+    //             }));
+    //         } else if (value.length < 2 || value.length > 20) {
+    //             setRecipeError((prevErrors) => ({
+    //                 ...prevErrors,
+    //                 [e.target.name]: "Recipe name must be between 2 and 20 characters long.",
+    //             }));
+    //         } else {
+    //             setRecipeError((prevErrors) => ({
+    //                 ...prevErrors,
+    //                 [e.target.name]: "",
+    //             }));
+    //         }
+    //     }
 
-        if (e.target.name === "time") {
-            const value = e.target.value;
-            if (value === "") {
-                setRecipeError((prevErrors) => ({
-                    ...prevErrors,
-                    [e.target.name]: "Please enter a required time for recipe preparation.",
-                }));
-            } else if (value <= 0 || value > 1000) {
-                setRecipeError((prevErrors) => ({
-                    ...prevErrors,
-                    [e.target.name]: "Time cannot be over 1000 minutes.",
-                }));
-            } else if (isNaN(value)) {
-                setRecipeError((prevErrors) => ({
-                    ...prevErrors,
-                    [e.target.name]:
-                        "Cannot enter text, please enter number less than 1000.",
-                }));
-            }
-        }
-    };
+    //     if (e.target.name === "time") {
+    //         const value = e.target.value;
+    //         if (value === "") {
+    //             setRecipeError((prevErrors) => ({
+    //                 ...prevErrors,
+    //                 [e.target.name]: "Please enter a required time for recipe preparation.",
+    //             }));
+    //         } else if (value <= 0 || value > 1000) {
+    //             setRecipeError((prevErrors) => ({
+    //                 ...prevErrors,
+    //                 [e.target.name]: "Time cannot be over 1000 minutes.",
+    //             }));
+    //         } else if (isNaN(value)) {
+    //             setRecipeError((prevErrors) => ({
+    //                 ...prevErrors,
+    //                 [e.target.name]:
+    //                     "Cannot enter text, please enter number less than 1000.",
+    //             }));
+    //         }
+    //     }
+    // };
 
     const update = async () => {
         if (name === "" || time === "" || steps === ""

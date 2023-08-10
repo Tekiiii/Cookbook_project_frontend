@@ -54,7 +54,20 @@ const router = createBrowserRouter([{
     },
     {
       path: 'recipe/new_recipe',
-      element: <RecipeForm />
+      element: <RecipeForm />,
+      // loader: async () => {
+      //   const user = check_login(['ROLE_ADMIN', 'ROLE_CHEF']);
+      //   const ingredients_r = await fetch(`http://localhost:8080/project/ingredients`, {
+      //     method: 'GET',
+      //     headers: {
+      //       Authorization: user.token,
+      //       "Accept": "application/json",
+      //       "Content-Type": "application/json",
+      //     }
+      //   });
+      //   const ingredients = await ingredients_r.json();
+      //   return ingredients;
+      // }
     },
     {
       path: 'recipe/edit_recipe/:id',

@@ -1,7 +1,7 @@
-import { Box, Button, Container, FormHelperText, TextField, Typography } from "@mui/material";
+import { Autocomplete, Box, Button, Chip, Container, FormControl, FormHelperText, Stack, TextField, Typography } from "@mui/material";
 import { produce } from "immer";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 const RecipeForm = () => {
     // const [newRecipe, setNewRecipe] = useState({
@@ -17,20 +17,23 @@ const RecipeForm = () => {
     const [time, setTime] = useState("");
     const [amount, setAmount] = useState("");
     const [steps, setSteps] = useState("");
-    const [ingredients, setIngredients] = useState([]);
+    const loader_data = useLoaderData();
+    const [ingredients, setIngredients] = useState(loader_data);
+    const [selectedIngredients, setSelectedIngredients] = useState([]);
+    const [selectedIngredient, setSelectedIngredient] = useState(null); 
 
     const [nameError, setNameError] = useState("");
     const [timeError, setTimeError] = useState("");
     const [stepsError, setStepsError] = useState("");
     const [amountError, setAmountError] = useState("");
-    const [ingredientsError, setIngredientsError] = useState("");
+    const [ingredientError, setIngredientError] = useState("");
     const [globalError, setGlobalError] = useState(false);
     const errorMessageTemplate = "Please enter ";
     const navigate = useNavigate();
 
     const save = async () => {
         if (name === "" || time === "" || steps === ""
-            || amount === "") {
+            || amount === "" === selectedIngredients.size == 0) {
             setGlobalError("Please fill all the fields in the form.")
             return;
         }
@@ -39,7 +42,8 @@ const RecipeForm = () => {
             name: name,
             time: time,
             amount: amount,
-            steps: steps
+            steps: steps,
+            ingredients: selectedIngredients
         }
 
         const user = localStorage.getItem("user");
@@ -200,9 +204,55 @@ const RecipeForm = () => {
                     } else setAmountError("");
                 }}
             />
+
+
+            <FormControl sx={{ width: "100%" }} error={ingredientError}>
+                <Stack direction="column">
+                    {/* kontrola koja prikazuje sastojke koje smo odabrali */}
+                    <Typography> Ingredients </Typography>
+                    {/* Ingredient 1     Ingredient 2 ... */}
+                    <Stack direction='row'>
+                        {
+                            selectedIngredients.map((a, ii) => <Chip
+                                label={a}
+                                onDelete={() => {
+                                    const a = selectedIngredients.filter((v, i) => i != ii);
+                                    setSelectedIngredients(a);
+                                }
+                                }
+                            />)
+                        }
+                    </Stack>
+                    {/* kontrola iz koje biram sastojke */}
+                    <Stack direction='row' sx={{ width: '100%' }}>
+                        <Autocomplete options={
+                            ingredients.filter(a => selectedIngredients.every(vv => vv != a.name))}
+                            getOptionLabel={a => a.name}
+                            renderInput={(params) => <TextField {...params} />}
+                            sx={{ width: '90%' }}
+                            value={selectedIngredient}
+                            onChange={(e, v) => { setSelectedIngredient(v) }} />
+                        <Button disabled={selectedIngredient === null}
+                            onClick={() => {
+                                // selektovani sastojak ubacujemo u listu
+                                console.log(selectedIngredient);
+                                if (selectedIngredient != null) {
+                                    let a = selectedIngredients;
+                                    a.push(selectedIngredient.name);
+                                    setSelectedIngredients(a);
+                                    setSelectedIngredient(null);
+                                }
+                            }}
+                        > Add ingredients </Button>
+                    </Stack>
+
+                </Stack>
+            </FormControl>
+
+
             <Button sx={{ color: '#E01E9B' }}
                 onClick={save}
-                disabled={timeError || nameError || stepsError || amountError}>
+                disabled={timeError || nameError || stepsError || amountError || ingredientError}>
                 {" "}Save{" "}
             </Button>
             <FormHelperText error={globalError}>{globalError}</FormHelperText>
