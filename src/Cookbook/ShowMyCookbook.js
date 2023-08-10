@@ -39,7 +39,7 @@ const ShowMyCookbook = () => {
       const user = localStorage.getItem("user");
       if (user) {
         const u = JSON.parse(user);
-        let result = await fetch(`http://localhost:8080/project/cookbook/${u.myCookBook.id}}`, {
+        let result = await fetch(`http://localhost:8080/project/cookbook/user`, {
           headers: {
             Authorization: u.token,
             "Accept": "application/json",
