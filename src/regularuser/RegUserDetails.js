@@ -54,12 +54,17 @@ const RegUserDetails = () => {
                 <h2> <i> {regularUser.email}</i></h2>
             </Grid>
             <Grid item xs={12}>
-                Allergens:
-                <ul>
-                    {data.map((allergens) => (
-                        <li key={allergens.id}>{allergens.id}</li>
-                    ))}
-                </ul>
+                {data.length > 0 ? (
+                    <>
+                    Allergens: 
+                    <ul>
+                        {data.map((allergens) => (
+                            <li key={allergens.id}>{allergens.name}</li>
+                        ))}
+                    </ul>
+                     </>
+                    ) : (
+                    'No allergens')}
             </Grid>
         </Grid>
         <Box sx={{ marginTop: '10px', alignItems: 'center', textAlign: 'center' }}>
