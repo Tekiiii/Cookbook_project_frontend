@@ -29,6 +29,7 @@ import ChefDetails from './chef/ChefDetails';
 import ChefForm from './chef/ChefForm';
 import IngredientDetails from './ingredients/IngredientDetails';
 import IngredientForm from './ingredients/IngredientForm';
+import IngredientEdit from './ingredients/IngredientEdit';
 import ChefRecipes from './chef/ChefRecipes';
 
 const router = createBrowserRouter([{
@@ -139,6 +140,29 @@ const router = createBrowserRouter([{
     {
       path: 'ingredients/newIngredient',
       element: <IngredientForm />
+    },
+    {
+      path: 'ingredients/edit_ingredient/:id',
+      element:<IngredientEdit/>,
+      loader: async({params}) =>{
+        const user = localStorage.getItem("user");
+        if (user) {
+          const u = JSON.parse(user);
+          let result= await fetch (`http://localhost:8080/project/ingredients/id/${params.id}`,{
+            method: 'GET',
+            headers: {
+              "Authorization": u.token,
+              "Accept": "application/json",
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify()
+          });
+          if (result.ok) {
+            let r = await result.json();
+            return r;
+          }
+        }
+      }
     },
     {
       path: 'regularuser',
