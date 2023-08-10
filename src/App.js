@@ -97,8 +97,17 @@ const App = () => {
             </Box>
             <Divider sx={{ backgroundColor: '#E01E9B' }} />
             <Stack direction="column" alignItems="flex-start" marginTop={2} marginLeft={5}>
-              {user && user.role !== "ROLE_ADMIN" ? (
+              <Button
+                activeClassName="activeLink"
+                className="navLink"
+                style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
+                onClick={() => { navigate('/recipe'); setOpen(false) }}
+              >
+                All recipes
+              </Button>
+              {user && user.role === "ROLE_REGULAR_USER" ? (
                 <>
+
                   <Button
                     activeClassName="activeLink"
                     className="navLink"
@@ -116,7 +125,7 @@ const App = () => {
                     My allergens
                   </Button>
                 </>
-              ) : null}
+              ) : <></>}
               {user && user.role === "ROLE_ADMIN" ? (
                 <>
                   <Button
@@ -127,42 +136,42 @@ const App = () => {
                   >
                     All allergens
                   </Button>
-                </>
-              ) : null}
-              <Button
-                activeClassName="activeLink"
-                className="navLink"
-                style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
-                onClick={() => { navigate('/chef'); setOpen(false) }}
-              >
-                Chefs
-              </Button>
-              <Button
-                activeClassName="activeLink"
-                className="navLink"
-                style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
-                onClick={() => { navigate('/regularuser'); setOpen(false) }}
-              >
-                Regular users
-              </Button>
-              <Button
-                activeClassName="activeLink"
-                className="navLink"
-                style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
-                onClick={() => { navigate('/ingredients'); setOpen(false) }}
-              >
-                My cookbook
-              </Button>
 
-              {/* {user && user.role !== "ROLE_CHEF" ?  */}
-              <Button
-                activeClassName="activeLink"
-                className="navLink"
-                style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
-              //onClick={() => {navigate('/chefRecipes'); setOpen(false)}}
-              >
-                Chef recipes
-              </Button>
+
+                  <Button
+                    activeClassName="activeLink"
+                    className="navLink"
+                    style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
+                    onClick={() => { navigate('/chef'); setOpen(false) }}
+                  >
+                    Chefs
+                  </Button>
+                  <Button
+                    activeClassName="activeLink"
+                    className="navLink"
+                    style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
+                    onClick={() => { navigate('/regularuser'); setOpen(false) }}
+                  >
+                    Regular users
+                  </Button>
+                  <Button
+                    activeClassName="activeLink"
+                    className="navLink"
+                    style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
+                    onClick={() => { navigate('/ingredients'); setOpen(false) }}
+                  >
+                    Ingredients
+                  </Button>
+                </>) : <></>}
+              {user && user.role === "ROLE_CHEF" ? (<>
+                <Button
+                  activeClassName="activeLink"
+                  className="navLink"
+                  style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
+                onClick={() => {navigate('/chefRecipes'); setOpen(false)}}
+                >
+                  Chef recipes
+                </Button></>) : <></>}
             </Stack>
           </Drawer>
         </Stack>
