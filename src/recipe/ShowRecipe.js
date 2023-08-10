@@ -36,9 +36,30 @@ const ShowRecipe = ({ recipe, onDelete }) => {
             if (response.ok) {
                 let d = await response.json();
                 console.log("Successfully deleted recipe");
-                onDelete(recipe.ID);
+                onDelete(recipe.id);
             } else {
                 console.log("Error while deleting recipe");
+            }
+        }
+    }
+
+    const updateRecipe = async () => {
+        const user = localStorage.getItem("user");
+        if (user) {
+            const u = JSON.parse(user);
+            let response = await fetch(`http://localhost:8080/project/cookbook/cookbook_id/${user.myCookbook.id}/recipe_id/${recipe.id}`, {
+                method: "PUT",
+                headers: {
+                    Authorization: u.token,
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }
+            });
+            if (response.ok) {
+                let d = await response.json();
+                console.log("Successfully updated recipe");
+            } else {
+                console.log("Error while updating recipe");
             }
         }
     }
@@ -108,26 +129,26 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                         </IconButton>
                     </Tooltip>
                     {/* {user && user.role === "ROLE_ADMIN" || user.role === "ROLE_CHEF" ? */}
-                        <>
-                            <Tooltip title="Edit">
-                                <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="edit" onClick={() => navigate(`edit_recipe/${recipe.ID}`)}>
-                                    <EditIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Delete">
-                                <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="delete" onClick={deleteRecipe}>
-                                    <DeleteIcon />
-                                </IconButton>
-                            </Tooltip> </>
-                        {/* : <></>} */}
+                    <>
+                        <Tooltip title="Edit">
+                            <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="edit" onClick={() => navigate(`edit_recipe/${recipe.id}`)}>
+                                <EditIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete">
+                            <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="delete" onClick={deleteRecipe}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </Tooltip> </>
+                    {/* : <></>}  */}
                     {/* {user && user.role === "ROLE_REGULAR_USER" ? */}
-                        <>
-                            <Tooltip title="Add to my Cookbook">
-                                <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="Add to my Cookbook">
-                                    <FavoriteBorderIcon />
-                                </IconButton>
-                            </Tooltip> </>
-                        {/* : <></>} */}
+                    <>
+                        <Tooltip title="Add to my Cookbook">
+                            <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="Add to my Cookbook" onClick={updateRecipe}>
+                                <FavoriteBorderIcon />
+                            </IconButton>
+                        </Tooltip> </>
+                    {/* : <></>} */}
                 </ Box>
             </Card>
         </Grid>

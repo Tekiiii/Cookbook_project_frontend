@@ -112,7 +112,7 @@ const RecipeEdit = () => {
         if (user) {
             const u = JSON.parse(user);
             let response = await fetch(
-                `http://localhost:8080/project/recipe/updateRecipe/${updatedRecipe.ID}`,
+                `http://localhost:8080/project/recipe/updateRecipe/${updatedRecipe.id}`,
                 {
                     method: "PUT",
                     headers: {

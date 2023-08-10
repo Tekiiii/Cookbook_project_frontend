@@ -58,7 +58,7 @@ const RecipeForm = () => {
                 let d = await response.json();
                 console.log(JSON.stringify(d));
                 alert("You have successfully created new recipe!");
-                navigate("/recipe");
+                navigate("/chefRecipes");
             } else {
                 console.log("Failed creating new recipe");
             }

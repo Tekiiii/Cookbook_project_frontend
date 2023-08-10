@@ -143,12 +143,12 @@ const router = createBrowserRouter([{
     },
     {
       path: 'ingredients/edit_ingredient/:id',
-      element:<IngredientEdit/>,
-      loader: async({params}) =>{
+      element: <IngredientEdit />,
+      loader: async ({ params }) => {
         const user = localStorage.getItem("user");
         if (user) {
           const u = JSON.parse(user);
-          let result= await fetch (`http://localhost:8080/project/ingredients/id/${params.id}`,{
+          let result = await fetch(`http://localhost:8080/project/ingredients/id/${params.id}`, {
             method: 'GET',
             headers: {
               "Authorization": u.token,
@@ -232,8 +232,22 @@ const router = createBrowserRouter([{
       }
     },
     {
+      path: 'chefRecipes/new_recipe',
+      element: <RecipeForm />
+    },
+    {
+      path: 'edit_recipe',
+      element: <RecipeEdit />
+    },
+    {
       path: 'chefRecipes',
-      element: <ChefRecipes />
+      element: <ChefRecipes />,
+      // children: [
+      //   {
+      //     path: 'edit_recipe',
+      //     element: <RecipeEdit />
+      //   },
+      // ]
     },
   ]
 }
