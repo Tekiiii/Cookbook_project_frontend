@@ -107,7 +107,7 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                             <InfoIcon />
                         </IconButton>
                     </Tooltip>
-                    {user && user.role === "ROLE_ADMIN" || user.role === "ROLE_CHEF" ?
+                    {/* {user && user.role === "ROLE_ADMIN" || user.role === "ROLE_CHEF" ? */}
                         <>
                             <Tooltip title="Edit">
                                 <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="edit" onClick={() => navigate(`edit_recipe/${recipe.ID}`)}>
@@ -119,15 +119,15 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                                     <DeleteIcon />
                                 </IconButton>
                             </Tooltip> </>
-                        : <></>}
-                    {user && user.role === "ROLE_REGULAR_USER" ?
+                        {/* : <></>} */}
+                    {/* {user && user.role === "ROLE_REGULAR_USER" ? */}
                         <>
                             <Tooltip title="Add to my Cookbook">
                                 <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="Add to my Cookbook">
                                     <FavoriteBorderIcon />
                                 </IconButton>
                             </Tooltip> </>
-                        : <></>}
+                        {/* : <></>} */}
                 </ Box>
             </Card>
         </Grid>
