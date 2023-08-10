@@ -97,14 +97,38 @@ const App = () => {
             </Box>
             <Divider sx={{ backgroundColor: '#E01E9B' }} />
             <Stack direction="column" alignItems="flex-start" marginTop={2} marginLeft={5}>
-            <Button
-                activeClassName="activeLink"
-                className="navLink"
-                style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
-                onClick={() => { navigate('/recipe'); setOpen(false) }}
-              >
-                All Recipes
-              </Button>
+              {user && user.role !== "ROLE_ADMIN" ? (
+                <>
+                  <Button
+                    activeClassName="activeLink"
+                    className="navLink"
+                    style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
+                    onClick={() => { navigate('/myCookbook'); setOpen(false) }}
+                  >
+                    My cookbook
+                  </Button>
+                  <Button
+                    activeClassName="activeLink"
+                    className="navLink"
+                    style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
+                    onClick={() => { navigate('/myAllergens'); setOpen(false) }}
+                  >
+                    My allergens
+                  </Button>
+                </>
+              ) : null}
+              {user && user.role === "ROLE_ADMIN" ? (
+                <>
+                  <Button
+                    activeClassName="activeLink"
+                    className="navLink"
+                    style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
+                    onClick={() => { navigate('/allAllergens'); setOpen(false) }}
+                  >
+                    All allergens
+                  </Button>
+                </>
+              ) : null}
               <Button
                 activeClassName="activeLink"
                 className="navLink"
@@ -126,22 +150,6 @@ const App = () => {
                 className="navLink"
                 style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
                 onClick={() => { navigate('/ingredients'); setOpen(false) }}
-              >
-                Ingredients
-              </Button>
-              <Button
-                activeClassName="activeLink"
-                className="navLink"
-                style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
-                onClick={() => { navigate('/myAllergens'); setOpen(false) }}
-              >
-                My allergens
-              </Button>
-              <Button
-                activeClassName="activeLink"
-                className="navLink"
-                style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
-                onClick={() => { navigate('/myCookbook'); setOpen(false) }}
               >
                 My cookbook
               </Button>

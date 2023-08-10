@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowIngredient from "./ShowIngredient";
 
-
 const ShowIngredients = () => {
     const [ingredients, setIngredients] = useState([]);
     const [all, setAll] = useState([]);

@@ -10,7 +10,8 @@ import RecipeEdit from './recipe/RecipeEdit';
 import RecipeForm from './recipe/RecipeForm';
 import ShowMyCookbook from './Cookbook/ShowMyCookbook';
 import MyAllergens from './allergens/MyAllergens';
-import AllAllergens from './allergens/AllAllergens';
+import ShowAllergens from './allergens/ShowAllergens';
+import AllergenEdit from './allergens/AllergenEdit';
 import { check_login } from './login_logic';
 import Login from './Login';
 import Error from './Error';
@@ -93,11 +94,26 @@ const router = createBrowserRouter([{
     },
     {
       path: 'allAllergens',
-      element: <AllAllergens />,
+      element: <ShowAllergens />
+    },
+    {
+      path: 'allergen_edit/:id',
+      element: <AllergenEdit />,
+      loader: async ({ params }) => {
+        const user = check_login(['ROLE_ADMIN', 'ROLE_CHEF']);
+        return fetch(`http://localhost:8080/project/allergens/${params.id}`, {
+          method: 'GET',
+          headers: {
+            Authorization: user.token,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        })
+      },
     },
     {
       path: 'ingredients',
-      element: <ShowIngredients/>
+      element: <ShowIngredients />
     },
     {
       path: 'ingredients/ingredient_details/:id',
