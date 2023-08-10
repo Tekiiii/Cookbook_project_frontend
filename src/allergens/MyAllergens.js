@@ -4,19 +4,33 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CardMedia,
   IconButton,
-  InputAdornment,
-  OutlinedInput,
   Tooltip,
   Typography,
   Grid
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import InfoIcon from "@mui/icons-material/Info";
-import SearchIcon from '@mui/icons-material/Search';
 import { UserContext } from '../App';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+const getImageUrlForAllergen = (allergenId) => {
+  switch (allergenId) {
+    case 1:
+      return 'https://zdravaprica.com/wp-content/uploads/2017/12/Kikiriki-1.jpg';
+    case 2:
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm77OqZ8dqroHNN13eBZty4sx30l3Xf-97LA&usqp=CAU';
+    case 3:
+      return 'https://agroinfonet.com/wp-content/uploads/2016/08/pb-soja-zrna-Jing.jpg';
+    case 4:
+      return 'https://www.ediskont.rs/uploads/useruploads/Photos/lesnici.jpg';
+    case 5:
+      return 'https://vimafoods.com/wp-content/uploads/2020/05/fresas-frescas.jpg';
+    default:
+      return 'https://nadijeti.com/wp-content/uploads/2010/05/hrana4.jpg';
+  }
+};
 
 const MyAllergens = () => {
   const { user } = useContext(UserContext);
@@ -84,42 +98,25 @@ const MyAllergens = () => {
       <Typography sx={{ marginBottom: '20px', fontSize: '22px', color: '#E01E9B' }}>
         My Allergens
       </Typography>
-      <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-        <OutlinedInput
-          className='custom-textfield'
-          type='text'
-          placeholder='Search...'
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{
-            border: 'none',
-            borderRadius: '20px',
-            '& .MuiOutlinedInput-notchedOutline': {
-              border: '0.5px solid #6bb187',
-            },
-            '&:hover': {
-              boxShadow: '0 0 5px #6bb187',
-              '& .MuiOutlinedInput-notchedOutline': {
-                border: 'none',
-              },
-            },
-            '&.Mui-focused': {
-              '& .MuiOutlinedInput-notchedOutline': {
-                border: '1px solid #6bb187',
-              },
-            },
-          }}
-          startAdornment={
-            <InputAdornment position='start'>
-              <SearchIcon />
-            </InputAdornment>
-          }
-        />
-      </Box>
+
       <Grid container spacing={3}>
         {filteredAllergens.map((allergen) => (
           <Grid item xs={4} key={allergen.id}>
-            <Card variant="outlined" sx={{ marginBottom: 1 }}>
+            <Card variant="outlined" sx={{
+              marginBottom: 1,
+              border: '1px solid #6bb187',
+              fontFamily: "RobotoL",
+              fontWeight: "bold",
+              lineHeight: "1.7",
+              backgroundColor: "rgba(233, 240, 199, 0.396)",
+              backdropFilter: "blur(10px)",
+              color: "#418258",
+              borderRadius: "0px 0px 9px 9px",
+              '&.MuiCard-root': {
+                border: '1px solid #6bb187',
+                borderRadius: '10px',
+              },
+            }}>
               <CardHeader
                 sx={{
                   display: "flex",
@@ -130,31 +127,35 @@ const MyAllergens = () => {
                 }}
                 title={allergen.name}
               />
-              <CardContent>
-                ID: {allergen.id}
+              <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={getImageUrlForAllergen(allergen.id)}
+                  alt={allergen.name}
+                />
+                <Typography variant="body1" sx={{ marginTop: '8px' }}>
+                  ID: {allergen.id}
+                </Typography>
               </CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Tooltip title="Info">
-                  <IconButton
-                    sx={{ margin: '0px 8px 15px 8px', color: '#6bb187', fontSize: '1em' }}
-                    aria-label="info"
-                    onClick={() => navigate(`allergen_details/${allergen.id}`)}>
-                    <InfoIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Delete">
-                  <IconButton
-                    sx={{ margin: '0px 8px 15px 8px', color: '#6bb187', fontSize: '1em' }}
-                    aria-label="delete"
-                    onClick={() => handleDelete(allergen.id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0px 8px' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+
+                  <Tooltip title="Delete">
+                    <IconButton
+                      sx={{ marginX: '8px', color: '#6bb187', fontSize: '1em' }}
+                      aria-label="delete"
+                      onClick={() => handleDelete(allergen.id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
               </Box>
             </Card>
           </Grid>
         ))}
       </Grid>
+
     </div>
   );
 };
