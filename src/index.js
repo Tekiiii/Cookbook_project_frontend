@@ -12,6 +12,7 @@ import ShowMyCookbook from './Cookbook/ShowMyCookbook';
 import MyAllergens from './allergens/MyAllergens';
 import ShowAllergens from './allergens/ShowAllergens';
 import AllergenEdit from './allergens/AllergenEdit';
+import AllergenForm from './allergens/AllergenForm';
 import { check_login } from './login_logic';
 import Login from './Login';
 import Error from './Error';
@@ -113,12 +114,16 @@ const router = createBrowserRouter([{
       },
     },
     {
+      path: 'add-allergen',
+      element: <AllergenForm />,
+    },
+    {
       path: 'ingredients',
       element: <ShowIngredients />
     },
     {
       path: 'ingredients/ingredient_details/:id',
-      element: <IngredientDetails/>,
+      element: <IngredientDetails />,
       loader: async ({ params }) => {
         console.log(params.id);
         console.log(params);
@@ -133,7 +138,7 @@ const router = createBrowserRouter([{
     },
     {
       path: 'ingredients/newIngredient',
-      element:<IngredientForm/>
+      element: <IngredientForm />
     },
     {
       path: 'regularuser',
