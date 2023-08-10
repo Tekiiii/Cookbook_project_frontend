@@ -9,7 +9,9 @@ import {
     OutlinedInput,
     Tooltip,
     Typography,
-    Grid
+    Grid,
+    Button,
+    Container
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
@@ -83,11 +85,14 @@ const ChefRecipes = () => {
     //   };
 
     return (
-        <div>
-            <Typography sx={{ marginBottom: '20px', fontSize: '22px', color: '#E01E9B' }}>
+        <Container>
+            <Typography sx={{ fontSize: '22px', color: '#E01E9B', }}>
                 Chef Recipes
             </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center'
+            }}>
                 <OutlinedInput
                     className='custom-textfield'
                     type='text'
@@ -119,54 +124,33 @@ const ChefRecipes = () => {
                     }
                 />
             </Box>
-            {/* <Grid container spacing={3}>
-        {data.map((recipe) => (
-          <Grid item xs={4} key={recipe.id}>
-            <Card variant="outlined" sx={{ marginBottom: 1 }}>
-              <CardHeader
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  backgroundColor: "#6bb187",
-                  color: "white"
-                }}
-                title={recipe.name}
-              />
-              <CardContent>
-                ID: {recipe.id}
-              </CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Tooltip title="Info">
-                  <IconButton
-                    sx={{ margin: '0px 8px 15px 8px', color: '#6bb187', fontSize: '1em' }}
-                    aria-label="info"
-                    onClick={() => navigate(`recipe_details/${recipe.id}`)}>
-                    <InfoIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Delete">
-                  <IconButton
-                    sx={{ margin: '0px 8px 15px 8px', color: '#6bb187', fontSize: '1em' }}
-                    aria-label="delete"
-                    onClick={() => handleDelete(recipe.id)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-              </Box>
-            </Card>
-          </Grid>
-        ))}
-      </Grid> */}
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-45px' }}>
+                <Button variant="outlined" onClick={() => navigate("new_recipe")}
+                    sx={{
+                        padding: '10px 15px',
+                        backgroundColor: "rgba(253, 246, 238, 0.396)",
+                        backdropFilter: "blur(4px)",
+                        color: "#418258",
+                        borderRadius: "15px",
+                        border: '0.5px solid #6bb187',
+                        "&:hover": {
+                            border: '0.5px solid #6bb187',
+                            backgroundColor: "rgba(253, 246, 238, 0.7)",
+                            backdropFilter: "blur(4px)",
+                        }
+                    }}>
+                    {" "}Add new recipe{" "}
+                </Button>
+            </Box>
             <Grid sx={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(196px, 1fr))',
                 gridGap: '36px',
                 margin: '40px auto',
             }}>
-                {data.map((s) => <ShowRecipe recipe={s} key={s.ID} />)}
+                {data.map((s) => <ShowRecipe recipe={s} key={s.id} />)}
             </Grid>
-        </div>
+        </Container>
     );
 };
 
