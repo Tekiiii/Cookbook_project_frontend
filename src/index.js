@@ -12,6 +12,7 @@ import ShowMyCookbook from './Cookbook/ShowMyCookbook';
 import MyAllergens from './allergens/MyAllergens';
 import ShowAllergens from './allergens/ShowAllergens';
 import AllergenEdit from './allergens/AllergenEdit';
+import AllergenForm from './allergens/AllergenForm';
 import { check_login } from './login_logic';
 import Login from './Login';
 import Error from './Error';
@@ -29,6 +30,7 @@ import ChefForm from './chef/ChefForm';
 import IngredientDetails from './ingredients/IngredientDetails';
 import IngredientForm from './ingredients/IngredientForm';
 import IngredientEdit from './ingredients/IngredientEdit';
+import ChefRecipes from './chef/ChefRecipes';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -113,12 +115,16 @@ const router = createBrowserRouter([{
       },
     },
     {
+      path: 'add-allergen',
+      element: <AllergenForm />,
+    },
+    {
       path: 'ingredients',
       element: <ShowIngredients />
     },
     {
       path: 'ingredients/ingredient_details/:id',
-      element: <IngredientDetails/>,
+      element: <IngredientDetails />,
       loader: async ({ params }) => {
         console.log(params.id);
         console.log(params);
@@ -133,7 +139,7 @@ const router = createBrowserRouter([{
     },
     {
       path: 'ingredients/newIngredient',
-      element:<IngredientForm/>
+      element: <IngredientForm />
     },
     {
       path: 'ingredients/edit_ingredient/:id',
@@ -183,20 +189,7 @@ const router = createBrowserRouter([{
     },
     {
       path: "regularuser/regularuser_details/:id",
-      element: <RegUserDetails />,
-      loader: async ({ params }) => {
-        const user = check_login('ROLE_ADMIN');
-        // console.log(params.id);
-        // console.log(params);
-        return fetch(`http://localhost:8080/project/regularuser/${params.id}`, {
-          method: 'GET',
-          headers: {
-            Authorization: user.token,
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-          }
-        });
-      }
+      element: <RegUserDetails />
     },
     {
       path: 'chef',
@@ -237,6 +230,10 @@ const router = createBrowserRouter([{
           }
         });
       }
+    },
+    {
+      path: 'chefRecipes',
+      element: <ChefRecipes />
     },
   ]
 }

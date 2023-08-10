@@ -91,7 +91,7 @@ const AllergenEdit = () => {
     return (
         <Container maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <Typography sx={{ marginBottom: "20px", fontSize: "22px", color: "#E01E9B" }}>
-                Edit Allergen <br />
+                Edit Allergens <br />
                 <span style={{ fontSize: "16px" }}>Molimo Vas unesite podatke u polja za unos.</span>
             </Typography>
             <Box

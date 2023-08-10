@@ -15,6 +15,7 @@ const normalizeText = (text) => {
 
 const ShowMyCookbook = () => {
   const [myCookbook, setMyCookbook] = useState([]);
+  const [recipes, setAllRecipes] = useState([]);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
@@ -34,11 +35,11 @@ const ShowMyCookbook = () => {
   }, [search]);
 
   useEffect(() => {
-    const getMyCookbook = async ({params}) => {
+    const getMyCookbook = async () => {
       const user = localStorage.getItem("user");
       if (user) {
         const u = JSON.parse(user);
-        let result = await fetch(`http://localhost:8080/project/cookbook/${params.id}`, {
+        let result = await fetch(`http://localhost:8080/project/cookbook/user`, {
           headers: {
             Authorization: u.token,
             "Accept": "application/json",
@@ -55,6 +56,30 @@ const ShowMyCookbook = () => {
     };
     getMyCookbook();
   }, []);
+
+  // useEffect(() => {
+  //   const getRecipes = async () => {
+  //     const user = localStorage.getItem("user");
+  //     if (user) {
+  //       const u = JSON.parse(user);
+  //       let result = await fetch(`http://localhost:8080/project/recipe/`, {
+  //         method: 'GET',
+  //         headers: {
+  //           Authorization: u.token,
+  //           "Accept": "application/json",
+  //           "Content-Type": "application/json"
+  //         },
+  //       });
+  //       console.log(result);
+  //       if (result.ok) {
+  //         let recipes_r = await result.json();
+  //         setData(recipes_r);
+  //         setAllRecipes(recipes_r);
+  //       }
+  //     }
+  //   };
+  //   getRecipes();
+  // }, []);
 
   // useEffect(() => {
   // const getRecipes = async ({params}) => {

@@ -19,7 +19,7 @@ const ShowRecipes = () => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
-  const { user, login, logout } = useContext(UserContext);
+  // const { user, login, logout } = useContext(UserContext);s
 
   useEffect(() => {
     if (search === '') {
@@ -98,7 +98,7 @@ const ShowRecipes = () => {
           }
         />
       </Box>
-      {user && user.role === "ROLE_CHEF" || user.role === "ROLE_ADMIN" ?
+      {/* {user && user.role === "ROLE_CHEF" || user.role === "ROLE_ADMIN" ? */}
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-45px' }}>
           <Button variant="outlined" onClick={() => navigate("new_recipe")}
             sx={{
@@ -117,7 +117,7 @@ const ShowRecipes = () => {
             {" "}Add new recipe{" "}
           </Button>
         </Box>
-        : <></>}
+        {/* : <></>} */}
       <Grid sx={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fill, minmax(196px, 1fr))',
