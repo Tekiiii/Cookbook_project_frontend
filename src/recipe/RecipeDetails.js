@@ -96,7 +96,7 @@ const RecipeDetails = () => {
                                 Ingredients:
                                 <ul>
                                     {data.map((ingredients) => (
-                                        <li key={ingredients.id}>{ingredients.id}</li>
+                                        <li key={ingredients.id}>{ingredients.id} {ingredients.name} </li>
                                     ))}
                                 </ul>
                             </>)
