@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate,useSearchParams } from "react-router-dom";
-import { Box, Button, Container, TextField } from "@mui/material";
+import { Box, Button, Container, FormHelperText, TextField } from "@mui/material";
 
 const RegUserForm = () => {
   const [name, setName] = useState("");
@@ -10,8 +10,17 @@ const RegUserForm = () => {
   const [confirmed_password, setConfirmed_password] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const [globalError, setGlobalError] = useState(false);
 
 
+  const newRegularUser = {
+    name: name,
+    lastname: lastname,
+    username:username,
+    password: password,
+    confirmed_password: confirmed_password,
+    email: email,
+  };
 
   const addRegularUser = async () => {
 
@@ -30,21 +39,15 @@ const RegUserForm = () => {
     console.log(response);
     if (response.ok) {
       let d = await response.json();
-      console.log(JSON.stringify(d, null, 4));
+      //console.log(JSON.stringify(d, null, 4));
+      alert("Successfully added new regular user.");
       navigate("/regularuser");
     } else {
       console.log("Error!");
     }
    }
 
-   const newRegularUser = {
-    name: name,
-    lastname: lastname,
-    username:username,
-    password: password,
-    confirmed_password: confirmed_password,
-    email: email,
-  };
+   
  };
   return (
     <Container>
@@ -133,6 +136,8 @@ const RegUserForm = () => {
           {" "}
           Save{" "}
         </Button>
+        <FormHelperText error={globalError}>{globalError}</FormHelperText>
+
       </Box>
     </Container>
   );

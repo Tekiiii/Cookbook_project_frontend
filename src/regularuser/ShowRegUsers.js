@@ -20,6 +20,7 @@ const ShowRegUsers = () => {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const navigation = useNavigate();
+  const[showRegUsers, setShowRegUsers] = useState(regularUser);
 
   useEffect(() => {
     const getRegularUsers = async () => {
@@ -60,8 +61,8 @@ const ShowRegUsers = () => {
 
   const handleDelete = (regularUserId) => {
     // osvezimo prikaz
-    const fru = regularUser.filter((ru) => ru.id!= regularUserId);
-    setRegularUser(fru);
+    const fru = showRegUsers.filter((ru) => ru.id!= regularUserId);
+    setShowRegUsers(fru);
   };
 
 

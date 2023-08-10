@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate,useSearchParams } from "react-router-dom";
-import { Box, Button, Container, TextField } from "@mui/material";
+import { Box, Button, Container, FormHelperText, TextField } from "@mui/material";
 
 const ChefForm = () => {
   const [name, setName] = useState("");
@@ -10,6 +10,7 @@ const ChefForm = () => {
   const [confirmed_password, setConfirmed_password] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const [globalError, setGlobalError] = useState(false);
 
   const newChef = {
     name: name,
@@ -38,7 +39,8 @@ const ChefForm = () => {
     console.log(response);
     if (response.ok) {
       let d = await response.json();
-      console.log(JSON.stringify(d, null, 4));
+     // console.log(JSON.stringify(d, null, 4));
+     alert("Successfully added new chef.");
       navigate("/chef");
     } else {
       console.log("Error!");
@@ -134,6 +136,8 @@ const ChefForm = () => {
           {" "}
           Save{" "}
         </Button>
+        <FormHelperText error={globalError}>{globalError}</FormHelperText>
+
       </Box>
     </Container>
   );
