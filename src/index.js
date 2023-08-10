@@ -28,6 +28,7 @@ import ChefDetails from './chef/ChefDetails';
 import ChefForm from './chef/ChefForm';
 import IngredientDetails from './ingredients/IngredientDetails';
 import IngredientForm from './ingredients/IngredientForm';
+import ChefRecipes from './chef/ChefRecipes';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -213,6 +214,10 @@ const router = createBrowserRouter([{
           }
         });
       }
+    },
+    {
+      path: 'chefRecipes',
+      element: <ChefRecipes />
     },
   ]
 }

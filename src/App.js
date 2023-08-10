@@ -97,14 +97,14 @@ const App = () => {
             </Box>
             <Divider sx={{ backgroundColor: '#E01E9B' }} />
             <Stack direction="column" alignItems="flex-start" marginTop={2} marginLeft={5}>
-              <Button
+              {/* <Button
                 activeClassName="activeLink"
                 className="navLink"
                 style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px' }}
                 onClick={() => { navigate('/recipe'); setOpen(false) }}
               >
                 All recipes
-              </Button>
+              </Button> */}
               {user && user.role === "ROLE_REGULAR_USER" ? (
                 <>
 
