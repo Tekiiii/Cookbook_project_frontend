@@ -25,8 +25,7 @@ const ChefRecipeEdit = () => {
     const [steps, setSteps] = useState(recipe.steps);
     const [ingredients, setIngredients] = useState(recipe.ingredientIdAmounts || []);
     const [ingredientIdAmounts, setIngredientIdAmounts] = useState({}); // Dodajte ovu definiciju
-const [allIngredients, setAllIngredients] = useState([]);
-    // const [ingredients, setIngredients] = useState(recipe.ingredients); RESITI
+    const [allIngredients, setAllIngredients] = useState([]);   
 
     const [nameError, setNameError] = useState("");
     const [timeError, setTimeError] = useState("");
@@ -35,66 +34,6 @@ const [allIngredients, setAllIngredients] = useState([]);
     const [ingredientsError, setIngredientError] = useState("");
     const [globalError, setGlobalError] = useState(false);
     const errorMessageTemplate = "Please enter ";
-
-    // const changeRecipe = (e) => {
-    //     setUpdatedRecipe(
-    //         produce((draft) => {
-    //             draft[e.target.name] = e.target.value;
-    //         })
-    //     );
-
-    //     setRecipeError((prevErrors) => ({
-    //         ...prevErrors,
-    //         [e.target.name]: "",
-    //     }));
-
-    //     if (e.target.name === "name") {
-    //         const value = e.target.value.trim();
-    //         if (value === "") {
-    //             setRecipeError((prevErrors) => ({
-    //                 ...prevErrors,
-    //                 [e.target.name]: "Please enter recipe name.",
-    //             }));
-    //         } else if (!/^[a-zA-Z\s]+$/.test(value)) {
-    //             setRecipeError((prevErrors) => ({
-    //                 ...prevErrors,
-    //                 [e.target.name]:
-    //                     "Cannot enter a number, please enter recipe name.",
-    //             }));
-    //         } else if (value.length < 2 || value.length > 20) {
-    //             setRecipeError((prevErrors) => ({
-    //                 ...prevErrors,
-    //                 [e.target.name]: "Recipe name must be between 2 and 20 characters long.",
-    //             }));
-    //         } else {
-    //             setRecipeError((prevErrors) => ({
-    //                 ...prevErrors,
-    //                 [e.target.name]: "",
-    //             }));
-    //         }
-    //     }
-
-    //     if (e.target.name === "time") {
-    //         const value = e.target.value;
-    //         if (value === "") {
-    //             setRecipeError((prevErrors) => ({
-    //                 ...prevErrors,
-    //                 [e.target.name]: "Please enter a required time for recipe preparation.",
-    //             }));
-    //         } else if (value <= 0 || value > 1000) {
-    //             setRecipeError((prevErrors) => ({
-    //                 ...prevErrors,
-    //                 [e.target.name]: "Time cannot be over 1000 minutes.",
-    //             }));
-    //         } else if (isNaN(value)) {
-    //             setRecipeError((prevErrors) => ({
-    //                 ...prevErrors,
-    //                 [e.target.name]:
-    //                     "Cannot enter text, please enter number less than 1000.",
-    //             }));
-    //         }
-    //     }
-    // };
 
     useEffect(() => {
         const getIngredients = async () => {
@@ -118,8 +57,7 @@ const [allIngredients, setAllIngredients] = useState([]);
     const handleTagDelete = (tagIndex) => {
         const newIngredients = ingredients.filter((_, index) => index !== tagIndex);
         setIngredients(newIngredients);
-    
-        // You might need to update the ingredientIdAmounts as well if needed
+
         const newIngredientIdAmounts = { ...ingredientIdAmounts };
         delete newIngredientIdAmounts[ingredients[tagIndex].id];
         setIngredientIdAmounts(newIngredientIdAmounts);
@@ -139,7 +77,9 @@ const [allIngredients, setAllIngredients] = useState([]);
             name: name,
             time: time,
             amount: amount,
-            steps: steps
+            steps: steps,
+            ingredients: ingredientIdAmounts
+            
         }
 
         const user = localStorage.getItem("user");
@@ -154,7 +94,7 @@ const [allIngredients, setAllIngredients] = useState([]);
                         Accept: "application/json",
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(updatedRecipe),
+                    body: JSON.stringify(update_recipe),
                 }
             );
             console.log(response);

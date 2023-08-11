@@ -316,6 +316,27 @@ const MyAllergens = () => {
             }
         };
 
+        const addAllergen = async (allergeniD) => {
+          const user = localStorage.getItem("user");
+          if (user) {
+              const u = JSON.parse(user);
+              const response = await fetch(`http://localhost:8080/project/regularuser/regularuser_id/${regularuser.id}/allergen_id/${allergeniD}`, {
+                  method: "PUT",
+                  headers: {
+                      Authorization: u.token,
+                      "Accept": "application/json",
+                      "Content-Type": "application/json",
+                  },
+              });
+              if (response.ok) {
+                  const updatedAllergens = allergens.filter(allergen => allergen.id !== allergeniD);
+                  setAllergens(updatedAllergens);
+              } else {
+                  console.log("Error while deleting allergen");
+              }
+          }
+      };
+
   return (
     <div>
       <Typography sx={{ marginBottom: '20px', fontSize: '22px', color: '#E01E9B' }}>
@@ -330,7 +351,7 @@ const MyAllergens = () => {
         onChange={(event, newValue) => setSelectedAllergen(newValue)}
         renderInput={(params) => <TextField {...params} label="Select Allergen" />}
       />
-      <Button variant="contained" color="primary" onClick={handleAddAllergen}>
+      <Button variant="contained" color="primary" onClick={addAllergen}>
         Add Allergen
       </Button>
       <div>
