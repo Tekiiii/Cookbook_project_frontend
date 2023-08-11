@@ -44,11 +44,11 @@ const ShowRecipe = ({ recipe, onDelete }) => {
     }
 
     // like recipe, TODO izbaciti id na back-u
-    const updateRecipe = async (cookbook_id, recipe_id) => {
+    const updateRecipe = async (recipe) => {
         const user = localStorage.getItem("user");
         if (user) {
             const u = JSON.parse(user);
-            let response = await fetch(`http://localhost:8080/project/cookbook/cookbook_id/${cookbook_id}/recipe_id/${recipe_id}`, {
+            let response = await fetch(`http://localhost:8080/project/cookbook/cookbook_id/${user.myCookbook.id}/recipe_id/${recipe.id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: u.token,

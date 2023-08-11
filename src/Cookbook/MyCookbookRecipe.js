@@ -21,11 +21,11 @@ const MyCookBookRecipe = ({ recipe }) => {
     const navigate = useNavigate();
 
     // dislike recipe TODO izbaciti to na back-u
-    const deleteRecipeFromCB = async (recipe_id) => {
+    const deleteRecipeFromCB = async (recipe) => {
         const user = localStorage.getItem("user");
         if (user) {
             const u = JSON.parse(user);
-            let response = await fetch(`http://localhost:8080/project/recipe/recipe_id/${recipe_id}`, {
+            let response = await fetch(`http://localhost:8080/project/recipe/recipe_id/${recipe.id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: u.token,
