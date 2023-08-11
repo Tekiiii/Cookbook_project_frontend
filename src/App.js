@@ -63,7 +63,7 @@ const App = () => {
                       Log out
                     </Button>
                   ) : (
-                    <div style={{ display: 'flex' }}>
+                    <div style={{ display: 'flex', textDecoration: 'none', color: '#E01E9B', paddingRight: '30 px' }}>
                       <Button
                         color="inherit"
                         sx={{ marginRight: '0.5vw', padding: '0px', fontSize: '14px' }}

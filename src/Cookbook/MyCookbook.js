@@ -101,7 +101,7 @@ const MyCookbook = () => {
         gridGap: '36px',
         margin: '40px auto',
       }}>
-        {data.map((s) => <MyCookBookRecipe recipe={s} key={s.id} />)}
+        {data.map((s) => <MyCookBookRecipe recipe={s} key={s.id}/>)}
       </Grid>
     </Container>
   );
