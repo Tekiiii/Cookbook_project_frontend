@@ -28,9 +28,7 @@ const ChefRecipeForm = () => {
     const save = async () => {
         if (name === "" || time === "" || steps === "" || picture === null
             || amount === "" || ingredients.length === 0) {
-            setGlobalError("Please fill all the fields in the form.")
-        return;
-}
+            setGlobalError("Please fill all the fields in the form.")}
 
         const new_recipe = {
             name: name,

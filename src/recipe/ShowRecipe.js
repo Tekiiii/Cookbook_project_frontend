@@ -15,10 +15,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { UserContext } from '../App';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import MyCookbook from '../Cookbook/MyCookbook';
 
 const ShowRecipe = ({ recipe, onDelete }) => {
     const { user, login, logout } = useContext(UserContext);
+    const [regularUser, setRegularUser] = useState({});
     const navigate = useNavigate();
 
     const deleteRecipe = async () => {
@@ -44,16 +46,50 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                 }
             } catch (error) {
                 console.error("Error while deleting recipe:", error);
+
             }
         }
     }
 
+    useEffect(() => {
+        const getRegularUser = async () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            console.log(user.role);
+            console.log(user && user.role === "ROLE_REGULAR_USER");
+            if (user) {
+                console.log(user + "ovo je user");
+                let response = await fetch(`http://localhost:8080/project/regularuser/${user.id}`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: user.token,
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    }
+                });
+                console.log(response);
+                if (response.ok) {
+                    let userData = await response.json();
+                    console.log("Successfully fetched user");
+                    console.log(userData);
+                    setRegularUser(userData);
+                } else {
+                    console.log("Error while fetching user");
+                }
+            }
+        }
+        getRegularUser();
+    }, []);
+
+    //udjemo u usera ulogovanog
+    // u njegov id
+    // preko toga da izvucemo ceo objekat usera sa poljem cookbook
+
     // like recipe, TODO izbaciti id na back-u
-    const updateRecipe = async (cookbook_id, recipe_id) => {
+    const updateRecipe = async () => {
         const user = localStorage.getItem("user");
         if (user) {
             const u = JSON.parse(user);
-            let response = await fetch(`http://localhost:8080/project/cookbook/cookbook_id/${cookbook_id}/recipe_id/${recipe_id}`, {
+            let response = await fetch(`http://localhost:8080/project/cookbook/cookbook_id/${regularUser.myCookBook.id}/recipe_id/${recipe.id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: u.token,
@@ -69,6 +105,8 @@ const ShowRecipe = ({ recipe, onDelete }) => {
             }
         }
     }
+
+    
 
     return (
         <Grid item xs={4}>

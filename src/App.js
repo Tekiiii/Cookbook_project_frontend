@@ -69,20 +69,20 @@ const App = () => {
                     </Button>
                   ) : (
                     <div style={{ display: 'flex' }}>
-                     <div> <Button
+                      <Button
                         color="inherit"
                         sx={{ marginRight: '0.5vw', padding: '0px', fontSize: '14px' }}
                         onClick={() => navigate('/login')}
                       >
                         Log in
-                      </Button></div>
-                      <div><Button
+                      </Button>
+                      <Button
                         color="inherit"
                         sx={{ padding: '0px', fontSize: '14px' }}
                         onClick={() => navigate('/signin')}
                       >
                         Sign in
-                      </Button></div>
+                      </Button>
                     </div>
                   )}
                 </div>
