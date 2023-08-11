@@ -14,13 +14,13 @@ import InfoIcon from "@mui/icons-material/Info";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { UserContext } from '../App';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 const MyCookBookRecipe = ({ recipe }) => {
     const { user, login, logout } = useContext(UserContext);
+    const [isFavorite, setIsFavorite] = useState(false);
     const navigate = useNavigate();
 
-    // dislike recipe TODO izbaciti to na back-u
     const deleteRecipeFromCB = async () => {
         const user = localStorage.getItem("user");
         if (user) {
@@ -41,6 +41,12 @@ const MyCookBookRecipe = ({ recipe }) => {
             }
         }
     }
+
+    const handleFavorite = () => {
+        setIsFavorite(true);
+        deleteRecipeFromCB();
+        window.location.reload();
+      };
 
     return (
         <Grid item xs={4}>
@@ -105,11 +111,13 @@ const MyCookBookRecipe = ({ recipe }) => {
                             <InfoIcon />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Delete">
-                        <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="delete" onClick={deleteRecipeFromCB}>
-                            <FavoriteIcon />
-                        </IconButton>
-                    </Tooltip>
+                    <IconButton
+                        sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }}
+                        aria-label="favorite"
+                        onClick={handleFavorite}
+                        >
+                        {isFavorite ? <FavoriteBorderIcon /> : <FavoriteIcon />}
+                    </IconButton>
                 </ Box>
             </Card>
         </Grid>

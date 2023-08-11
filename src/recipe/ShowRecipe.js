@@ -14,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import InfoIcon from "@mui/icons-material/Info";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { UserContext } from '../App';
 import { useContext, useEffect, useState } from 'react';
 import MyCookbook from '../Cookbook/MyCookbook';
@@ -21,7 +22,15 @@ import MyCookbook from '../Cookbook/MyCookbook';
 const ShowRecipe = ({ recipe, onDelete }) => {
     const { user, login, logout } = useContext(UserContext);
     const [regularUser, setRegularUser] = useState({});
+    const [isFavorite, setIsFavorite] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const favoriteStatus = localStorage.getItem(`favorite_${recipe.id}`);
+        if (favoriteStatus !== null) {
+            setIsFavorite(JSON.parse(favoriteStatus));
+        }
+    }, []);
 
     const deleteRecipe = async () => {
         console.log("Deleting recipe...");
@@ -80,8 +89,7 @@ const ShowRecipe = ({ recipe, onDelete }) => {
         getRegularUser();
     }, []);
 
-    // promeniti boju
-    const updateRecipe = async () => {
+    const favouriteRecipe = async () => {
         const user = localStorage.getItem("user");
         if (user) {
             const u = JSON.parse(user);
@@ -96,13 +104,13 @@ const ShowRecipe = ({ recipe, onDelete }) => {
             if (response.ok) {
                 let d = await response.json();
                 console.log("Successfully updated recipe");
+                setIsFavorite(prevFavorite => !prevFavorite);
+                localStorage.setItem(`favorite_${recipe.id}`, JSON.stringify(!isFavorite));
             } else {
                 console.log("Error while updating recipe");
             }
         }
     }
-
-    
 
     return (
         <Grid item xs={4}>
@@ -182,12 +190,15 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                         </Tooltip> </>
                     {/* : <></>}  */}
                     {/* {user && user.role === "ROLE_REGULAR_USER" ? */}
-                    <>
-                        <Tooltip title="Add to my Cookbook">
-                            <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="Add to my Cookbook" onClick={updateRecipe}>
-                                <FavoriteBorderIcon />
-                            </IconButton>
-                        </Tooltip> </>
+                    <Tooltip title={isFavorite ? "Added to my Cookbook" : "Add to my Cookbook"}>
+                    <IconButton
+                        sx={{ margin: '0px 8px 15px 8px', color: isFavorite ? '#6bb187' : 'inherit' }}
+                        aria-label={isFavorite ? "Added to my Cookbook" : "Add to my Cookbook"}
+                        onClick={favouriteRecipe}
+                    >
+                        {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                    </IconButton>
+                    </Tooltip>
                     {/* : <></>} */}
                 </ Box>
             </Card>
