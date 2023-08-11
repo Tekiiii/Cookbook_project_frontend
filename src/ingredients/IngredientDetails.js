@@ -1,11 +1,14 @@
-import { useLoaderData } from "react-router-dom";
-import { Card, CardHeader, CardContent, Typography, Box } from "@mui/material";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { Card, CardHeader, CardContent, Typography, Box, Button, Container } from "@mui/material";
 
 const IngredientDetails = () => {
+    
+    const navigate = useNavigate();
 
         const ingredient = useLoaderData();
 
-        return <Box sx={{display: "flex", justifyContent: "center"}}>
+        return <Container sx={{ width: '65%' }}>
+            <Box sx={{display: "flex", justifyContent: "center"}}>
             <Card sx={{marginBottom: 3, width: "300px"}} variant="outlined">
                 <CardHeader sx={{display: "flex", textAlign: "center", fontSize: "15px", fontWeight: "bold", color: "black",  backgroundColor: "#009688"}}
                     subheader= {ingredient.name}/>
@@ -36,9 +39,14 @@ const IngredientDetails = () => {
                     ) : (
                     'No allergen')}
                     </Typography>
+                    <Button onClick={() => navigate('/ingredients')}
+                    sx={{ color: '#E01E9B', marginLeft: '100px' }}>
+                    Back
+                </Button>
                 </CardContent>
             </Card>
             </Box>
+             </Container>
     
     
 };
