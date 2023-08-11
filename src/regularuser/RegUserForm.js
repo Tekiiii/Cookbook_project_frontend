@@ -13,7 +13,7 @@ const RegUserForm = () => {
   const [globalError, setGlobalError] = useState(false);
 
 
-  const newregularuser = {
+  const newRegularuser = {
     name: name,
     lastname: lastname,
     username:username,
@@ -33,7 +33,7 @@ const RegUserForm = () => {
         "Content-Type": "application/json",
        "Authorization": u.token,
       },
-      body: JSON.stringify(newregularuser),
+      body: JSON.stringify(newRegularuser),
     });
 
     console.log(response);

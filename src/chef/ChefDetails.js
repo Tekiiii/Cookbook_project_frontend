@@ -1,4 +1,5 @@
 import { Box, Button, CardMedia, Container, Grid, Typography } from "@mui/material";
+import { pink } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
@@ -8,26 +9,8 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 const ChefDetails = () => {
     const chef = useLoaderData(); //preuzmemo podatke koje nam je loader dobavio
      const navigate = useNavigate();
-    // const [allergens, setAllergens] = useState([]);
      const [data, setData] = useState([]);
-    // useEffect(() => {
-    //     const getAllergens = async () => {
-    //         let result = await fetch(`http://localhost:8080/project/allergens/id/${allergens.id}`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 "Accept": "application/json",
-    //                 "Content-Type": "application/json"
-    //             },
-    //         });
-    //         console.log(result);
-    //         if (result.ok) {
-    //             let allergens = await result.json();
-    //             setData(allergens);
-    //             setAllergens(allergens);
-    //         }
-    //     };
-    //     getAllergens();
-    // }, []);
+   
     return <Container>
         <Box sx={{ display: "flex", justifyContent: "center", width: '100%' }}>
             <Typography sx={{ fontSize: '30px', fontWeight: 'bold' }}>{`${chef.name} ${chef.lastname}`}</Typography>
@@ -37,11 +20,23 @@ const ChefDetails = () => {
             {/* alignItems - vertikalno poravnanje; 
           justifyContente - horizontalno poravnanje */}
 
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
                 <h4>Recipes:</h4>
             </Grid>
             <Grid item xs={6}>
-               {/* <h2> {chef.recipes}</h2> */}
+               <h2> {chef.recipes}</h2>
+            </Grid> */}
+            <Grid item xs={6} >
+            <h4> ID:</h4>
+            </Grid>
+            <Grid item xs={6}>
+            <h2> <i> {chef.id}</i></h2>
+            </Grid>
+            <Grid item xs={6} >
+            <h4> User name:</h4>
+            </Grid>
+            <Grid item xs={6}>
+            <h2> <i> {chef.username}</i></h2>
             </Grid>
             <Grid item xs={6} >
             <h4> e-Mail:</h4>

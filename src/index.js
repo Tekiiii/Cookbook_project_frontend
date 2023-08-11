@@ -187,7 +187,20 @@ const router = createBrowserRouter([{
     },
     {
       path: "regularuser/regularuser_details/:id",
-      element: <RegUserDetails />
+      element: <RegUserDetails />,
+      loader: async ({ params }) => {
+        const user = check_login('ROLE_ADMIN');
+        // console.log(params.id);
+        // console.log(params);
+        return fetch(`http://localhost:8080/project/regularuser/${params.id}`, {
+          method: 'GET',
+          headers: {
+            Authorization: user.token,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        });
+      }
     },
     {
       path: 'chef',

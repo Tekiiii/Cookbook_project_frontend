@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom/dist";
 const RegUserEdit = () => {
 
     const regularuser = useLoaderData();
-    const [updatedregularuser, setUpdatedregularuser] = useState(regularuser);
+ //   const [updatedregularuser, setUpdatedregularuser] = useState(regularuser);
     const navigate = useNavigate();
 
     // funkcija za izmenu 
@@ -14,20 +14,24 @@ const RegUserEdit = () => {
     const { id } = useParams();
     const [name, setName] = useState(regularuser.name);
     const [lastName, setLastName] = useState(regularuser.lastname);
-    const [myCookbook, setMyCookbook] = useState(regularuser.myCookBook);
-    const [allergens, setAllergens] = useState(regularuser.allergens);
+    const [username, setUsername] = useState(regularuser.username);
+    const [password, setPassword] = useState(regularuser.password);
+ //   const [myCookbook, setMyCookbook] = useState(regularuser.myCookBook);
+ //   const [allergens, setAllergens] = useState(regularuser.allergens);
     const [email, setEmail] = useState(regularuser.email);
 
     const [globalError, setGlobalError] = useState(false);
     const errorMessageTemplate = "Please enter the ";
     const [nameError, setNameError] = useState("");
     const [lastNameError, setLastNameError] = useState("");
-    const [myCookbookError, setMyCookbookError] = useState("");
-    const [allergensError, setAllergensError] = useState("");
+    const [usernameError, setUsernameError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+ //   const [myCookbookError, setMyCookbookError] = useState("");
+ //   const [allergensError, setAllergensError] = useState("");
     const [emailError, setEmailError] = useState("");
 
     const update = async () => {
-        if (name == "" || lastName == "" || myCookbook == "" || allergens == "" || email == "") {
+        if (name == "" || lastName == "" || username == "" || password == "" || email == "") {
             setGlobalError("Please fill all fields in the form");
             return;
         }
@@ -36,8 +40,10 @@ const RegUserEdit = () => {
             id: parseInt(id),
             name: name,
             lastname: lastName,
-            myCookBook: myCookbook,
-            allergens: allergens,
+            username: username,
+            password: password,
+        //    myCookBook: myCookbook,
+         //   allergens: allergens,
             email: email,
         };
 
@@ -45,7 +51,7 @@ const RegUserEdit = () => {
             if (user) {
                 const u = JSON.parse(user);
                 let response = await fetch(
-                    `http://localhost:8080/project/regularuser/edit_regularuser/${updatedregularuser.id}`,
+                    `http://localhost:8080/project/regularuser/${regularuser.id}`,
                     {
                         method: "PUT",
                         headers: {
@@ -119,6 +125,36 @@ const RegUserEdit = () => {
                         fullWidth
                         required
                         id="outlined-required"
+                        label="Username"
+                        placeholder="Username"
+                        value={username}
+                        helperText={usernameError}
+                        onChange={(e) => {
+                            setUsername(e.target.value);
+                            if (e.target.value !== "") setUsernameError("");
+                            else setUsernameError(errorMessageTemplate + " user username.");
+                         }}
+                    />
+                    <TextField
+                        sx={{ width: "100%" }}
+                        fullWidth
+                        required
+                        id="outlined-required"
+                        label="Password"
+                        placeholder="Password"
+                        value={password}
+                        helperText={passwordError}
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            if (e.target.value !== "") setPasswordError("");
+                            else setPasswordError(errorMessageTemplate + " user password.");
+                         }}
+                    />
+                    {/* <TextField
+                        sx={{ width: "100%" }}
+                        fullWidth
+                        required
+                        id="outlined-required"
                         label="MyCookbook"
                         placeholder="MyCookbook"
                         value={myCookbook.id}
@@ -144,7 +180,7 @@ const RegUserEdit = () => {
                             if (e.target.value !== "") setAllergens("");
                             else setAllergensError(errorMessageTemplate + " regular user allergens.");
                         }}
-                    />
+                    /> */}
                     <TextField
                         sx={{ width: "100%" }}
                         fullWidth
@@ -165,7 +201,7 @@ const RegUserEdit = () => {
                     <Button
                         onClick={update}
                         disabled={
-                             nameError || lastNameError || myCookbook || allergens || emailError
+                             nameError || lastNameError || usernameError || passwordError || emailError
                         }
                     >
                         {" "}

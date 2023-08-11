@@ -11,7 +11,7 @@ const ShowRegUser = ({ regularuser, onDelete }) => {
   const { user, login, logout } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const deleteregularuser = async () => {
+  const deleteRegularuser = async () => {
     const user = localStorage.getItem("user");
     if (user) {
     const u = JSON.parse(user);
@@ -39,10 +39,10 @@ const ShowRegUser = ({ regularuser, onDelete }) => {
                     image="https://cdn.cancer.ca/-/media/images/stock-images/recipes-main-banner-generic.png?rev=4a884cb602214bb3bc1ce51b84ef8a5f&cx=0.5&cy=0.5&cw=1200&ch=630&hash=B3798D04B58C0F94406103D32F09B1C5"
                 />
     <CardHeader sx={{ textAlign: 'center', backgroundColor: 'skyblue' }} title={`${regularuser.name} ${regularuser.lastname}`} >  </CardHeader>
-    <CardContent>ID: {regularuser.id}</CardContent>
+    {/* <CardContent>ID: {regularuser.id}</CardContent>
     <CardContent>Allergens: {regularuser.allergens.id}</CardContent>
     <CardContent>My Cookbook: {regularuser.myCookBook.id}</CardContent>
-    <CardContent>e-Mail: <i>{regularuser.email}</i></CardContent>
+    <CardContent>e-Mail: <i>{regularuser.email}</i></CardContent> */}
     <CardActions sx={{ display: 'flex', justifyContent: 'end' }}>
       <Tooltip title="Info">
         <IconButton
@@ -60,7 +60,7 @@ const ShowRegUser = ({ regularuser, onDelete }) => {
       </Tooltip>
 
       <Tooltip title="Delete">
-        <IconButton aria-label="delete" onClick={deleteregularuser}>
+        <IconButton aria-label="delete" onClick={deleteRegularuser}>
           <DeleteIcon />
         </IconButton>
       </Tooltip>
