@@ -8,12 +8,14 @@ import {
   IconButton,
   Tooltip,
   Typography,
-  Grid
+  Grid,
+  Container
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { UserContext } from '../App';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import MyAllergen from './MyAllergen';
 
 const getImageUrlForAllergen = (allergenId) => {
   switch (allergenId) {
@@ -33,7 +35,7 @@ const getImageUrlForAllergen = (allergenId) => {
 };
 
 const MyAllergens = () => {
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [allergens, setAllergens] = useState([]);
@@ -65,41 +67,14 @@ const MyAllergens = () => {
     getAllergens();
   }, []);
 
-  useEffect(() => {
-    const filtered = allergens.filter((allergen) =>
-      allergen.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredAllergens(filtered);
-  }, [searchTerm, allergens]);
-
-  const handleDelete = async (allergeniD) => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      const u = JSON.parse(user);
-      const response = await fetch(`http://localhost:8080/project/allergens/${allergeniD}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: u.token,
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.ok) {
-        const updatedAllergens = allergens.filter(allergen => allergen.id !== allergeniD);
-        setAllergens(updatedAllergens);
-      } else {
-        console.log("Error while deleting allergen");
-      }
-    }
-  };
 
   return (
-    <div>
+    <Container>
       <Typography sx={{ marginBottom: '20px', fontSize: '22px', color: '#E01E9B' }}>
         My Allergens
       </Typography>
 
-      <Grid container spacing={3}>
+      {/* <Grid container spacing={3}>
         {filteredAllergens.map((allergen) => (
           <Grid item xs={4} key={allergen.id}>
             <Card variant="outlined" sx={{
@@ -154,9 +129,20 @@ const MyAllergens = () => {
             </Card>
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
 
-    </div>
+      <Grid sx={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(196px, 1fr))',
+        gridGap: '36px',
+        margin: '40px auto',
+      }}>
+        {/* {data.map((allergen) => (
+          <MyAllergen allergen={allergen} key={allergen.id}/>
+        ))} */}
+        {data.map((a) => <MyAllergen allergen={a} key={a.id} />)}
+      </Grid>
+    </Container>
   );
 };
 
