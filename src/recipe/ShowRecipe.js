@@ -24,22 +24,29 @@ const ShowRecipe = ({ recipe, onDelete }) => {
     const navigate = useNavigate();
 
     const deleteRecipe = async () => {
+        console.log("Deleting recipe...");
         const user = localStorage.getItem("user");
         if (user) {
             const u = JSON.parse(user);
-            let response = await fetch(`http://localhost:8080/project/recipe/${recipe.id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: u.token,
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
+            try {
+                const response = await fetch(`http://localhost:8080/project/recipe/${recipe.id}`, {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: u.token,
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    }
+                });
+
+                if (response.ok) {
+                    onDelete(recipe.id);
+                    console.log("Successfully deleted recipe");
+                } else {
+                    console.log("Error while deleting recipe");
                 }
-            });
-            if (response.ok) {
-                let d = await response.json();
-                console.log("Successfully deleted recipe");
-            } else {
-                console.log("Error while deleting recipe");
+            } catch (error) {
+                console.error("Error while deleting recipe:", error);
+
             }
         }
     }

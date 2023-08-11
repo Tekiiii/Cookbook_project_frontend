@@ -1,96 +1,71 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
-
-import {
-  Box,
-  Button,
-  Container,
-  FormControl,
-  Stack,
-  TextField,
-} from "@mui/material";
 import { useEffect, useState } from "react";
+import { Container, FormControl, Stack, TextField, Box, Button } from "@mui/material";
 import ShowRegUser from "./ShowRegUser";
-
-
+import { useNavigate } from "react-router-dom";
 
 const ShowRegUsers = () => {
   const [regularuser, setRegularuser] = useState([]);
-  const [all, setAll] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const navigation = useNavigate();
-  const[showRegUsers, setShowRegUsers] = useState(regularuser);
 
   useEffect(() => {
     const getRegularusers = async () => {
       const user = localStorage.getItem("user");
-     if (user) {
-       const u = JSON.parse(user);
-        let result = await fetch('http://localhost:8080/project/regularuser', {
-        method: 'GET',
-        headers: {
-            "Authorization": u.token,
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          },
-        });
-        console.log(result);
-        if (result.ok) {
-          let ru = await result.json();
-          setRegularuser(ru);
-          setAll(ru);
-          setIsLoading(false);
-        } else {
-          setError("Please try again!");
-        }
-      };
+      if (user) {
+        const u = JSON.parse(user);
+        try {
+          let result = await fetch("http://localhost:8080/project/regularuser", {
+            method: "GET",
+            headers: {
+              Authorization: u.token,
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          });
 
+          if (result.ok) {
+            let ru = await result.json();
+            setRegularuser(ru);
+            setIsLoading(false);
+          } else {
+            setError("Please try again!");
+          }
+        } catch (error) {
+          setError("An error occurred while fetching data.");
+        }
+      }
     };
+
     getRegularusers();
   }, []);
 
   useEffect(() => {
     if (search !== "") {
-      let ru1 = all.filter((ru) => ru.name.toLowerCase().includes(search.toLowerCase()) || ru.lastname.toLowerCase().includes(search.toLowerCase()));
+      let ru1 = regularuser.filter(
+        (ru) =>
+          ru.name.toLowerCase().includes(search.toLowerCase()) ||
+          ru.lastname.toLowerCase().includes(search.toLowerCase())
+      );
       setRegularuser(ru1);
     } else {
-      setRegularuser(all);
+      setRegularuser(regularuser);
     }
-  }, [search, all]);
+  }, [search, regularuser]);
 
   const handleDelete = (regularuserId) => {
-    // osvezimo prikaz
-    const fru = showRegUsers.filter((ru) => ru.id!= regularuserId);
-    setShowRegUsers(fru);
+    // Osvežavanje prikaza nakon brisanja
+    const updatedRegularUsers = regularuser.filter((ru) => ru.id !== regularuserId);
+    setRegularuser(updatedRegularUsers);
   };
 
-
   if (isLoading) {
-    return (
-      <div>
-        <h1>Loading....</h1>
-      </div>
-    );
+    return <div>Loading....</div>;
   }
   if (error) {
     return <p>{error}</p>;
   }
-
-
-
-  //  const search = (value) => {
-  // pretraga po imenu
-
-  //  if (value == "") {
-  //    setPrikaziNastavnike(nastavnici);
-  //   } else {
-  //    const n = nastavnici.filter((n) =>
-  //    n.name.toLowerCase().includes(value.toLowerCase())
-  //   );
-  //  setPrikaziNastavnike(n);
-  //  }
-  // };
 
   return (
     <Container>
@@ -101,7 +76,6 @@ const ShowRegUsers = () => {
           marginBottom: 3,
         }}
       >
-        {/* definisan onChange dogadjaj, svaki put kada se unese nova vrednost pozove se funkcija search  */}
         <FormControl sx={{ width: "30%" }}>
           <TextField
             placeholder="Search..."
@@ -110,24 +84,18 @@ const ShowRegUsers = () => {
           />
         </FormControl>
 
-        {/* regulauser/newregularuser */}
         <Button variant="outlined" onClick={() => navigation("newregularuser")}>
-          {" "}
-          Add new regular user{" "}
+          Add new regular user
         </Button>
       </Box>
 
       <Stack direction="column">
-        {regularuser.map((ru) =>
-          <ShowRegUser
-            regularuser={ru}
-            onDelete={handleDelete} key={ru.id} />
-        )}
+        {regularuser.map((ru) => (
+          <ShowRegUser regularuser={ru} onDelete={handleDelete} key={ru.id} />
+        ))}
       </Stack>
     </Container>
   );
-
-
 };
 
 export default ShowRegUsers;
