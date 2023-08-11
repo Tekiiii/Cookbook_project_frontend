@@ -21,6 +21,7 @@ const Login = () => {
         setErrorLogin(false);
     }
 
+
     const loginUser = async () => {
         const result = await fetch('http://localhost:8080/cookbook/login', {
             method: "POST",
@@ -76,6 +77,7 @@ const Login = () => {
                     onKeyDown={handleKeyDown}
                     sx={{ width: '100%' }}
                     type='password' />
+
                 <Button sx={{ marginTop: '15px', color: '#E01E9B' }} onClick={loginUser} >Login</Button>
             </Box>
             <Snackbar open={errorLogin} onClose={closeErrorMsg}>

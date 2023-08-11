@@ -58,17 +58,36 @@ const App = () => {
                 className="navLink"
                 style={{ textDecoration: 'none', color: '#E01E9B', marginRight: '15px' }}
               >
-                {user ?
-                  (
-                    <Button color="inherit" sx={{ marginRight: '0.5vw', padding: "0px", fontSize: '14px' }} onClick={logout}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  {user ? (
+                    <Button
+                      color="inherit"
+                      sx={{ marginRight: '0.5vw', padding: '0px', fontSize: '14px' }}
+                      onClick={logout}
+                    >
                       Log out
                     </Button>
-                  ) :
-                  (
-                    <Button color="inherit" sx={{ marginRight: '0.5vw', padding: "0px", fontSize: '14px' }} onClick={() => navigate('/login')}>
-                      Log in
-                    </Button>
+                  ) : (
+                    <div style={{ display: 'flex' }}>
+                     <div> <Button
+                        color="inherit"
+                        sx={{ marginRight: '0.5vw', padding: '0px', fontSize: '14px' }}
+                        onClick={() => navigate('/login')}
+                      >
+                        Log in
+                      </Button></div>
+                      <div><Button
+                        color="inherit"
+                        sx={{ padding: '0px', fontSize: '14px' }}
+                        onClick={() => navigate('/signin')}
+                      >
+                        Sign in
+                      </Button></div>
+                    </div>
                   )}
+                </div>
+
+
                 <IconButton color="inherit">
                   <AccountCircleIcon />
                 </IconButton>
@@ -168,7 +187,7 @@ const App = () => {
                   activeClassName="activeLink"
                   className="navLink"
                   style={{ textDecoration: 'none', color: '#E01E9B', fontSize: '14px', marginTop: '8px' }}
-                onClick={() => {navigate('/chefRecipes'); setOpen(false)}}
+                  onClick={() => { navigate('/chefRecipes'); setOpen(false) }}
                 >
                   Chef recipes
                 </Button></>) : <></>}

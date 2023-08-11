@@ -36,6 +36,7 @@ import ChefRecipeDetails from './chefRecipes/ChefRecipeDetails';
 import ChefRecipeForm from './chefRecipes/ChefRecipeForm';
 import MyCookbook from './Cookbook/MyCookbook';
 import MyCookbookRecipeDetails from './Cookbook/MyCookbookRecipeDetails';
+import Signin from './Signin';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -52,6 +53,10 @@ const router = createBrowserRouter([{
     {
       path: 'login',
       element: <Login />
+    },
+    {
+      path: 'signin',
+      element: <Signin />
     },
     {
       path: 'recipe',
