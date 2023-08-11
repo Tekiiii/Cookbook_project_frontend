@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Box, Button, Container, Grid, InputAdornment, OutlinedInput, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
-import ShowRecipe from "../recipe/ShowRecipe";
+import MyCookBookRecipe from "./MyCookbookRecipe";
 
 const normalizeText = (text) => {
   return text
@@ -13,7 +13,7 @@ const normalizeText = (text) => {
     .replace("Š", 'S');
 }
 
-const ShowMyCookbook = () => {
+const MyCookbook = () => {
   const [myCookbook, setMyCookbook] = useState([]);
   const [recipes, setAllRecipes] = useState([]);
   const [data, setData] = useState([]);
@@ -56,54 +56,6 @@ const ShowMyCookbook = () => {
     };
     getMyCookbook();
   }, []);
-
-  // useEffect(() => {
-  //   const getRecipes = async () => {
-  //     const user = localStorage.getItem("user");
-  //     if (user) {
-  //       const u = JSON.parse(user);
-  //       let result = await fetch(`http://localhost:8080/project/recipe/`, {
-  //         method: 'GET',
-  //         headers: {
-  //           Authorization: u.token,
-  //           "Accept": "application/json",
-  //           "Content-Type": "application/json"
-  //         },
-  //       });
-  //       console.log(result);
-  //       if (result.ok) {
-  //         let recipes_r = await result.json();
-  //         setData(recipes_r);
-  //         setAllRecipes(recipes_r);
-  //       }
-  //     }
-  //   };
-  //   getRecipes();
-  // }, []);
-
-  // useEffect(() => {
-  // const getRecipes = async ({params}) => {
-  //   const user = localStorage.getItem("user");
-  //       if (user) {
-  //        const u = JSON.parse(user);
-  //       let result = await fetch(`http://localhost:8080/project/recipe/${params.id}`, {
-  //           method: "GET",
-  //           headers: {
-  //                Authorization: u.token,
-  //               "Accept": "application/json",
-  //               "Content-Type": "application/json",
-  //           }
-  //       });
-  //       if (result.ok) {
-  //         let get_recipes = await result.json();
-  //         setData(get_recipes);
-  //         setMyCookbook(get_recipes);
-  //       }
-  //    }
-  //   };
-  //   getRecipes();
-  // }, []);
-
 
   return (
     <Container>
@@ -149,11 +101,11 @@ const ShowMyCookbook = () => {
         gridGap: '36px',
         margin: '40px auto',
       }}>
-        {data.map((s) => <ShowRecipe recipe={s} key={s.id} />)}
+        {data.map((s) => <MyCookBookRecipe recipe={s} key={s.id} />)}
       </Grid>
     </Container>
   );
 
 }
 
-export default ShowMyCookbook;
+export default MyCookbook;
