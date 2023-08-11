@@ -1,154 +1,148 @@
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "./App";
-import { Box, TextField, Button, Container, Typography, Snackbar, Alert } from "@mui/material";
-import { useState, useContext } from 'react';
-import './App.css'
+import { useState } from "react";
+import { useNavigate,useSearchParams } from "react-router-dom";
+import { Box, Button, Container, FormHelperText, TextField } from "@mui/material";
 
 const Signin = () => {
-    const { user, signin} = useContext(UserContext);
-    const [signinData, setSigninData] = useState({ email: '', password: '', confirmed_password: "", username: "", name: "", lastname: "" });
-    const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmed_password, setConfirmed_password] = useState("");
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+  const [globalError, setGlobalError] = useState(false);
 
-    const handleKeyDown = (e) => {
-        if (e.key === "Enter") {
-            signin();
-        }
-    };
 
-    const [errorSignin, setErrorSignin] = useState(false);
+  const newRegularuser = {
+    name: name,
+    lastname: lastname,
+    username:username,
+    password: password,
+    confirmed_password: confirmed_password,
+    email: email,
+  };
 
-    const closeErrorMsg = () => {
-        setErrorSignin(false);
+  const addregularuser = async () => {
+
+   // const user = localStorage.getItem("user");
+   // if (user) {
+   //    const u = JSON.parse(user);
+    let response = await fetch("http://localhost:8080/project/regularuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+    //   "Authorization": u.token,
+      },
+      body: JSON.stringify(newRegularuser),
+    });
+
+    console.log(response);
+    if (response.ok) {
+      let d = await response.json();
+      //console.log(JSON.stringify(d, null, 4));
+      alert("Successfully added new regular user.");
+      navigate("/login");
+    } else {
+      console.log("Error!");
     }
+  // }
+
+   
+ };
+  return (
+    <Container>
+      <Box
+        component="form"
+        sx={{
+          display: "flex",
+          gap: "10px",
+          "flex-direction": "column",
+          "align-items": "center",
+          "& .MuiTextField-root": { m: 1, width: "100%" },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          sx={{ width: "100%" }}
+          fullWidth
+          required
+          id="outlined-required"
+          label="Regular user name"
+          placeholder="Regular user name"
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+        <TextField
+          sx={{ width: "100%" }}
+          fullWidth
+          required
+          id="outlined-required"
+          label="Regular user lastname"
+          placeholder="Regular user lastname"
+          onChange={(e) => {
+            setLastname(e.target.value);
+          }}
+        />
+        <TextField
+          sx={{ width: "100%" }}
+          fullWidth
+          required
+          id="outlined-required"
+          label="Username"
+          placeholder="Username"
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
+        <TextField
+          sx={{ width: "100%" }}
+          fullWidth
+          required
+          id="outlined-required"
+          label="Password"
+          placeholder="Password"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+        <TextField
+          sx={{ width: "100%" }}
+          fullWidth
+          required
+          id="outlined-required"
+          label="Confirmed password"
+          placeholder="Confirmed password"
+          onChange={(e) => {
+            setConfirmed_password(e.target.value);
+          }}
+        />
+        <TextField
+          sx={{ width: "100%" }}
+          fullWidth
+          required
+          id="outlined-required"
+          label="Email"
+          placeholder="Email"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+
+        <Button
+          onClick={addregularuser}
+        >
+          {" "}
+          Save{" "}
+        </Button>
+        <FormHelperText error={globalError}>{globalError}</FormHelperText>
+
+      </Box>
+    </Container>
+  );
 
 
-    const signinUser = async () => {
-        const result = await fetch('http://localhost:8080/project/regularuser', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(signinData),
-        });
-        if (result.ok) {
-            const user = await result.json();
-            signin(user);
-            localStorage.setItem("user", JSON.stringify(user));
-            console.log('Ulogovan korisnik ' + JSON.stringify(user))
-            navigate('/login'); // TODO or 
-            setErrorSignin(false);
-        } else {
-            console.log('Problem prilikom pravljenja naloga.');
-            setErrorSignin(true);
-        }
-    }
-
-    return (
-        <Container>
-            <Typography className="typo" sx={{ marginBottom: '30px', fontSize: '20px', color: '#E01E9B', textAlign: 'center' }}>
-                Molimo Vas, napravite svoj nalog.
-            </Typography>
-            <Box sx={{ margin: '50px auto 30px auto', alignItems: 'center', width: '40%', textAlign: 'center' }}>
-                <TextField
-                    required
-                    placeholder="Email"
-                    label="Email"
-                    onChange={(e) => {
-                        const dataForSignin = { ...signinData };
-                        dataForSignin.email = e.target.value;
-                        setSigninData(dataForSignin);
-                    }}
-                    onKeyDown={handleKeyDown}
-                    sx={{
-                        border: 'none',
-                        borderRadius: '20px',
-                        width: '100%',
-                        marginBottom: '25px',
-                    }} />
-                <TextField
-                    required
-                    placeholder="Password"
-                    label="Password"
-                    onChange={(e) => {
-                        const dataForSignin = { ...signinData };
-                        dataForSignin.email = e.target.value;
-                        setSigninData(dataForSignin);
-                    }}
-                    onKeyDown={handleKeyDown}
-                    sx={{ width: '100%' }}
-                    type='password' />
-                
-                <TextField
-                    required
-                    placeholder="Confirmed Password"
-                    label="Confirmed password"
-                    onChange={(e) => {
-                        const dataForSignin = { ...signinData };
-                        dataForSignin.email = e.target.value;
-                        setSigninData(dataForSignin);
-                    }}
-                    onKeyDown={handleKeyDown}
-                    sx={{
-                        border: 'none',
-                        borderRadius: '20px',
-                        width: '100%',
-                        marginBottom: '25px',
-                    }} />
-                <TextField
-                    required
-                    placeholder="Username"
-                    label="Username"
-                    onChange={(e) => {
-                        const dataForSignin = { ...signinData };
-                        dataForSignin.email = e.target.value;
-                        setSigninData(dataForSignin);
-                    }}
-                    onKeyDown={handleKeyDown}
-                    sx={{
-                        border: 'none',
-                        borderRadius: '20px',
-                        width: '100%',
-                        marginBottom: '25px',
-                    }} />
-                    <TextField
-                    required
-                    placeholder="Name"
-                    label="Name"
-                    onChange={(e) => {
-                        const dataForSignin = { ...signinData };
-                        dataForSignin.email = e.target.value;
-                        setSigninData(dataForSignin);
-                    }}
-                    onKeyDown={handleKeyDown}
-                    sx={{ width: '100%' }}
-                    type='name' />
-                    <TextField
-                    required
-                    placeholder="Lastname"
-                    label="Lastname"
-                    onChange={(e) => {
-                        const dataForSignin = { ...signinData };
-                        dataForSignin.email = e.target.value;
-                        setSigninData(dataForSignin);
-                    }}
-                    onKeyDown={handleKeyDown}
-                    sx={{ width: '100%' }}
-                    type='lastname' />
-
-
-
-
-
-
-                <Button sx={{ marginTop: '15px', color: '#E01E9B' }} onClick={signinUser} >Sign in</Button>
-            </Box>
-            <Snackbar open={errorSignin} onClose={closeErrorMsg}>
-                <Alert onClose={closeErrorMsg} severity='error' sx={{ width: '100%' }}>
-                    Problem prilikom pravljenja novog naloga.
-                </Alert>
-            </Snackbar>
-        </Container>
-    )
-}
+};
 
 export default Signin;
