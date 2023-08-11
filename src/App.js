@@ -52,13 +52,8 @@ const App = () => {
                 </IconButton>
               </Toolbar> : <></>}
             <Stack direction="row" alignItems="center" spacing={1} sx={{ alignItems: 'center' }}>
-              <NavLink
-                to="/login"
-                activeClassName="activeLink"
-                className="navLink"
-                style={{ textDecoration: 'none', color: '#E01E9B', marginRight: '15px' }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              
+                <div style={{ display: 'flex', justifyContent: 'flex-end', textDecoration: 'none', color: '#E01E9B', paddingRight: '30 px' }}>
                   {user ? (
                     <Button
                       color="inherit"
@@ -91,7 +86,6 @@ const App = () => {
                 <IconButton color="inherit">
                   <AccountCircleIcon />
                 </IconButton>
-              </NavLink>
             </Stack>
           </AppBar>
 
