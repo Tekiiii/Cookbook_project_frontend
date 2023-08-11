@@ -42,8 +42,12 @@ const ShowIngredients = () => {
     
     // brise ali ne osvezi stranicu
     const handleDelete = (ingredientsiD) => {
-      const deleteIng = ingredients.filter((i) => i.id!= ingredientsiD);
-      setIngredients(deleteIng);
+      console.log("Deleting ingredient with ID:", ingredientsiD);
+      
+      const updatedIngredients = ingredients.filter((i) => i.id !== ingredientsiD);
+      console.log("Updated ingredients:", updatedIngredients);
+      
+      setIngredients(updatedIngredients);
     };
   
   

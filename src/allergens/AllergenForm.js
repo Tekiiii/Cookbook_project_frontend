@@ -5,18 +5,21 @@ import { useNavigate } from "react-router-dom";
 const AllergenForm = () => {
     const [name, setName] = useState("");
     const [nameError, setNameError] = useState("");
+    const [imageURL, setImageURL] = useState("");
+    const [imageURLError, setImageURLError] = useState("");
     const [globalError, setGlobalError] = useState(false);
     const errorMessageTemplate = "Please enter ";
     const navigate = useNavigate();
 
     const save = async () => {
-        if (name === "") {
+        if (name === "" || imageURL === "") {
             setGlobalError("Please fill all the fields in the form.");
             return;
         }
 
         const newAllergen = {
             name: name,
+            icon: imageURL,
         }
 
         const user = localStorage.getItem("user");
@@ -60,6 +63,7 @@ const AllergenForm = () => {
                 noValidate
                 autoComplete="off"
             >
+                
                 <TextField
                     sx={{ width: "100%" }}
                     fullWidth
@@ -69,7 +73,7 @@ const AllergenForm = () => {
                     placeholder="Allergen name"
                     value={name}
                     helperText={nameError}
-                    error={nameError}
+                    error={Boolean(nameError)}
                     onBlur={(e) => {
                         const value = e.target.value;
                         setName(value);
@@ -91,15 +95,44 @@ const AllergenForm = () => {
                         }
                     }}
                 />
+                <TextField
+                    sx={{ width: "100%" }}
+                    fullWidth
+                    required
+                    id="outlined-image-url-required"
+                    label="Image URL"
+                    placeholder="Enter image URL"
+                    value={imageURL}
+                    helperText={imageURLError}
+                    error={Boolean(imageURLError)}
+                    onBlur={(e) => {
+                        const value = e.target.value;
+                        setImageURL(value);
+                        if (!value) {
+                            setImageURLError("Please enter an image URL.");
+                        }
+                    }}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        setImageURL(value);
+                        if (!value) {
+                            setImageURLError("Please enter an image URL.");
+                        } else {
+                            setImageURLError("");
+                        }
+                    }}
+                />
                 <Button
                     variant="contained"
                     style={{ backgroundColor: '#6bb187', color: 'white' }}
                     onClick={save}
-                    disabled={nameError}
+                    disabled={Boolean(globalError) || Boolean(nameError) || Boolean(imageURLError)}
                 >
                     Save
                 </Button>
-                <FormHelperText error={globalError}>{globalError}</FormHelperText>
+                <FormHelperText error={Boolean(globalError) || Boolean(nameError) || Boolean(imageURLError)}>
+                    {globalError}
+                </FormHelperText>
             </Box>
         </Container>
     );

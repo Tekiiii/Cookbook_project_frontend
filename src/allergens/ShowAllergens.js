@@ -15,13 +15,16 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from '@mui/icons-material/Edit';
-import InfoIcon from "@mui/icons-material/Info";
 import SearchIcon from '@mui/icons-material/Search';
 import { UserContext } from '../App';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const getImageUrlForAllergen = (allergenId) => {
+const getImageUrlForAllergen = (allergenId, imageUrl) => {
+    if (imageUrl) {
+        return imageUrl;
+    }
+
     switch (allergenId) {
         case 1:
             return 'https://zdravaprica.com/wp-content/uploads/2017/12/Kikiriki-1.jpg';
@@ -193,7 +196,7 @@ const ShowAllergens = () => {
                                 <CardMedia
                                     component="img"
                                     height="140"
-                                    image={getImageUrlForAllergen(allergen.id)}
+                                    image={getImageUrlForAllergen(allergen.id, allergen.icon)}
                                     alt={allergen.name}
                                 />
                                 <Typography variant="body1" sx={{ marginTop: '8px' }}>
