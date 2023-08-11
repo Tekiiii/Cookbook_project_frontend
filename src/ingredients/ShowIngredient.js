@@ -11,6 +11,7 @@ const ShowIngredient = ({ingredient, onDelete}) => {
     const navigate = useNavigate();
   
     const deleteIngredient = async () => {
+      console.log("Deleting ingredient:", ingredient.id);
       const user = localStorage.getItem("user");
       if (user) {
       const u = JSON.parse(user);
@@ -23,12 +24,10 @@ const ShowIngredient = ({ingredient, onDelete}) => {
         },
       });
       if (response.ok) {
-        let d = await response.json();
-        console.log('Ingredient deleted!');
+        console.log("Ingredient deleted:", ingredient.id);
         onDelete(ingredient.id);
-      
       } 
-    }
+    };
     };
   
     return <Card sx={{ marginBottom: 3, marginRight: 5, marginLeft: 5 }} variant="outlined">

@@ -118,7 +118,7 @@ const router = createBrowserRouter([{
       },
     },
     {
-      path: 'add_allergen',
+      path: 'add-allergen',
       element: <AllergenForm />,
     },
     {
