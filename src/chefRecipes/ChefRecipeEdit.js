@@ -1,9 +1,11 @@
 import { produce } from "immer";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import {
+    Autocomplete,
     Box,
     Button,
+    Chip,
     Container,
     FormHelperText,
     TextField,
@@ -14,8 +16,6 @@ const ChefRecipeEdit = () => {
     const recipe = useLoaderData();
     const [updatedRecipe, setUpdatedRecipe] = useState(recipe);
 
-
-    const [recipeError, setRecipeError] = useState("");
     const navigate = useNavigate();
 
     const { id } = useParams();
@@ -23,13 +23,16 @@ const ChefRecipeEdit = () => {
     const [time, setTime] = useState(recipe.time);
     const [amount, setAmount] = useState(recipe.amount);
     const [steps, setSteps] = useState(recipe.steps);
+    const [ingredients, setIngredients] = useState(recipe.ingredientIdAmounts || []);
+    const [ingredientIdAmounts, setIngredientIdAmounts] = useState({}); // Dodajte ovu definiciju
+const [allIngredients, setAllIngredients] = useState([]);
     // const [ingredients, setIngredients] = useState(recipe.ingredients); RESITI
 
     const [nameError, setNameError] = useState("");
     const [timeError, setTimeError] = useState("");
     const [stepsError, setStepsError] = useState("");
     const [amountError, setAmountError] = useState("");
-    const [ingredientsError, setIngredientsError] = useState("");
+    const [ingredientsError, setIngredientError] = useState("");
     const [globalError, setGlobalError] = useState(false);
     const errorMessageTemplate = "Please enter ";
 
@@ -92,6 +95,37 @@ const ChefRecipeEdit = () => {
     //         }
     //     }
     // };
+
+    useEffect(() => {
+        const getIngredients = async () => {
+            let result = await fetch('http://localhost:8080/project/ingredients', {
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            });
+            console.log(result);
+            if (result.ok) {
+                let i = await result.json();
+                setAllIngredients(i);
+                console.log(i);
+            } 
+        };
+        getIngredients();
+    }, []);
+
+    const handleTagDelete = (tagIndex) => {
+        const newIngredients = ingredients.filter((_, index) => index !== tagIndex);
+        setIngredients(newIngredients);
+    
+        // You might need to update the ingredientIdAmounts as well if needed
+        const newIngredientIdAmounts = { ...ingredientIdAmounts };
+        delete newIngredientIdAmounts[ingredients[tagIndex].id];
+        setIngredientIdAmounts(newIngredientIdAmounts);
+    
+        setIngredientError(newIngredients.length === 0 ? "Please select at least one ingredient." : "");
+    };
 
     const update = async () => {
         if (name === "" || time === "" || steps === ""
@@ -215,11 +249,46 @@ const ChefRecipeEdit = () => {
 
                 }}
             />
-            <Button sx={{ color: '#E01E9B' }}
-                onClick={update} disabled={timeError || nameError || stepsError || amountError}>
-                {" "}
-                Save{" "}
+            <Autocomplete
+                multiple
+                id="ingredients"
+                options={allIngredients}
+                getOptionLabel={(option) => option.name}
+                filterSelectedOptions
+                value={ingredients}
+                onChange={(event, newValue) => {
+                    setIngredients(newValue);
+                    setIngredientError(newValue.length === 0 ? "Please select at least one ingredient." : "");
+                }}
+                renderTags={(value, getTagProps) =>
+                    value.map((option, index) => (
+                        <Chip
+                            label={option.name}
+                            {...getTagProps({ index })}
+                            onDelete={() => handleTagDelete(index)} // Define this function
+                        />
+                    ))
+                }
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        fullWidth
+                        label="Ingredients"
+                        placeholder="Select ingredients"
+                        error={Boolean(ingredientsError)}
+                        helperText={ingredientsError}
+                    />
+                )}
+            />
+
+            <Button
+                sx={{ color: '#E01E9B' }}
+                onClick={update}
+                disabled={timeError || nameError || stepsError || amountError || ingredientsError}
+            >
+                Update
             </Button>
+
             <FormHelperText error={globalError}>{globalError}</FormHelperText>
         </Box>
     </Container>

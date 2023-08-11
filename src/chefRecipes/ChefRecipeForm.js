@@ -1,30 +1,24 @@
 import { Autocomplete, Box, Button, Chip, Container, FormControl, FormHelperText, Stack, TextField, Typography } from "@mui/material";
 import { produce } from "immer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
 const ChefRecipeForm = () => {
-    // const [newRecipe, setNewRecipe] = useState({
-    //     name: "",
-    //     time: "",
-    //     amount: "",
-    //     steps: "",
-    //     picture: "",
-    //     ingredients: []
-    // });
 
     const [name, setName] = useState("");
     const [time, setTime] = useState("");
     const [amount, setAmount] = useState("");
     const [steps, setSteps] = useState("");
+    const [picture, setPicture] = useState(null);
     const [ingredients, setIngredients] = useState([]);
+    const [ingredientIdAmounts, setIngredientIdAmounts] = useState({});
 
-    // const [selectedIngredients, setSelectedIngredients] = useState([]);
-    // const [selectedIngredient, setSelectedIngredient] = useState(null); 
+    const[allIngredients, setAllIngredients] = useState([]);
 
     const [nameError, setNameError] = useState("");
     const [timeError, setTimeError] = useState("");
     const [stepsError, setStepsError] = useState("");
+    const [pictureError, setPictureError] = useState("");
     const [amountError, setAmountError] = useState("");
     const [ingredientError, setIngredientError] = useState("");
     const [globalError, setGlobalError] = useState(false);
@@ -32,18 +26,19 @@ const ChefRecipeForm = () => {
     const navigate = useNavigate();
 
     const save = async () => {
-        if (name === "" || time === "" || steps === ""
-            || amount === "" || ingredients == 0) {
+        if (name === "" || time === "" || steps === "" || picture === null
+            || amount === "" || ingredients.length === 0) {
             setGlobalError("Please fill all the fields in the form.")
-            return;
-        }
+        return;
+}
 
         const new_recipe = {
             name: name,
             time: time,
             amount: amount,
+            picture: picture,
             steps: steps,
-            ingredients: ingredients
+            ingredientIdAmounts: ingredients
         }
 
         const user = localStorage.getItem("user");
@@ -67,7 +62,42 @@ const ChefRecipeForm = () => {
                 console.log("Failed creating new recipe");
             }
         }
-    }
+    };
+
+    useEffect(() => {
+        const getIngredients = async () => {
+            let result = await fetch('http://localhost:8080/project/ingredients', {
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            });
+            console.log(result);
+            if (result.ok) {
+                let i = await result.json();
+                setAllIngredients(i);
+                console.log(i);
+            } 
+        };
+        getIngredients();
+    }, []);
+
+    const handleIngredientChange = (event, newValue) => {
+        setIngredients(newValue);
+        setIngredientError(newValue.length === 0 ? "Please select at least one ingredient." : "");
+    };
+
+    const handleAmountChange = (event, ingredientId) => {
+        const newIngredientIdAmounts = { ...ingredientIdAmounts };
+        newIngredientIdAmounts[ingredientId] = event.target.value;
+        setIngredientIdAmounts(newIngredientIdAmounts);
+    };
+
+    const handlePictureChange = (event) => {
+        const selectedPicture = event.target.files[0];
+        setPicture(selectedPicture);
+    };
 
     return <Container maxWidth="sm" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <Typography sx={{ marginBottom: '20px', fontSize: '22px', color: '#E01E9B' }}>
@@ -204,10 +234,62 @@ const ChefRecipeForm = () => {
                     } else setAmountError("");
                 }}
             />
-
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handlePictureChange}
+                sx={{ marginTop: 2 }}
+            />
+            <Autocomplete
+                multiple
+                id="ingredients"
+                options={allIngredients}
+                getOptionLabel={(option) => option.name}
+                filterSelectedOptions
+                value={ingredients}
+                onChange={handleIngredientChange}
+                renderTags={(value, getTagProps) =>
+                    value.map((option, index) => (
+                        <Chip
+                            label={option.name}
+                            {...getTagProps({ index })}
+                            onDelete={() => {
+                                const newValue = ingredients.filter((_, i) => i !== index);
+                                setIngredients(newValue);
+                                const newIngredientIdAmounts = { ...ingredientIdAmounts };
+                                delete newIngredientIdAmounts[option.id];
+                                setIngredientIdAmounts(newIngredientIdAmounts);
+                                setIngredientError(newValue.length === 0 ? "Please select at least one ingredient." : "");
+                            }}
+                        />
+                    ))
+                }
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        fullWidth
+                        label="Ingredients"
+                        placeholder="Select ingredients"
+                        error={Boolean(ingredientError)}
+                        helperText={ingredientError}
+                    />
+                )}
+            />
+            {ingredients.map((ingredient) => (
+                <Box key={ingredient.id} sx={{ display: 'flex', alignItems: 'center', marginTop: 2 }}>
+                    <Typography sx={{ minWidth: 150 }}>{ingredient.name}</Typography>
+                    <TextField
+                        sx={{ width: '80px', marginLeft: 'auto' }}
+                        label="Amount"
+                        variant="outlined"
+                        value={ingredientIdAmounts[ingredient.id] || ''}
+                        onChange={(e) => handleAmountChange(e, ingredient.id)}
+                    />
+                </Box>
+            ))}
             <Button sx={{ color: '#E01E9B' }}
                 onClick={save}
-                disabled={timeError || nameError || stepsError || amountError || ingredientError}>
+                disabled={timeError !== "" || nameError !== "" || stepsError !== "" || amountError !== "" || ingredientError !== "" || pictureError !== ""}>
                 {" "}Save{" "}
             </Button>
             <FormHelperText error={globalError}>{globalError}</FormHelperText>
