@@ -8,7 +8,7 @@ import ShowRecipes from './recipe/ShowRecipes';
 import RecipeDetails from './recipe/RecipeDetails';
 import RecipeEdit from './recipe/RecipeEdit';
 import RecipeForm from './recipe/RecipeForm';
-import ShowMyCookbook from './Cookbook/ShowMyCookbook';
+import ShowMyCookbook from './Cookbook/MyCookbook';
 import MyAllergens from './allergens/MyAllergens';
 import ShowAllergens from './allergens/ShowAllergens';
 import AllergenEdit from './allergens/AllergenEdit';
@@ -34,6 +34,8 @@ import ChefRecipeEdit from './chefRecipes/ChefRecipeEdit';
 import ChefRecipes from './chefRecipes/ChefRecipes';
 import ChefRecipeDetails from './chefRecipes/ChefRecipeDetails';
 import ChefRecipeForm from './chefRecipes/ChefRecipeForm';
+import MyCookbook from './Cookbook/MyCookbook';
+import MyCookbookRecipeDetails from './Cookbook/MyCookbookRecipeDetails';
 
 const router = createBrowserRouter([{
   path: '/',
@@ -91,7 +93,22 @@ const router = createBrowserRouter([{
     },
     {
       path: 'myCookbook',
-      element: <ShowMyCookbook />
+      element: <MyCookbook />
+    },
+    {
+      path: 'myCookbook/recipe_details/:id',
+      element: <MyCookbookRecipeDetails />,
+      loader: async ({ params }) => {
+        console.log(params.id);
+        console.log(params);
+        return fetch(`http://localhost:8080/project/recipe/${params.id}`, {
+          method: 'GET',
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          }
+        });
+      }
     },
 
     {
