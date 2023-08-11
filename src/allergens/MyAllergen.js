@@ -21,7 +21,8 @@ const MyAllergen = (allergen) => {
 
     const [allergens, setAllergens] = useState([]);
     const [data, setData] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
+        const [searchTerm, setSearchTerm] = useState('');
+    const [regularUser, setRegularUser] = useState({});
     const [filteredAllergens, setFilteredAllergens] = useState([]);
 
     const getImageUrlForAllergen = (allergenId) => {
@@ -41,11 +42,42 @@ const MyAllergen = (allergen) => {
         }
     };
 
+    useEffect(() => {
+        const getRegularUser = async () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            console.log(user.role);
+            console.log(user && user.role === "ROLE_REGULAR_USER");
+            if (user) {
+                console.log(user + "ovo je user");
+                let response = await fetch(`http://localhost:8080/project/regularuser/${user.id}`, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: user.token,
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                    }
+                });
+                console.log(response);
+                if (response.ok) {
+                    let userData = await response.json();
+                    console.log("Successfully fetched user");
+                    console.log(userData);
+                    setRegularUser(userData);
+                } else {
+                    console.log("Error while fetching user");
+                }
+            }
+        }
+        getRegularUser();
+    }, []);
+
+    console.log(allergen.id);
+
     const handleDelete = async (allergeniD) => {
         const user = localStorage.getItem("user");
         if (user) {
             const u = JSON.parse(user);
-            const response = await fetch(`http://localhost:8080/project/regularuser/delete/regularuser_id/$/allergen_id/${allergen.id}`, {
+            const response = await fetch(`http://localhost:8080/project/regularuser/delete/regularuser_id/${regularUser.id}/allergen_id/${allergen.ID}`, {
                 method: "PUT",
                 headers: {
                     Authorization: u.token,
