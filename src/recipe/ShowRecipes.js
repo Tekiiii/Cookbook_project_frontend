@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Box, Button, Container, Grid, InputAdornment, OutlinedInput } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Container, Grid, InputAdornment, OutlinedInput } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { useNavigate } from 'react-router';
-import { UserContext } from "../App.js";
-import ShowRecipe from './ShowRecipe.js';
+import ShowRecipe from './ShowRecipe';
 
 const normalizeText = (text) => {
   return text
@@ -15,54 +13,50 @@ const normalizeText = (text) => {
 }
 
 const ShowRecipes = () => {
-  const [recipes, setAllRecipes] = useState([]);
-  const [data, setData] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [search, setSearch] = useState('');
-  const navigate = useNavigate();
-  // const { user, login, logout } = useContext(UserContext);s
+
+  useEffect(() => {
+    const getRecipes = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/project/recipe", {
+          method: 'GET',
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          },
+        });
+
+        if (response.ok) {
+          const recipesData = await response.json();
+          setRecipes(recipesData);
+          setFilteredRecipes(recipesData);
+        }
+      } catch (error) {
+        console.error("Error while fetching recipes:", error);
+      }
+    };
+    getRecipes();
+  }, []);
 
   useEffect(() => {
     if (search === '') {
-      setAllRecipes(recipes);
-      setData(recipes);
+      setFilteredRecipes(recipes);
     } else {
       const normalizedSearch = normalizeText(search.toUpperCase());
       const filteredData = recipes.filter((recipe) => {
         const normalizedText = normalizeText(recipe.name.toUpperCase());
         return normalizedText.includes(normalizedSearch);
-      })
-      setData(filteredData);
-    }
-  }, [search]);
-
-  useEffect(() => {
-    const getRecipes = async () => {
-      //  const user = localStorage.getItem("user");
-      //  if (user) {
-      //  const u = JSON.parse(user);
-      let result = await fetch("http://localhost:8080/project/recipe", {
-        method: 'GET',
-        headers: {
-          //  Authorization: u.token,
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
       });
-      console.log(result);
-      if (result.ok) {
-        let recipes_r = await result.json();
-        setData(recipes_r);
-        setAllRecipes(recipes_r);
-      }
-      //   }
-    };
-    getRecipes();
-  }, []);
+      setFilteredRecipes(filteredData);
+    }
+  }, [search, recipes]);
 
   const handleDelete = (recipeId) => {
-    const fileteredRecipes = recipes.filter((s) => s.id != recipeId);
-    setData(fileteredRecipes);
-    setAllRecipes(fileteredRecipes);
+    console.log("Deleting recipe with ID:", recipeId);
+    const updatedRecipes = filteredRecipes.filter((recipe) => recipe.id !== recipeId);
+    setFilteredRecipes(updatedRecipes);
   };
 
   return (
@@ -124,7 +118,9 @@ const ShowRecipes = () => {
         gridGap: '36px',
         margin: '40px auto',
       }}>
-        {data.map((s) => <ShowRecipe recipe={s} key={s.id} onDelete={handleDelete} />)}
+        {filteredRecipes.map((recipe) => (
+          <ShowRecipe recipe={recipe} key={recipe.id} onDelete={handleDelete} />
+        ))}
       </Grid>
     </Container>
   );
