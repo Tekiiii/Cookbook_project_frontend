@@ -13,7 +13,7 @@ const RegUserDetails = () => {
             const user = localStorage.getItem("user");
             if (user) {
                 const u = JSON.parse(user);
-                let result = await fetch(`http://localhost:8080/project/allergens/userAllergen`, {
+                let result = await fetch(`http://localhost:8080/project/allergens/userAllergens`, {
                     method: 'GET',
                     headers: {
                         Authorization: u.token,
@@ -42,10 +42,16 @@ const RegUserDetails = () => {
           justifyContente - horizontalno poravnanje */}
 
             <Grid item xs={6}>
-                <h4>My Cookbook:</h4>
+                <h4>My Cook book:</h4>
             </Grid>
             <Grid item xs={6}>
                 <h2> {regularuser.myCookBook.id}</h2>
+            </Grid>
+            <Grid item xs={6} >
+                <h4> User name:</h4>
+            </Grid>
+            <Grid item xs={6}>
+                <h2> <i> {regularuser.username}</i></h2>
             </Grid>
             <Grid item xs={6} >
                 <h4> e-Mail:</h4>
@@ -57,14 +63,14 @@ const RegUserDetails = () => {
                 {data.length > 0 ? (
                     <>
                     Allergens: 
-                    {/* <ul>
+                    <ul>
                         {data.map((allergens) => (
                             <li key={allergens.id}>{allergens.name}</li>
                         ))}
-                    </ul> */}
+                    </ul>
                      </>
-                    ) : (
-                    'No allergens')}
+                     ) : (
+                     'No allergens')}
             </Grid>
         </Grid>
         <Box sx={{ marginTop: '10px', alignItems: 'center', textAlign: 'center' }}>

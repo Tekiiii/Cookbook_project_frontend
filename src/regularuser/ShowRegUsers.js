@@ -14,7 +14,7 @@ import ShowRegUser from "./ShowRegUser";
 
 
 const ShowRegUsers = () => {
-  const [regularuser, setregularuser] = useState([]);
+  const [regularuser, setRegularuser] = useState([]);
   const [all, setAll] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,7 +23,7 @@ const ShowRegUsers = () => {
   const[showRegUsers, setShowRegUsers] = useState(regularuser);
 
   useEffect(() => {
-    const getregularusers = async () => {
+    const getRegularusers = async () => {
       const user = localStorage.getItem("user");
      if (user) {
        const u = JSON.parse(user);
@@ -38,7 +38,7 @@ const ShowRegUsers = () => {
         console.log(result);
         if (result.ok) {
           let ru = await result.json();
-          setregularuser(ru);
+          setRegularuser(ru);
           setAll(ru);
           setIsLoading(false);
         } else {
@@ -47,15 +47,15 @@ const ShowRegUsers = () => {
       };
 
     };
-    getregularusers();
+    getRegularusers();
   }, []);
 
   useEffect(() => {
     if (search !== "") {
       let ru1 = all.filter((ru) => ru.name.toLowerCase().includes(search.toLowerCase()) || ru.lastname.toLowerCase().includes(search.toLowerCase()));
-      setregularuser(ru1);
+      setRegularuser(ru1);
     } else {
-      setregularuser(all);
+      setRegularuser(all);
     }
   }, [search, all]);
 

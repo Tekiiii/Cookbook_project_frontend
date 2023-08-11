@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom/dist";
 const ChefEdit = () => {
 
     const chef = useLoaderData();
-    const [updatedchef, setUpdatedchef] = useState(chef);
+//    const [updatedchef, setUpdatedchef] = useState(chef);
     const navigate = useNavigate();
 
     // funkcija za izmenu 
@@ -14,18 +14,22 @@ const ChefEdit = () => {
     const { id } = useParams();
     const [name, setName] = useState(chef.name);
     const [lastname, setLastname] = useState(chef.lastname);
-    const [recipes, setRecipes] = useState(chef.recipes);
+    const [username, setUsername] = useState(chef.username);
+    const [password, setPassword] = useState(chef.password);
+ //   const [recipes, setRecipes] = useState(chef.recipes);
     const [email, setEmail] = useState(chef.email);
 
     const [globalError, setGlobalError] = useState(false);
     const errorMessageTemplate = "Please enter the ";
     const [nameError, setNameError] = useState("");
     const [lastnameError, setLastnameError] = useState("");
-    const [recipesError, setRecipesError] = useState("");
+    const [usernameError, setUsernameError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+ //   const [recipesError, setRecipesError] = useState("");
     const [emailError, setEmailError] = useState("");
 
     const update = async () => {
-        if (name == "" || lastname == "" || recipes == "" || email == "") {
+        if (name == "" || lastname == "" || username == "" || password == "" || email == "") {
             setGlobalError("Please fill all fields in the form");
             return;
         }
@@ -34,7 +38,9 @@ const ChefEdit = () => {
             id: parseInt(id),
             name: name,
             lastname: lastname,
-            recipes: recipes,
+            username: username,
+            password: password,
+    ///        recipes: recipes,
             email: email,
         };
 
@@ -42,7 +48,7 @@ const ChefEdit = () => {
             if (user) {
                 const u = JSON.parse(user);
                 let response = await fetch(
-                    `http://localhost:8080/project/chef/edit_chef/${updatedchef.id}`,
+                    `http://localhost:8080/project/chef/${chef.id}`,
                     {
                         method: "PUT",
                         headers: {
@@ -116,6 +122,36 @@ const ChefEdit = () => {
                         fullWidth
                         required
                         id="outlined-required"
+                        label="Username"
+                        placeholder="Username"
+                        value={username}
+                        helperText={usernameError}
+                        onChange={(e) => {
+                            setUsername(e.target.value);
+                            if (e.target.value !== "") setUsernameError("");
+                            else setUsernameError(errorMessageTemplate + " chef username.");
+                         }}
+                    />
+                    <TextField
+                        sx={{ width: "100%" }}
+                        fullWidth
+                        required
+                        id="outlined-required"
+                        label="Password"
+                        placeholder="Password"
+                        value={password}
+                        helperText={passwordError}
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                            if (e.target.value !== "") setPasswordError("");
+                            else setPasswordError(errorMessageTemplate + " chef password.");
+                         }}
+                    />
+                    {/* <TextField
+                        sx={{ width: "100%" }}
+                        fullWidth
+                        required
+                        id="outlined-required"
                         label="Recipes"
                         placeholder="Recipes"
                         value={recipes.id}
@@ -126,7 +162,7 @@ const ChefEdit = () => {
                             else setRecipesError(errorMessageTemplate + " chef recipes.");
                          
                         }}
-                    />
+                    /> */}
                     <TextField
                         sx={{ width: "100%" }}
                         fullWidth
@@ -147,7 +183,7 @@ const ChefEdit = () => {
                     <Button
                         onClick={update}
                         disabled={
-                             nameError || lastnameError || recipes || emailError
+                             nameError || lastnameError || usernameError || passwordError || emailError
                         }
                     >
                         {" "}
