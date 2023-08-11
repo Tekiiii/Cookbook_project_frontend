@@ -21,7 +21,7 @@ const MyCookBookRecipe = ({ recipe }) => {
     const navigate = useNavigate();
 
     // dislike recipe TODO izbaciti to na back-u
-    const deleteRecipeFromCB = async (recipe) => {
+    const deleteRecipeFromCB = async () => {
         const user = localStorage.getItem("user");
         if (user) {
             const u = JSON.parse(user);
