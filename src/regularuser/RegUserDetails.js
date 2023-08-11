@@ -8,29 +8,29 @@ const RegUserDetails = () => {
     const [allergens, setAllergens] = useState([]);
     const [data, setData] = useState([]);
 
-    useEffect(() => {
-        const getAllergens = async () => {
-            const user = localStorage.getItem("user");
-            if (user) {
-                const u = JSON.parse(user);
-                let result = await fetch(`http://localhost:8080/project/allergens/userAllergens`, {
-                    method: 'GET',
-                    headers: {
-                        Authorization: u.token,
-                        "Accept": "application/json",
-                        "Content-Type": "application/json"
-                    },
-                });
-                console.log(result);
-                if (result.ok) {
-                    let allergens = await result.json();
-                    setData(allergens);
-                    setAllergens(allergens);
-                }
-            }
-        };
-        getAllergens();
-    }, []);
+    // useEffect(() => {
+    //     const getAllergens = async () => {
+    //         const user = localStorage.getItem("user");
+    //         if (user) {
+    //             const u = JSON.parse(user);
+    //             let result = await fetch(`http://localhost:8080/project/allergens/userAllergens`, {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     Authorization: u.token,
+    //                     "Accept": "application/json",
+    //                     "Content-Type": "application/json"
+    //                 },
+    //             });
+    //             console.log(result);
+    //             if (result.ok) {
+    //                 let allergens = await result.json();
+    //                 setData(allergens);
+    //                 setAllergens(allergens);
+    //             }
+    //         }
+    //     };
+    //     getAllergens();
+    // }, []);
 
     return <Container>
         <Box sx={{ display: "flex", justifyContent: "center", width: '100%' }}>
@@ -59,7 +59,7 @@ const RegUserDetails = () => {
             <Grid item xs={6}>
                 <h2> <i> {regularuser.email}</i></h2>
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 {data.length > 0 ? (
                     <>
                     Allergens: 
@@ -71,7 +71,7 @@ const RegUserDetails = () => {
                      </>
                      ) : (
                      'No allergens')}
-            </Grid>
+            </Grid> */}
         </Grid>
         <Box sx={{ marginTop: '10px', alignItems: 'center', textAlign: 'center' }}>
             <Button onClick={() => navigate('/regularuser')}
