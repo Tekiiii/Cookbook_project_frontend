@@ -23,15 +23,10 @@ const Signin = () => {
   };
 
   const addregularuser = async () => {
-
-   // const user = localStorage.getItem("user");
-   // if (user) {
-   //    const u = JSON.parse(user);
     let response = await fetch("http://localhost:8080/project/regularuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-    //   "Authorization": u.token,
       },
       body: JSON.stringify(newRegularuser),
     });

@@ -43,10 +43,6 @@ const router = createBrowserRouter([{
   element: <App />,
   children: [
     {
-      path: '/',
-      element: <Navigate to="/recipe" />,
-    },
-    {
       path: 'error',
       element: <Error />
     },

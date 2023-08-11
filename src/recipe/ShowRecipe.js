@@ -73,11 +73,7 @@ const ShowRecipe = ({ recipe, onDelete }) => {
         getRegularUser();
     }, []);
 
-    //udjemo u usera ulogovanog
-    // u njegov id
-    // preko toga da izvucemo ceo objekat usera sa poljem cookbook
-
-    // like recipe, TODO izbaciti id na back-u
+    // promeniti boju
     const updateRecipe = async () => {
         const user = localStorage.getItem("user");
         if (user) {
