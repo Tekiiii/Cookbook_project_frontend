@@ -22,7 +22,7 @@ const App = () => {
     setOpen(false);
   };
 
-  return (
+  return (<div className="home-background">
     <Container>
       <UserContext.Provider value={{ user, login, logout }}>
         <Stack>
@@ -193,7 +193,7 @@ const App = () => {
         </Box>
       </UserContext.Provider>
     </Container>
-  );
+    </div>  );
 };
 
 export default App;

@@ -38,7 +38,7 @@ const ShowChef = ({ chef, onDelete }) => {
                     sx={{ height: 200 }}
                     image="https://www.shutterstock.com/shutterstock/photos/1435160735/display_1500/stock-vector-kitchen-chef-design-logo-template-1435160735.jpg"
                 />
-    <CardHeader sx={{textAlign: 'center', backgroundColor: 'darkred' }}  title={`${chef.name} ${chef.lastname}`} >  </CardHeader>
+    <CardHeader sx={{textAlign: 'center', backgroundColor: 'white' }}  title={`${chef.name} ${chef.lastname}`} >  </CardHeader>
     {/* <CardContent>ID: {chef.id}</CardContent> */}
     {user && user.role === "ROLE_REGULAR_USER" ? (
      <CardContent>Recipes: {chef.recipes.id}</CardContent> ) : <></>}

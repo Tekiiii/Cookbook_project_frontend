@@ -7,9 +7,9 @@ const IngredientDetails = () => {
 
         return <Box sx={{display: "flex", justifyContent: "center"}}>
             <Card sx={{marginBottom: 3, width: "300px"}} variant="outlined">
-                <CardHeader sx={{display: "flex", textAlign: "center", fontSize: "15px", fontWeight: "bold", color: "black",  backgroundColor: "#ce93d892"}}
+                <CardHeader sx={{display: "flex", textAlign: "center", fontSize: "15px", fontWeight: "bold", color: "black",  backgroundColor: "#009688"}}
                     subheader= {ingredient.name}/>
-                <CardContent sx={{backgroundColor: "#e6f5fc"}}>
+                <CardContent sx={{backgroundColor: "white"}}>
                     <Typography sx={{display: "flex", flexDirection: "column", justifyContent: "space-around", padding: "7px"}}>
                         ID: {ingredient.id} </Typography>
                     <Typography sx={{display: "flex", flexDirection: "column", justifyContent: "space-around", padding: "7px"}}>
