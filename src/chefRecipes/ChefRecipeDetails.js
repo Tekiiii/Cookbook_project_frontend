@@ -107,7 +107,7 @@ const ChefRecipeDetails = () => {
             </CardContent>
         </Card>
         <Box sx={{ marginTop: '10px', alignItems: 'center', textAlign: 'center' }}>
-            <Button onClick={() => navigate('/recipe')}
+            <Button onClick={() => navigate('/chefRecipes')}
                 sx={{ color: '#E01E9B' }}>
                 Back
             </Button>

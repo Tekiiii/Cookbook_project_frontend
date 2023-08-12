@@ -60,7 +60,7 @@ const ShowRecipe = ({ recipe, onDelete }) => {
         }
     }
 
-    useEffect(() => {
+    
         const getRegularUser = async () => {
             const user = JSON.parse(localStorage.getItem('user'));
             console.log(user.role);
@@ -86,8 +86,10 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                 }
             }
         }
-        getRegularUser();
-    }, []);
+        
+        if (user != null && user.role === "ROLE_REGULAR_USER") {
+            getRegularUser();
+        }
 
     const favouriteRecipe = async () => {
         const user = localStorage.getItem("user");
@@ -167,7 +169,6 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                 </CardContent>
 
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {/* {user && user.role === "ROLE_REGULAR_USER" || user.role === "ROLE_CHEF" || user.role === "ROLE_ADMIN" ? */}
                     <Tooltip title="Info">
                         <IconButton
                             sx={{ margin: '0px 8px 15px 8px', color: '#6bb187', fontSize: '1em' }}
@@ -176,7 +177,7 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                             <InfoIcon />
                         </IconButton>
                     </Tooltip>
-                    {/* {user && user.role === "ROLE_ADMIN" || user.role === "ROLE_CHEF" ? */}
+                    {user && (user.role === "ROLE_ADMIN" ) ? 
                     <>
                         <Tooltip title="Edit">
                             <IconButton sx={{ margin: '0px 8px 15px 8px', color: '#6bb187' }} aria-label="edit" onClick={() => navigate(`edit_recipe/${recipe.id}`)}>
@@ -188,8 +189,8 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                                 <DeleteIcon />
                             </IconButton>
                         </Tooltip> </>
-                    {/* : <></>}  */}
-                    {/* {user && user.role === "ROLE_REGULAR_USER" ? */}
+                     : <></>}  
+                     {user && user.role === "ROLE_REGULAR_USER" ? 
                     <Tooltip title={isFavorite ? "Added to my Cookbook" : "Add to my Cookbook"}>
                     <IconButton
                         sx={{ margin: '0px 8px 15px 8px', color: isFavorite ? '#6bb187' : 'inherit' }}
@@ -199,7 +200,7 @@ const ShowRecipe = ({ recipe, onDelete }) => {
                         {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                     </IconButton>
                     </Tooltip>
-                    {/* : <></>} */}
+                     : <></>} 
                 </ Box>
             </Card>
         </Grid>
