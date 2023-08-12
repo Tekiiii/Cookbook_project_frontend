@@ -26,8 +26,8 @@ const ChefRecipeForm = () => {
     const navigate = useNavigate();
 
     const save = async () => {
-        if (name === "" || time === "" || steps === "" || picture === null
-            || amount === "" || ingredients.length === 0) {
+        if (name === "" || time === "" || steps === ""
+            || amount === "") {
             setGlobalError("Please fill all the fields in the form.")}
 
         const new_recipe = {
@@ -36,18 +36,18 @@ const ChefRecipeForm = () => {
             amount: amount,
             picture: picture,
             steps: steps,
-            ingredientIdAmounts: ingredients
+            ingredientIdAmounts: ingredientIdAmounts
         }
-
-        const user = localStorage.getItem("user");
+        console.log(JSON.stringify(new_recipe));
+        const user = JSON.parse(localStorage.getItem("user"));
         if (user && user.role === "ROLE_CHEF") {
-            const u = JSON.parse(user);
             let response = await fetch("http://localhost:8080/project/recipe/newRecipe", {
                 method: "POST",
                 headers: {
-                    Authorization: u.token,
+                    Authorization: user.token,
                     "Content-Type": "application/json",
                 },
+                
                 body: JSON.stringify(new_recipe),
             });
             console.log(response);
@@ -287,7 +287,7 @@ const ChefRecipeForm = () => {
             ))}
             <Button sx={{ color: '#E01E9B' }}
                 onClick={save}
-                disabled={timeError !== "" || nameError !== "" || stepsError !== "" || amountError !== "" || ingredientError !== "" || pictureError !== ""}>
+                disabled={timeError !== "" || nameError !== "" || stepsError !== "" || amountError !== "" || ingredientError !== ""}>
                 {" "}Save{" "}
             </Button>
             <FormHelperText error={globalError}>{globalError}</FormHelperText>

@@ -88,7 +88,10 @@ const RecipeDetails = () => {
                         Time: {recipe.time}
                     </Grid>
                     <Grid item xs={12}>
-                        Amount: {recipe.amount}
+                        Amount: {recipe.amount}g
+                    </Grid>
+                    <Grid item xs={12}>
+                        Calories: {recipe.calories} kcal
                     </Grid>
                     <Grid item xs={12}>
                         {data.length > 0 ? (
@@ -96,7 +99,7 @@ const RecipeDetails = () => {
                                 Ingredients:
                                 <ul>
                                     {data.map((ingredients) => (
-                                        <li key={ingredients.id}>{ingredients.id} {ingredients.name} </li>
+                                        <li key={ingredients.id}> {ingredients.name} {ingredients.amount}g </li>
                                     ))}
                                 </ul>
                             </>)

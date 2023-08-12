@@ -21,6 +21,7 @@ const ShowChefRecipe = ({ recipe, onDelete }) => {
     const { user, login, logout } = useContext(UserContext);
     const navigate = useNavigate();
 
+    console.log(recipe);
     const deleteRecipe = async () => {
         const user = localStorage.getItem("user");
         if (user) {
